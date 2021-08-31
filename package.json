@@ -1,0 +1,23 @@
+{
+  "name": "redwoodjs-stripe",
+  "version": "0.0.1",
+  "description": "A Redwood/Stripe integration made easy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrisvdm/redwoodjs-stripe.git"
+  },
+  "keywords": [
+    "redwood",
+    "stripe"
+  ],
+  "author": "Chrisvdm",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chrisvdm/redwoodjs-stripe/issues"
+  },
+  "homepage": "https://github.com/chrisvdm/redwoodjs-stripe#readme"
+}
