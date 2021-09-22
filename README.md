@@ -1,8 +1,10 @@
 # redwoodjs-stripe
 
-A Redwood/Stripe integration made easy 
+A Redwood/Stripe integration made easy!
 
-_COMING SOON!!!_
+**STATUS:** POC development
+
+## Useful Links
 
 To follow the progress or offer your thoughts and experiences feel free to comment over in the Redwood community forum:
  
