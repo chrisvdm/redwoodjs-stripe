@@ -2,7 +2,7 @@
 
 A Redwood/Stripe integration made easy!
 
-This package is built with support of the teams from [Stripe](https://stripe.com/) and [Redwoodjs](https://redwoodjs.com/)
+This package is built with support of the teams from [Stripe](https://stripe.com/) and [Redwood](https://redwoodjs.com/)
 
 ### Current progress
  
@@ -26,6 +26,6 @@ To offer your thoughts and experiences feel free to comment over in the Redwood 
  
  To see the Example store, work in progress, follow the link below:
  
- [Redwoodjs + Stripe example store](https://github.com/redwoodjs/example-store)
+ [Stripe + Redwood example store](https://github.com/redwoodjs/example-store)
 
 
