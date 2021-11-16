@@ -2,30 +2,29 @@
 
 A Redwood/Stripe integration made easy!
 
-This package is built with support of the teams from [Stripe](https://stripe.com/) and [Redwood](https://redwoodjs.com/)
+This package is being built with the support of the awesome people at [Redwood](https://redwoodjs.com/) and [Stripe](https://stripe.com/)
 
 ### Current progress
  
- To follow the progress of the plugin you can view a roadmap here:
-
- [Roadmap issue](https://github.com/chrisvdm/redwoodjs-stripe/issues/1)
+You can take a look at the [Roadmap](https://github.com/chrisvdm/redwoodjs-stripe/issues/1) for this project for more details and a rough timeline. For a quick status update look below. 
 
 **STATUS:** Building an example store
 
 **ETA** June 2022
 
+## How you can help
+- Tell me what you would like to see in an Stripe/Redwoodjs plugin on the discussion page. Even though V1 features are locked in, it will help for planning later releases
+- Send good vibes :)
+
 ## Useful Links
 
-To offer your thoughts and experiences feel free to comment over in the Redwood community forum:
- 
- [Stripe + Redwood Integration package](https://community.redwoodjs.com/t/stripe-redwood-integration-package/2226)
- 
- To see the Proof of Concept, which is a work in progress, look here:
- 
- [Stripe + Redwood Integration Proof of Concept Repo](https://github.com/redwoodjs/payments)
- 
- To see the Example store, work in progress, follow the link below:
- 
- [Stripe + Redwood example store](https://github.com/redwoodjs/example-store)
+- [Stripe + Redwood Integration package discusson](https://community.redwoodjs.com/t/stripe-redwood-integration-package/2226) in the Redwood forum
+- [Stripe + Redwood Integration Proof of Concept Repo](https://github.com/redwoodjs/payments) (work in progress)
+- [Stripe + Redwood example store](https://github.com/redwoodjs/example-store) using Redwood and Stripe (work in progress)
+- [Roadmap](https://github.com/chrisvdm/redwoodjs-stripe/issues/1)
 
-
+## Planned V1 Features
+- Subscription payments with Stripe Checkout
+  - Customer Portal creation 
+- Once-off payments with Stripe Checkout
+- Webhook handling 
