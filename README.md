@@ -2,14 +2,24 @@
 
 A Redwood/Stripe integration made easy!
 
-**STATUS:** POC development
+**STATUS:** Building an example store
+
+**ETA** June 2022
 
 ## Useful Links
 
-To follow the progress or offer your thoughts and experiences feel free to comment over in the Redwood community forum:
+To offer your thoughts and experiences feel free to comment over in the Redwood community forum:
  
  [Stripe + Redwood Integration package](https://community.redwoodjs.com/t/stripe-redwood-integration-package/2226)
  
  To see the Proof of Concept, which is a work in progress, look here:
  
  [Stripe + Redwood Integration Proof of Concept Repo](https://github.com/redwoodjs/payments)
+ 
+ To see the Example store, work in progress, follow the link below:
+ 
+ [Redwoodjs + Stripe example store](https://github.com/redwoodjs/example-store)
+
+ To follow the progress of the plugin you can view a roadmap here:
+
+ [Roadmap issue](https://github.com/chrisvdm/redwoodjs-stripe/issues/1)
