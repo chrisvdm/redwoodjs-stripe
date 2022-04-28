@@ -2,8 +2,12 @@
   "name": "redwoodjs-stripe",
   "version": "0.0.1",
   "description": "A Redwood/Stripe integration made easy",
-  "main": "index.js",
+  "source": "src/index.js",
+  "main": "dist/main.js",
+  "module":"dist/module.js",
   "scripts": {
+    "watch": "parcel watch",
+    "build": "parcel build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/chrisvdm/redwoodjs-stripe/issues"
   },
-  "homepage": "https://github.com/chrisvdm/redwoodjs-stripe#readme"
+  "homepage": "https://github.com/chrisvdm/redwoodjs-stripe#readme",
+  "devDependencies": {
+    "parcel": "latest"
+  }
 }

@@ -8,7 +8,7 @@ This package is being built with the support of the awesome people at [Redwood](
  
 You can take a look at the [Roadmap](https://github.com/chrisvdm/redwoodjs-stripe/issues/1) for this project for more details and a rough timeline. For a quick status update look below. 
 
-**STATUS:** Building an example store
+**STATUS:** Working on package
 
 **ETA** June 2022
 
