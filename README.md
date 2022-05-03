@@ -8,7 +8,7 @@ This package is being built with the support of the awesome people at [Redwood](
  
 You can take a look at the [Roadmap](https://github.com/chrisvdm/redwoodjs-stripe/issues/1) for this project for more details and a rough timeline. For a quick status update look below. 
 
-**STATUS:** Working on package
+**STATUS:** Building MVP
 
 **ETA** June 2022
 
@@ -21,7 +21,7 @@ You can take a look at the [Roadmap](https://github.com/chrisvdm/redwoodjs-strip
 
 - [Stripe + Redwood Integration package discusson](https://community.redwoodjs.com/t/stripe-redwood-integration-package/2226) in the Redwood forum
 - [Stripe + Redwood Integration Proof of Concept Repo](https://github.com/redwoodjs/payments) (work in progress)
-- [Stripe + Redwood example store](https://github.com/redwoodjs/example-store) using Redwood and Stripe (work in progress and open to contributors)
+- [Stripe + Redwood example store](https://github.com/redwoodjs/example-store) using Redwood and Stripe (open to contributors)
 - [Roadmap](https://github.com/chrisvdm/redwoodjs-stripe/issues/1)
 
 ## Planned V1 Features
