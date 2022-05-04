@@ -23,6 +23,7 @@ You can take a look at the [Roadmap](https://github.com/chrisvdm/redwoodjs-strip
 - [Stripe + Redwood Integration Proof of Concept Repo](https://github.com/redwoodjs/payments) (work in progress)
 - [Stripe + Redwood example store](https://github.com/redwoodjs/example-store) using Redwood and Stripe (open to contributors)
 - [Roadmap](https://github.com/chrisvdm/redwoodjs-stripe/issues/1)
+- [Sandbox](https://github.com/chrisvdm/test-app) a sandbox app for testing plugin integration before putting in the example store
 
 ## Planned V1 Features
 - Subscription payments with Stripe Checkout
