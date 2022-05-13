@@ -1,4 +1,4 @@
-import {stripe} from '../../lib'
+import { stripe } from '../../lib'
 
 export const checkout = async ({ mode, cart, customerId }, { context }) => {
   // eslint-disable-next-line camelcase

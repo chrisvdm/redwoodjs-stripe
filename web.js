@@ -1,1 +1,1 @@
-export * from './dist/web/web'
+module.exports = require('./dist/web/index.js')

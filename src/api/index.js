@@ -1,4 +1,8 @@
-export * from './lib'
+export {
+    handleStripeWebhooks,
+    stripe,
+    checkout
+} from './lib'
 
 // export schemas sdl
 export * as stripeSchemas from './schemas'

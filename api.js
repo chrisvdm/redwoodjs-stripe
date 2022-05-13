@@ -1,1 +1,1 @@
-export * from './dist/api/api'
+module.exports = require('./dist/api/index.js')

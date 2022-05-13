@@ -2,14 +2,46 @@
   "name": "redwoodjs-stripe",
   "version": "0.0.1",
   "description": "A Redwood/Stripe integration made easy",
-  "main": "dist/main.js",
-  "module": "dist/module.js",
-  "targets": {
-    "api": {
-      "source": "src/api/index.js"
+  "type": "module",
+  "main": "./dist/cjs/api/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/api-mjs/index.js",
+      "require": "./dist/api-cjs/index.js"
     },
-    "web": {
-      "source": "src/web/index.js"
+    "./api": {
+      "import": "./dist/api-mjs/index.js",
+      "require": "./dist/api-cjs/index.js"
+    },
+    "./web": {
+      "import": "./dist/web-mjs/index.js",
+      "require": "./dist/web-cjs/index.js"
+    }
+  },
+  "targets": {
+    "api-cjs": {
+      "source": "src/api/index.js",
+      "isLibrary": true,
+      "context": "node",
+      "outputFormat": "commonjs"
+    },
+    "web-cjs": {
+      "source": "src/web/index.js",
+      "isLibrary": true,
+      "context": "browser",
+      "outputFormat": "commonjs"
+    },
+    "api-mjs": {
+      "source": "src/api/index.js",
+      "isLibrary": true,
+      "context": "node",
+      "outputFormat": "esmodule"
+    },
+    "web-mjs": {
+      "source": "src/web/index.js",
+      "isLibrary": true,
+      "context": "browser",
+      "outputFormat": "esmodule"
     }
   },
   "scripts": {
@@ -32,8 +64,8 @@
   },
   "homepage": "https://github.com/chrisvdm/redwoodjs-stripe#readme",
   "devDependencies": {
-    "parcel": "latest",
     "@redwoodjs/web": "1.x",
+    "parcel": "latest",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
@@ -42,8 +74,8 @@
     "stripe": "^8.220.0"
   },
   "peerDependencies": {
+    "@redwoodjs/core": "1.x",
     "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "@redwoodjs/core": "1.x"
+    "react-dom": "17.0.2"
   }
 }
