@@ -1,6 +1,6 @@
 import { stripe } from '../../lib'
 
-export const checkout = async ({ mode, cart, customerId }, { context }) => {
+export const checkout = async () => {
   // eslint-disable-next-line camelcase
   // const line_items = cart.map((product) => ({
   //   price: product.id,
@@ -17,14 +17,15 @@ export const checkout = async ({ mode, cart, customerId }, { context }) => {
     }
   ]
 
+  console.log('sup there')
+
   return stripe.checkout.sessions.create({
     // See https://stripe.com/docs/payments/checkout/custom-success-page#modify-success-url.
-    success_url: `${context.event.headers.referer}success?sessionId={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${context.event.headers.referer}failure`,
+    success_url: `http://localhost:8910/success?sessionId={CHECKOUT_SESSION_ID}`,
+    cancel_url: `http://localhost:8910/failure`,
     // eslint-disable-next-line camelcase
     line_items,
-    mode,
-    payment_method_types: ['card'],
-    customer: customerId,
+    mode: 'payment',
+    payment_method_types: ['card']
   })
 }

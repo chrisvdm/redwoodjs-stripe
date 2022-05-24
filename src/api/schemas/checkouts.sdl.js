@@ -1,4 +1,4 @@
-export const checkoutsSchema = gql`
+export const checkoutsSchema = `
   type Session {
     id: String!
     customerId: String
@@ -24,7 +24,6 @@ export const checkoutsSchema = gql`
   type Mutation {
     # In GraphQL, we can't reuse types as mutation inputs
     # (otherwise we'd just type "cart" as "[Product!]!")
-    checkout: Session!
-      @skipAuth
+    checkout: Session! @skipAuth
   }
 `

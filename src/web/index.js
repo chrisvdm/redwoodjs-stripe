@@ -1,2 +1,2 @@
 // export hooks
-export { checkoutHandler } from './hooks'
+export { useCheckoutHandler } from './hooks'

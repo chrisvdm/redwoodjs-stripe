@@ -1,28 +1,33 @@
-// import { loadStripe } from '@stripe/stripe-js'
-// import { useMutation, gql } from '@redwoodjs/web'
+import {logger} from '../lib'
+import { loadStripe } from '@stripe/stripe-js'
+import { useMutation } from '@redwoodjs/web'
+import gql from 'graphql-tag'
 
-// const [useCheckout] = useMutation(
-//     gql`
-//       mutation Checkout {
-//         checkout() {
-//           id
-//         }
-//       }
-//     `
-//   )
+export const useCheckoutHandler = () => {
+  // Create Session Mutation
+  const [checkout] = useMutation(
+    gql`
+      mutation Checkout {
+        checkout {
+          id
+        }
+      }
+    `
+  )
+  
+  logger("Entering package...")
 
-export const checkoutHandler = () => {
-  console.log("oh hi!")
-    
     // Create checkout session and return session id
-  //   const {
-  //       data: {
-  //       checkout: { id },
-  //       },
-  //   } = await useCheckout()
-  // console.log("====================================")
-  // console.log(id)
-  // console.log("====================================")
+    
+    
+  return async () => {
+      const {
+        data: {
+        checkout: { id },
+        },
+      } = await checkout()
+    return id
+  }
 
     // // Redirect user to Stripe Checkout page
     // const stripe = await loadStripe(process.env.STRIPE_PK)
