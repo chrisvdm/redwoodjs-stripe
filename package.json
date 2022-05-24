@@ -29,7 +29,10 @@
       "source": "src/web/index.js",
       "isLibrary": true,
       "context": "browser",
-      "outputFormat": "commonjs"
+      "outputFormat": "commonjs",
+      "includeNodeModules": [
+        "@stripe/stripe-js"
+      ]
     },
     "api-mjs": {
       "source": "src/api/index.js",
@@ -41,7 +44,10 @@
       "source": "src/web/index.js",
       "isLibrary": true,
       "context": "browser",
-      "outputFormat": "esmodule"
+      "outputFormat": "esmodule",
+      "includeNodeModules": [
+        "@stripe/stripe-js"
+      ]
     }
   },
   "scripts": {
@@ -64,10 +70,11 @@
   },
   "homepage": "https://github.com/chrisvdm/redwoodjs-stripe#readme",
   "devDependencies": {
-    "@redwoodjs/web": "1.x",
-    "parcel": "latest",
-    "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "@babel/runtime-corejs3": "^7.17.9",
+    "@parcel/transformer-graphql": "latest",
+    "core-js": "^3.22.5",
+    "graphql-tag": "2.x",
+    "parcel": "latest"
   },
   "dependencies": {
     "@stripe/stripe-js": "1.29.0",
@@ -75,6 +82,8 @@
   },
   "peerDependencies": {
     "@redwoodjs/core": "1.x",
+    "@redwoodjs/web": "1.x",
+    "graphql-tag": "2.x",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   }
