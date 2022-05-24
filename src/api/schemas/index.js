@@ -1,2 +1,6 @@
-export { checkoutsSchema } from './checkouts.sdl'
-// export * as checkoutsSchema from './checkouts.graphql'
+import * as checkouts from './checkouts.sdl'
+
+// shape schema object
+export const stripeSchemas = {
+    checkouts_sdl: checkouts
+}

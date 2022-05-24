@@ -26,6 +26,7 @@ export const useCheckoutHandler = () => {
         checkout: { id },
         },
       } = await checkout()
+    logger(id)
     return id
   }
 

@@ -1,4 +1,4 @@
-export const checkoutsSchema = `
+export const schema = `
   type Session {
     id: String!
     customerId: String

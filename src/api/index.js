@@ -3,8 +3,10 @@ export {
     stripe,
     checkout
 } from './lib'
+
 // export schemas sdl
-export * as stripeSchemas from './schemas'
+// export * as stripeSchemas from './schemas'
+export * from './schemas'
 
 // export services
-export * as stripeServices from './services'
+export * from './services' 
