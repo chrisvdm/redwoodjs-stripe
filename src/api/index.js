@@ -3,7 +3,6 @@ export {
     stripe,
     checkout
 } from './lib'
-
 // export schemas sdl
 export * as stripeSchemas from './schemas'
 

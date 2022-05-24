@@ -2,22 +2,7 @@
   "name": "redwoodjs-stripe",
   "version": "0.0.1",
   "description": "A Redwood/Stripe integration made easy",
-  "type": "module",
   "main": "./dist/cjs/api/index.js",
-  "exports": {
-    ".": {
-      "import": "./dist/api-mjs/index.js",
-      "require": "./dist/api-cjs/index.js"
-    },
-    "./api": {
-      "import": "./dist/api-mjs/index.js",
-      "require": "./dist/api-cjs/index.js"
-    },
-    "./web": {
-      "import": "./dist/web-mjs/index.js",
-      "require": "./dist/web-cjs/index.js"
-    }
-  },
   "targets": {
     "api-cjs": {
       "source": "src/api/index.js",
@@ -30,21 +15,6 @@
       "isLibrary": true,
       "context": "browser",
       "outputFormat": "commonjs",
-      "includeNodeModules": [
-        "@stripe/stripe-js"
-      ]
-    },
-    "api-mjs": {
-      "source": "src/api/index.js",
-      "isLibrary": true,
-      "context": "node",
-      "outputFormat": "esmodule"
-    },
-    "web-mjs": {
-      "source": "src/web/index.js",
-      "isLibrary": true,
-      "context": "browser",
-      "outputFormat": "esmodule",
       "includeNodeModules": [
         "@stripe/stripe-js"
       ]

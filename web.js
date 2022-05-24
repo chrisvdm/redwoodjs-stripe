@@ -1,1 +1,1 @@
-module.exports = require('./dist/web/index.js')
+module.exports = require('./dist/web-cjs/index.js')
