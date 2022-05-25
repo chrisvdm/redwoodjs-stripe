@@ -10,30 +10,43 @@ export const useCheckoutHandler = () => {
       mutation Checkout {
         checkout {
           id
+          sessionUrl
         }
       }
     `
   )
-  
-  logger("Entering package...")
-
-    // Create checkout session and return session id
-    
-    
+ 
   return async () => {
-      const {
-        data: {
-        checkout: { id },
+    // Create checkout session and return session id
+    const {
+      data: {
+        checkout: {
+          id,
+          sessionUrl
         },
-      } = await checkout()
-    logger(id)
-    return id
+      },
+    } = await checkout()
+
+    console.log(id, sessionUrl)
+
+   
+    // APPROACH A
+    // Redirect user to Stripe Checkout page
+    // Not very secure, Server-side redirects are 
+    location.href = sessionUrl;
+    
+    /*
+    // APPROACH B + C
+    // Redirect user to Stripe Checkout page
+    // Stripe Public key needs to be passed directly to hook
+    // APPROACH C 
+    // Requires extra setup step to share env vars with package
+    const stripe = await loadStripe(pk)
+
+    await stripe.redirectToCheckout({
+    sessionId: id,
+    }) 
+    */
   }
-
-    // // Redirect user to Stripe Checkout page
-    // const stripe = await loadStripe(process.env.STRIPE_PK)
-
-    // await stripe.redirectToCheckout({
-    // sessionId: id,
-    // })
+    
 }

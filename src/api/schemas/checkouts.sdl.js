@@ -5,6 +5,7 @@ export const schema = `
     customerEmail: String
     customerName: String
     customerSignedUp: Boolean
+    sessionUrl: String
   }
 
   enum Mode {
