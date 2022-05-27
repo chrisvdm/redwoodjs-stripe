@@ -18,12 +18,19 @@
       "includeNodeModules": [
         "@stripe/stripe-js"
       ]
+    },
+    "cli": {
+      "source": "cli/index.js",
+      "isLibrary": true,
+      "context": "node",
+      "outputFormat": "commonjs"
     }
   },
   "scripts": {
     "watch": "parcel watch",
     "build": "parcel build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "stripe": "node ./cli/index.js"
   },
   "repository": {
     "type": "git",
@@ -47,8 +54,10 @@
     "parcel": "latest"
   },
   "dependencies": {
+    "@snaplet/copycat": "^0.3.0",
     "@stripe/stripe-js": "1.29.0",
-    "stripe": "^8.220.0"
+    "stripe": "^8.220.0",
+    "yargs": "^17.5.1"
   },
   "peerDependencies": {
     "@redwoodjs/core": "1.x",
