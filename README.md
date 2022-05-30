@@ -30,3 +30,10 @@ You can take a look at the [Roadmap](https://github.com/chrisvdm/redwoodjs-strip
   - Customer Portal creation 
 - Once-off payments with Stripe Checkout
 - Webhook handling 
+
+# Usage _for the moment_
+
+_This section is alive!!!... meaning it changes as the plugin is being developed. As new features are added and updates are made the information over here will change._
+
+
+
