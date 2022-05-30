@@ -4,7 +4,7 @@ const { hideBin } = require('yargs/helpers')
 const setup = require('./setup')
 
 yargs(hideBin(process.argv))
-    .scriptName('stripe')
+    .scriptName('rw-stripe')
     .command('setup', 'Sets up Redwoodjs-stripe plugin', {
         subscription: {
             describe: 'flags for subscription payments',

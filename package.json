@@ -30,7 +30,7 @@
     "watch": "parcel watch",
     "build": "parcel build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "stripe": "node ./cli/index.js"
+    "rw-stripe": "node ./cli/index.js"
   },
   "repository": {
     "type": "git",
