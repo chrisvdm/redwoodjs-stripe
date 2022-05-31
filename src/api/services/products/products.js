@@ -7,9 +7,9 @@ export const products = async ({ params = { productParams: {}, priceParams: {} }
   
   const products = await stripe.products.list(productParams)
 
+  // Get a list of prices relating to product
   const itemList = []
   for (const product of products.data) {
-    // Get a list of prices relating to product
     const prices = await stripe.prices.list({
       product: product.id,
       ...priceParams

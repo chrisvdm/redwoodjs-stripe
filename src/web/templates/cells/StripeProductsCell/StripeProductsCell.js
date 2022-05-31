@@ -14,7 +14,7 @@
 */
 
 export const QUERY = gql`
-  query Products($params: Params) {
+  query Products($params: StripeProductsParamsInput) {
     products(params: $params) {
       id
       name
