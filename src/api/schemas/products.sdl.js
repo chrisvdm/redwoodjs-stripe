@@ -70,5 +70,6 @@ export const schema = `
 
   type Query {
     products(params: StripeProductsParamsInput): [Product!]! @skipAuth
+    productByPrice(id: ID!): Product! @skipAuth
   }
 `
