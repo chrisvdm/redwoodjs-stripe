@@ -1,18 +1,18 @@
 import { logger } from '../../../web/lib'
 import { stripe } from '../../lib'
 
-export const products = async ({ type = 'one_time' }) => {
-  // Get a list of active products
-  const products = await stripe.products.list({
-    active: true,
-  })
+export const products = async ({ params = { productParams: {}, priceParams: {} } }) => {
+  
+  const { productParams = {}, priceParams = {} } = params
+  
+  const products = await stripe.products.list(productParams)
 
   const itemList = []
   for (const product of products.data) {
     // Get a list of prices relating to product
     const prices = await stripe.prices.list({
-      type: type,
       product: product.id,
+      ...priceParams
     })
 
     const price = prices.data[0]

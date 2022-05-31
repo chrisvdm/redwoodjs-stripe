@@ -10,12 +10,25 @@ export const schema = `
     type: String!
   }
 
+  input StripeProductParams {
+    active: Boolean
+  }
+
+  input StripePriceParams {
+    type: ProductType
+  }
+
+  input Params {
+    productParams: StripeProductParams
+    priceParams: StripePriceParams
+  }
+
   enum ProductType {
     one_time
     recurring
   }
 
   type Query {
-    products(type: ProductType): [Product!]! @skipAuth
+    products(params: Params): [Product!]! @skipAuth
   }
 `
