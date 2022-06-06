@@ -1,0 +1,23 @@
+.stripe-button {
+  background-color: #64bbed;
+  color: #fff;
+  border-radius: 2px;
+  border: none;
+  padding: 0.625rem;
+  box-shadow: 2px 2px #dcdbdb;
+  transition: ease-in-out 0.25s;
+}
+
+.stripe-button:hover {
+  cursor: pointer;
+  background-color: #3a444a;
+}
+
+.stripe-product-card {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #3a444a;
+  box-shadow: 2px 2px #dcdbdb;
+  font-style: normal;
+}

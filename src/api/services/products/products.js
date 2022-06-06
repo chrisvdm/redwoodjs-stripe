@@ -32,3 +32,17 @@ export const products = async ({ params = { productParams: {}, priceParams: {} }
 
   return itemList
 }
+
+export const productByPrice = async ({ id }) => {
+  const price = await stripe.prices.retrieve(id.toString())
+
+  const product = await stripe.products.retrieve(price.product)
+  return {
+        id: price.id,
+        name: product.name,
+        description: product.description,
+        image: product.images[0],
+        price: price.unit_amount,
+        type: price.type,
+      }
+}
