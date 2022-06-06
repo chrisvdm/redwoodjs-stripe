@@ -12,3 +12,12 @@
   cursor: pointer;
   background-color: #3a444a;
 }
+
+.stripe-product-card {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #3a444a;
+  box-shadow: 2px 2px #dcdbdb;
+  font-style: normal;
+}
