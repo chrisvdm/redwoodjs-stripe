@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "A Redwood/Stripe integration made easy",
   "main": "./dist/cjs/api/index.js",
+  "bin": {
+    "redwood-stripe": "./src/cli/cli.js"
+  },
   "targets": {
     "api-cjs": {
       "source": "src/api/index.js",
@@ -43,12 +46,21 @@
     "@babel/runtime-corejs3": "^7.17.9",
     "@parcel/transformer-graphql": "latest",
     "core-js": "^3.22.5",
+    "dir-tree": "^1.0.1",
     "graphql-tag": "2.x",
+    "jest": "^28.1.1",
     "parcel": "latest"
   },
   "dependencies": {
     "@stripe/stripe-js": "1.29.0",
-    "stripe": "^8.220.0"
+    "cli-testing-library": "^1.0.4",
+    "envfile": "^6.17.0",
+    "fs-extra": "^10.1.0",
+    "listr": "^0.14.3",
+    "prompts": "^2.4.2",
+    "stripe": "^8.220.0",
+    "tmp-promise": "^3.0.3",
+    "yargs": "^17.5.1"
   },
   "peerDependencies": {
     "@redwoodjs/core": "1.x",
