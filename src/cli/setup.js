@@ -5,7 +5,7 @@ const envfile = require("envfile");
 const path = require("path");
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
-import { stripe } from '../api/lib/'
+const Stripe = require('stripe')
 
 const prompt = (initialOptions) =>
   prompts(
@@ -21,8 +21,8 @@ const prompt = (initialOptions) =>
         message: "What is your Stripe publishable key?",
       },
       {
-        name: "shouldAddDummyProducts",
-        type: "confirm",
+        type: () => shouldSkip(initialOptions,'addDummyProducts') ? null : 'confirm',
+        name: "addDummyProducts",
         message: "Would you like us to add dummy products to your Stripe account?",
         initial: false,
       },
@@ -47,7 +47,9 @@ const updateDotEnv = async (options) => {
   await fs.writeFile(dotEnvPath, envfile.stringify(nextEnv));
 };
 
-const addDummyProducts = async () => {
+const addDummyProducts = async (options) => {
+  const stripe = new Stripe(options.stripeSecretKey)
+
   const superpowers = JSON.parse(
     fs.readFileSync(path.join(__dirname, 'superpowers.json'), 'utf-8')
   )
@@ -68,7 +70,7 @@ const addDummyProducts = async () => {
 
 const copyTemplateFiles = async (options) => {
   const srcDir = path.join(__dirname, "..", "..", "templates");
-  const destDir = path.join(options.dir, "src");
+  const destDir = options.dir;
 
   await fs.mkdirp(srcDir);
 
@@ -77,10 +79,12 @@ const copyTemplateFiles = async (options) => {
   });
 };
 
+const shouldSkip = (options, step) => [...options.skip || []].includes(step)
+
 const scaffold = async (options) => {
   await updateDotEnv(options);
 
-  if (!options.shouldSkipGenerate) {
+  if (!shouldSkip(options, 'rwGenerate')) {
     await exec('yarn rw g page stripe-demo', { cwd: options.dir })
   }
 
@@ -94,7 +98,7 @@ const setup = async (initialOptions) => {
     ...(await prompt(initialOptions)),
   };
   const tasks = [
-    options.shouldAddDummyProducts && {
+    options.addDummyProducts && {
       title: "Adding dummy products",
       task: () => addDummyProducts(options),
     },
@@ -107,10 +111,7 @@ const setup = async (initialOptions) => {
   await new Tasks(tasks.filter(Boolean)).run();
 
   console.log("Your redwoodjs-stripe integration is ready!");
-  if (!options.shouldSkipGenerate) {
-    console.log("Run `yarn rw dev` and then navigate to http://localhost:8910/stripe-demo for a little demo")
-  }
-  
+  console.log("Run `yarn rw dev` and then navigate to http://localhost:8910/stripe-demo for a little demo")
 };
 
 module.exports = {

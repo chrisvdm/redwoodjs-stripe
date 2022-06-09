@@ -15,7 +15,8 @@ describe("setup", () => {
       "setup",
       "--dir",
       dir,
-      '--shouldSkipGenerate',
+      '--skip rwGenerate',
+      '--skip addDummyProducts',
       ...args,
     ]);
 
@@ -34,7 +35,7 @@ describe("setup", () => {
       })
     );
 
-    const cmd = await setup("--shouldAddDummyProducts");
+    const cmd = await setup();
 
     expect(await cmd.findByText("secret key")).toBeInTheConsole();
 
@@ -53,7 +54,7 @@ describe("setup", () => {
   });
 
   test("writes .env if it does not yet exist", async () => {
-    const cmd = await setup("--shouldAddDummyProducts");
+    const cmd = await setup();
 
     expect(await cmd.findByText("secret key")).toBeInTheConsole();
 
@@ -73,7 +74,7 @@ describe("setup", () => {
 
   test("copies template files", async () => {
     const cmd = await setup(
-      "--shouldAddDummyProducts --stripeSecretKey=foo --stripePublishableKey=bar"
+      "--stripeSecretKey=foo --stripePublishableKey=bar"
     );
 
     expect(await cmd.findByText("ready!")).toBeInTheConsole();
@@ -82,7 +83,7 @@ describe("setup", () => {
       path.join(__dirname, "..", "..", "..", "templates")
     );
 
-    const srcFileTree = await dirTree(path.join(dir, "src"));
-    expect(srcFileTree).toEqual(templateFileTree);
+    const srcFileTree = await dirTree(dir);
+    expect(srcFileTree).toEqual(expect.objectContaining(templateFileTree));
   });
 });
