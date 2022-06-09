@@ -4,20 +4,20 @@ export const createStripeCartApi = (cart, setCart) => ({
   cart,
   addToCart: (item) => {
     const prevCart = [...cart] 
-    const itemIndex = findItemIndexByID(item, prevCart)
+    const itemIndex = findItemIndexByID(item.id, prevCart)
     let newCart = []
     if (itemIndex >= 0) {
       // replace obj with new object
       newCart =[ ...prevCart]
       newCart.splice(itemIndex, 1, {
-          id: item,
+          ...item,
           quantity: prevCart[itemIndex].quantity + 1
         })
     } else {
       newCart = [
         ...cart,
         {
-          id: item,
+          ...item,
           quantity: 1
         }
       ]
