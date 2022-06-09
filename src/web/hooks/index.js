@@ -1,22 +1,40 @@
-import {logger} from '../lib'
 import { loadStripe } from '@stripe/stripe-js'
 import { useMutation } from '@redwoodjs/web'
 import gql from 'graphql-tag'
 
-export const useCheckoutHandler = () => {
+export const useCheckoutHandler = (cart) => {
   // Create Session Mutation
   const [checkout] = useMutation(
     gql`
-      mutation Checkout {
-        checkout {
+      mutation Checkout(
+        $cart: [ProductInput!]!
+      ) {
+        checkout(cart: $cart) {
           id
           sessionUrl
         }
       }
     `
   )
+  
+  /*
+  Original Mutation
+  const [checkout] = useMutation(
+    gql`
+      mutation Checkout(
+        $mode: Mode!
+        $cart: [ProductInput!]!
+        $customerId: String
+      ) {
+        checkout(mode: $mode, cart: $cart, customerId: $customerId) {
+          id
+        }
+      }
+    `
+  )
+  */
  
-  return async () => {
+  return async (cart) => {
     // Create checkout session and return session id
     const {
       data: {
@@ -25,7 +43,7 @@ export const useCheckoutHandler = () => {
           sessionUrl
         },
       },
-    } = await checkout()
+    } = await checkout({variables: {cart: cart}})
 
     console.log(id, sessionUrl)
 
