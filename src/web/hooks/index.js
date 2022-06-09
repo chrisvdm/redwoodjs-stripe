@@ -35,6 +35,7 @@ export const useCheckoutHandler = (cart) => {
   */
  
   return async (cart) => {
+    const newCart = cart.map(item => ({id: item.id, quantity: item.quantity}))
     // Create checkout session and return session id
     const {
       data: {
@@ -43,7 +44,7 @@ export const useCheckoutHandler = (cart) => {
           sessionUrl
         },
       },
-    } = await checkout({variables: {cart: cart}})
+    } = await checkout({variables: {cart: newCart}})
 
     console.log(id, sessionUrl)
 

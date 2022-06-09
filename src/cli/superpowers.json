@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Invisibility",
+    "description": "Become invisible in the blink of an eye and avoid all those pesky people. Warning: overuse may cause one to feel transparent and lost.",
+    "images": ["img/invisibility.png"],
+    "prices": [
+      {
+        "currency": "usd",
+        "unit_amount": 200
+      },
+      {
+        "currency": "usd",
+        "unit_amount": 1000,
+        "recurring": {
+          "interval": "month"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Flight",
+    "description": "Fly up to 50m into the sky and reach a maximum speed of 180km/h.",
+    "images":["img/flight.png"],
+    "prices": [
+      {
+        "currency": "usd",
+        "unit_amount": 350
+      },
+      {
+        "currency": "usd",
+        "unit_amount": 1700,
+        "recurring": {
+          "interval": "month"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Folding",
+    "description": "Fold anything in the universe, whether it be laundry or spacetime itself. Disclaimer: May cause a rip in the spacetime continuum if used improperly.",
+    "images":["img/folding.png"],
+    "prices": [
+      {
+        "currency": "usd",
+        "unit_amount": 500
+      },
+      {
+        "currency": "usd",
+        "unit_amount": 3500,
+        "recurring": {
+          "interval": "month"
+        }
+      }
+    ]
+  }
+]

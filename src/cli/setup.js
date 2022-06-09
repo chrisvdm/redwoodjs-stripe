@@ -5,6 +5,7 @@ const envfile = require("envfile");
 const path = require("path");
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
+import { stripe } from '../api/lib/'
 
 const prompt = (initialOptions) =>
   prompts(
@@ -22,7 +23,7 @@ const prompt = (initialOptions) =>
       {
         name: "shouldAddDummyProducts",
         type: "confirm",
-        message: "Would you us to add dummy products to your Stripe account?",
+        message: "Would you like us to add dummy products to your Stripe account?",
         initial: false,
       },
     ].filter((item) => initialOptions[item.name] == null)
@@ -47,7 +48,22 @@ const updateDotEnv = async (options) => {
 };
 
 const addDummyProducts = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 200));
+  const superpowers = JSON.parse(
+    fs.readFileSync(path.join(__dirname, 'superpowers.json'), 'utf-8')
+  )
+
+  for (const superpower of superpowers) {
+    const { prices, ...productData } = superpower
+
+    const product = await stripe.products.create(productData)
+
+    for (const price of prices) {
+      await stripe.prices.create({
+        product: product.id,
+        ...price,
+      })
+    }
+  }
 };
 
 const copyTemplateFiles = async (options) => {

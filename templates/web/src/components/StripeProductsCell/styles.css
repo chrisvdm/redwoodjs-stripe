@@ -1,0 +1,14 @@
+.rws-products__list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 20px;
+}
+
+.rws-products__list__item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
