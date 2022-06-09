@@ -30,6 +30,7 @@ You can take a look at the [Roadmap](https://github.com/chrisvdm/redwoodjs-strip
   - Customer Portal creation 
 - Once-off payments with Stripe Checkout
 - Webhook handling 
+- LoFi Cart
 
 
 
