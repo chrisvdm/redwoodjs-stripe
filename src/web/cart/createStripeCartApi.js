@@ -38,6 +38,18 @@ export const createStripeCartApi = (cart, setCart) => ({
 
     setCart(newCart)
   },
+  editCartItem: (item, payload) => {
+    const itemIndex = findItemIndexByID(item, cart)
+    
+    // payload shape: {quantity: 1}
+    const editedItem = {
+      ...cart[itemIndex],
+      ...payload,
+    }
+    const editedCart = [...cart]
+    editedCart.splice(itemIndex, 1, editedItem)
+    setCart(editedCart)
+  },
   clearCart: () => {
     setCart([])
   },
