@@ -1,6 +1,6 @@
 {
   "name": "redwoodjs-stripe",
-  "version": "0.1.0-alpha.001",
+  "version": "0.1.0-alpha.002",
   "description": "A Redwood/Stripe integration made easy",
   "main": "./dist/cjs/api/index.js",
   "bin": {
