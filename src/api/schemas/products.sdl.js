@@ -4,7 +4,7 @@ export const schema = `
   type Product {
     id: ID!
     name: String!
-    image: String
+    images: [String]
     description: String
     price: Int!
     type: String!

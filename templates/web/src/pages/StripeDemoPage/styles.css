@@ -1,0 +1,55 @@
+
+/* HEADER */
+.rws-page-header {
+  position: relative;
+}
+
+/* SHOPPING CART */
+.rws-cart__list {
+  list-style: none;
+  padding: 10px;
+  width: 200px;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #f4eef3;
+  z-index: 30000;
+  margin: 0;
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.372);
+  border-radius: 0 0 2px 2px ;
+}
+
+.rws-cart__list__item {
+  margin-top: 0.5em;
+  width: 200px;
+}
+
+.rws-cart__actions {
+  padding-top: 10px;
+  margin-top: 0.5em;
+}
+
+/* REUSABLE CLASSES */
+.rws-page-wrapper {
+  position: relative;
+  max-width: 860px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.rws-flex--sb {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-center;
+}
+
+.rws-flex--fs {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-center;
+  gap: 15px;
+}
+
+
+
+

@@ -23,7 +23,7 @@ export const products = async ({ params = { productParams: {}, priceParams: {} }
         id: price.id,
         name: product.name,
         description: product.description,
-        image: product.images[0],
+        images: product.images,
         price: price.unit_amount,
         type: price.type,
       })
@@ -41,7 +41,7 @@ export const productByPrice = async ({ id }) => {
         id: price.id,
         name: product.name,
         description: product.description,
-        image: product.images[0],
+        images: product.images,
         price: price.unit_amount,
         type: price.type,
       }
