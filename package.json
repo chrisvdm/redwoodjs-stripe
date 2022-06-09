@@ -6,6 +6,12 @@
   "bin": {
     "redwoodjs-stripe": "./src/cli/cli.js"
   },
+  "files": [
+    "src",
+    "dist",
+    "templates",
+    "*.js"
+  ],
   "targets": {
     "api-cjs": {
       "source": "src/api/index.js",
