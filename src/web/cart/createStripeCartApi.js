@@ -56,11 +56,9 @@ export const createStripeCartApi = (cart, setCart) => ({
 })
 
 const findItemIndexByID = (key, inputArray) => {
-  for (let i=0; i < inputArray.length; i++) {
+  for (let i = 0; i < inputArray.length; i++) {
       if (inputArray[i].id === key) {
           return i;
-      } else {
-        return -1;
       }
   }
 }
