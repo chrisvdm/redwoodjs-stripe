@@ -1,7 +1,7 @@
 
 import Stripe from 'stripe'
 
-export const stripe = new Stripe(process.env.STRIPE_SK)
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 export const handleStripeWebhooks = (event, context, webhooksObj) => {
   let stripeEvent
@@ -10,7 +10,7 @@ export const handleStripeWebhooks = (event, context, webhooksObj) => {
     stripeEvent = stripe.webhooks.constructEvent(
       event.body,
       sig,
-      process.env.STRIPE_WEBHOOK_SK
+      process.env.STRIPE_WEBHOOK_SECRET_KEY
     )
 
     let results = null

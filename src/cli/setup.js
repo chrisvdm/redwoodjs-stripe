@@ -90,7 +90,11 @@ const setup = async (initialOptions) => {
 
   await new Tasks(tasks.filter(Boolean)).run();
 
-  console.log("Your redwood-stripe integration is ready!");
+  console.log("Your redwoodjs-stripe integration is ready!");
+  if (!options.shouldSkipGenerate) {
+    console.log("Run `yarn rw dev` and then navigate to http://localhost:8910/stripe-cart for a little demo")
+  }
+  
 };
 
 module.exports = {

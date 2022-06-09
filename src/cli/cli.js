@@ -4,7 +4,7 @@ const yargs = require("yargs");
 const { setup } = require("./setup");
 
 const main = () =>
-  yargs.scriptName("redwood-stripe").command({
+  yargs.scriptName("redwoodjs-stripe").command({
     command: "setup",
     describe: "Scaffolds out the files needed for using stripe with redwood",
     handler(args) {

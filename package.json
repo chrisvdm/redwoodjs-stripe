@@ -4,7 +4,7 @@
   "description": "A Redwood/Stripe integration made easy",
   "main": "./dist/cjs/api/index.js",
   "bin": {
-    "redwood-stripe": "./src/cli/cli.js"
+    "redwoodjs-stripe": "./src/cli/cli.js"
   },
   "targets": {
     "api-cjs": {
