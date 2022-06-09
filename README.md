@@ -10,7 +10,7 @@ You can take a look at the [Roadmap](https://github.com/chrisvdm/redwoodjs-strip
 
 **STATUS:** Building MVP
 
-**ETA** July 2022
+**ETA** July 2022 🤞
 
 ## How you can help
 - Tell me what you would like to see in an Stripe/Redwoodjs plugin on the discussion page. Even though V1 features are pretty much locked in, it will help for planning later releases
@@ -30,6 +30,7 @@ You can take a look at the [Roadmap](https://github.com/chrisvdm/redwoodjs-strip
   - Customer Portal creation 
 - Once-off payments with Stripe Checkout
 - Webhook handling 
+- LoFi Cart
 
 
 

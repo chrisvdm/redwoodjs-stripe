@@ -1,8 +1,7 @@
-import { logger } from '../../../web/lib'
 import { stripe } from '../../lib'
 
-export const checkout = async () => {
-  const { url, id } = await createStripeCheckoutSession()
+export const checkout = async ({cart}) => {
+  const { url, id } = await createStripeCheckoutSession(cart)
  
   // api side redirect to Stripe Checkout (SUGGESTED APPROACH)
   // this approach is probably best put in a serverless function
@@ -15,17 +14,11 @@ export const checkout = async () => {
 }
 
 
-export const createStripeCheckoutSession = async () => {
-  // TODO: Find way to get cart items server-side
-    const line_items = [
-    {
-      price: "price_1Kb1YlHMAJHtnk9iwZZxLJjp",
-      quantity: 1
-    }, {
-      price: "price_1Kb1YjHMAJHtnk9im9R7zlKO",
-      quantity: 2
-    }
-  ]
+export const createStripeCheckoutSession = async (cart) => {
+  const line_items = cart.map(product => ({
+    price: product.id,
+    quantity: product.quantity
+  }))
 
   // TODO: Pass custom payload
   const session = await stripe.checkout.sessions.create({
@@ -33,7 +26,7 @@ export const createStripeCheckoutSession = async () => {
     success_url: `http://localhost:8910/success?sessionId={CHECKOUT_SESSION_ID}`,
     cancel_url: `http://localhost:8910/failure`,
     // eslint-disable-next-line camelcase
-    line_items,
+    line_items: line_items,
     mode: 'payment',
     payment_method_types: ['card']
   })
