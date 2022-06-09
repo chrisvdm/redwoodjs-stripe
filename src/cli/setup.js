@@ -65,7 +65,7 @@ const scaffold = async (options) => {
   await updateDotEnv(options);
 
   if (!options.shouldSkipGenerate) {
-    await exec('yarn rw g page stripe-cart', { cwd: options.dir })
+    await exec('yarn rw g page stripe-demo', { cwd: options.dir })
   }
 
   await copyTemplateFiles(options);
@@ -92,7 +92,7 @@ const setup = async (initialOptions) => {
 
   console.log("Your redwoodjs-stripe integration is ready!");
   if (!options.shouldSkipGenerate) {
-    console.log("Run `yarn rw dev` and then navigate to http://localhost:8910/stripe-cart for a little demo")
+    console.log("Run `yarn rw dev` and then navigate to http://localhost:8910/stripe-demo for a little demo")
   }
   
 };
