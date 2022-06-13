@@ -1,4 +1,5 @@
-import { StripeButton, useStripeCart } from 'redwoodjs-stripe/web'
+import { useStripeCart } from 'redwoodjs-stripe/web'
+import { Icon } from './Icon'
 import './styles.css'
 /*
   Fetches an array of products and their prices filtered via params.
@@ -53,7 +54,7 @@ export const Success = ({ products }) => {
   )
 }
 
-const Product = ({ name, description, price, id }) => {
+const Product = ({ name, price, id, images }) => {
   const { addToCart } = useStripeCart()
 
   const onAddToCartButtonClick = (item) => {
@@ -61,24 +62,37 @@ const Product = ({ name, description, price, id }) => {
   }
   return (
     <>
-      <div>
-        <h3>{name}</h3>
-        <p>{description}</p>
-        <p>
-          {(price / 100).toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD',
-          })}
-        </p>
-      </div>
+      <div className="rws-product">
+        <img className="rws-product__img" src={images[0]} alt="" />
+        <div className="rws-product__data">
+          <div className="rws-product__text-wrapper">
+            <p className="rws-product__text">{name}</p>
+            <p className="rws-product__text">
+              {(price / 100).toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+              })}
+            </p>
+          </div>
 
-      <StripeButton
-        onClick={() =>
-          onAddToCartButtonClick({ name: name, id: id, price: price })
-        }
-      >
-        Add to Cart
-      </StripeButton>
+          <button
+            className="rws-button"
+            onClick={() =>
+              onAddToCartButtonClick({ name: name, id: id, price: price })
+            }
+          >
+            <Icon name="plus" />
+          </button>
+
+          {/* <StripeButton
+            onClick={() =>
+              onAddToCartButtonClick({ name: name, id: id, price: price })
+            }
+          >
+            Add to Cart
+          </StripeButton> */}
+        </div>
+      </div>
     </>
   )
 }
