@@ -1,0 +1,29 @@
+name: ⚙️ CI
+
+# The GitHub events we want this workflow to run in response to.
+# The hanging `pull_request:` may look odd, but all it does is say "run on every PR".
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    name: 🔨 Build
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout this repo on the GitHub runner.
+      # When the runner starts executing the jobs in this workflow,
+      # it literally doesn't even have the code in this repo yet.
+      - uses: actions/checkout@v3
+
+      # It doesn't have Node.js either; we have to set it up before we can do Node.js things. 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - run: yarn install
+        shell: bash
+
+      - name: 🔨 Build
+        run: yarn build
