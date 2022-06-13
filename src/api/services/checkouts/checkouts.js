@@ -1,7 +1,7 @@
 import { stripe } from '../../lib'
 
-export const checkout = async ({cart}) => {
-  const { url, id } = await createStripeCheckoutSession(cart)
+export const checkout = async (payload) => {
+  const { url, id } = await createStripeCheckoutSession(payload)
  
   // api side redirect to Stripe Checkout (SUGGESTED APPROACH)
   // this approach is probably best put in a serverless function
@@ -14,7 +14,11 @@ export const checkout = async ({cart}) => {
 }
 
 
-export const createStripeCheckoutSession = async (cart) => {
+export const createStripeCheckoutSession = async ({
+  cart,
+  successUrl = "http://localhost:8910/stripe-demo?success=true&sessionId={CHECKOUT_SESSION_ID}",
+  cancelUrl = "http://localhost:8910/stripe-demo?success=false" }) => {
+
   const line_items = cart.map(product => ({
     price: product.id,
     quantity: product.quantity
@@ -23,8 +27,8 @@ export const createStripeCheckoutSession = async (cart) => {
   // TODO: Pass custom payload
   const session = await stripe.checkout.sessions.create({
     // See https://stripe.com/docs/payments/checkout/custom-success-page#modify-success-url.
-    success_url: `http://localhost:8910/success?sessionId={CHECKOUT_SESSION_ID}`,
-    cancel_url: `http://localhost:8910/failure`,
+    success_url: successUrl,
+    cancel_url: cancelUrl,
     // eslint-disable-next-line camelcase
     line_items: line_items,
     mode: 'payment',
