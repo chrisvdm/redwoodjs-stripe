@@ -8,8 +8,10 @@ export const useCheckoutHandler = (cart) => {
     gql`
       mutation Checkout(
         $cart: [ProductInput!]!
+        $successUrl: String
+        $cancelUrl: String
       ) {
-        checkout(cart: $cart) {
+        checkout(cart: $cart, successUrl: $successUrl, cancelUrl: $cancelUrl) {
           id
           sessionUrl
         }
@@ -34,7 +36,7 @@ export const useCheckoutHandler = (cart) => {
   )
   */
  
-  return async (cart) => {
+  return async ({ cart, successUrl, cancelUrl }) => {
     const newCart = cart.map(item => ({id: item.id, quantity: item.quantity}))
     // Create checkout session and return session id
     const {
@@ -44,11 +46,16 @@ export const useCheckoutHandler = (cart) => {
           sessionUrl
         },
       },
-    } = await checkout({variables: {cart: newCart}})
+    } = await checkout({
+      variables: {
+        cart: newCart,
+        successUrl: successUrl,
+        cancelUrl: cancelUrl
+      }
+    })
 
     console.log(id, sessionUrl)
 
-   
     // APPROACH A
     // Redirect user to Stripe Checkout page
     // Not very secure, Server-side redirects are 
