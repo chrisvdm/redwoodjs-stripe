@@ -52,7 +52,12 @@ const StripeCart = () => {
   const { cart, clearCart } = useStripeCart()
 
   const onCheckoutButtonClick = async () => {
-    await checkout(cart)
+    await checkout({
+      cart: cart,
+      successUrl:
+        'http://localhost:8910/stripe-demo?success=true&sessionId={CHECKOUT_SESSION_ID}',
+      cancelUrl: 'http://localhost:8910/stripe-demo?success=false',
+    })
   }
 
   const onClearCartButtonClick = () => {
