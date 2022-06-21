@@ -97,7 +97,7 @@ const CartCounter = () => {
 }
 
 const StripeCart = () => {
-  const checkout = useStripeCheckoutHandler()
+  const checkout = useStripeCheckout()
   const { cart, clearCart } = useStripeCart()
 
   const onCheckoutButtonClick = async () => {

@@ -2,7 +2,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import { useMutation } from '@redwoodjs/web'
 import gql from 'graphql-tag'
 
-export const useStripeCheckoutHandler = () => {
+export const useStripeCheckout = () => {
   // Create Session Mutation
   const [checkout] = useMutation(
     gql`
