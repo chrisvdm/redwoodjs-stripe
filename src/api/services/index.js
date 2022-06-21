@@ -6,3 +6,5 @@ export const stripeServices = {
     checkouts_checkouts: checkouts,
     products_products: products
 }
+
+export { productByPrice } from './products/products'
