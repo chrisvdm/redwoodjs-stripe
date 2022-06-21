@@ -1,4 +1,3 @@
-import { logger } from '../../../web/lib'
 import { stripe } from '../../lib'
 
 export const products = async ({ params = { productParams: {}, priceParams: {} } }) => {
