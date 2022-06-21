@@ -6,7 +6,7 @@ import { Icon } from './Icon'
 
 import {
   useStripeCart,
-  useCheckoutHandler,
+  useStripeCheckoutHandler,
   StripeCartProvider,
 } from 'redwoodjs-stripe/web'
 import StripeProductsCell from 'src/components/StripeProductsCell/StripeProductsCell'
@@ -97,7 +97,7 @@ const CartCounter = () => {
 }
 
 const StripeCart = () => {
-  const checkout = useCheckoutHandler()
+  const checkout = useStripeCheckoutHandler()
   const { cart, clearCart } = useStripeCart()
 
   const onCheckoutButtonClick = async () => {
