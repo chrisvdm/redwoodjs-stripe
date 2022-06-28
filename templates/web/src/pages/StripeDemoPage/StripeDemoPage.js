@@ -6,7 +6,7 @@ import { Icon } from './Icon'
 
 import {
   useStripeCart,
-  useStripeCheckoutHandler,
+  useStripeCheckout,
   StripeCartProvider,
 } from 'redwoodjs-stripe/web'
 import StripeProductsCell from 'src/components/StripeProductsCell/StripeProductsCell'
