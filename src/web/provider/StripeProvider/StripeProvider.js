@@ -7,9 +7,11 @@ import {
 import { createStripeApi } from '../createStripeApi'
 import { StripeContext } from '../StripeContext'
 
-export const StripeProvider = ({ children }) => {
+export const StripeProvider = ({ children, customerRef = '' }) => {
   const [cart, setCart] = useState([])
+  const [customer, setCustomer] = useState(customerRef)
 
+  console.log("customerRef", customerRef)
   // onMount fetch cart items from local storage
   useEffect(() => {
     const serializedCart = window.localStorage.getItem('stripeCart')
@@ -26,7 +28,7 @@ export const StripeProvider = ({ children }) => {
   }, [cart])
 
   // Only create new api obj when cart changes
-  const api = useMemo(() => createStripeApi(cart, setCart), [cart])
+  const api = useMemo(() => createStripeApi(cart, setCart, customer, setCustomer), [cart])
 
   return (
     <StripeContext.Provider value={api}>
