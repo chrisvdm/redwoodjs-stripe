@@ -1,5 +1,5 @@
 // export hooks
-export { useCheckoutHandler } from './hooks'
+export { useStripeCheckout } from './hooks'
 
 // export components
 export * from './components'
