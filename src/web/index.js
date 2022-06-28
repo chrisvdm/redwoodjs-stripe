@@ -5,4 +5,4 @@ export { useStripeCheckout } from './hooks'
 export * from './components'
 
 // export useStripeCart hook and StripeCartProvider
-export * from './cart'
+export * from './provider'

@@ -1,6 +1,6 @@
 
 // Define context shape
-export const createStripeCartApi = (cart, setCart) => ({
+export const createStripeApi = (cart, setCart) => ({
   cart,
   addToCart: (item) => {
     const prevCart = [...cart] 

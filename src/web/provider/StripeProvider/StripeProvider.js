@@ -4,10 +4,10 @@ import {
   useMemo,
 } from 'react'
 
-import { createStripeCartApi } from '../createStripeCartApi'
-import { StripeCartContext } from '../StripeCartContext'
+import { createStripeApi } from '../createStripeApi'
+import { StripeContext } from '../StripeContext'
 
-export const StripeCartProvider = ({ children }) => {
+export const StripeProvider = ({ children }) => {
   const [cart, setCart] = useState([])
 
   // onMount fetch cart items from local storage
@@ -26,11 +26,11 @@ export const StripeCartProvider = ({ children }) => {
   }, [cart])
 
   // Only create new api obj when cart changes
-  const api = useMemo(() => createStripeCartApi(cart, setCart), [cart])
+  const api = useMemo(() => createStripeApi(cart, setCart), [cart])
 
   return (
-    <StripeCartContext.Provider value={api}>
+    <StripeContext.Provider value={api}>
       {children}
-    </StripeCartContext.Provider>
+    </StripeContext.Provider>
   )
 }
