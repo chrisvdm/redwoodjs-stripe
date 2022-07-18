@@ -76,3 +76,33 @@ export const useStripeCheckout = () => {
   }
     
 }
+
+export const useStripeCustomerSearch = () => {
+  const [stripeCustomerSearch] = useMutation(
+    gql`
+      mutation StripeCustomerSearch(
+        $query: String
+      ) {
+        stripeCustomerSearch(query: $query) {
+          id
+          name
+        }
+      }
+    `
+  )
+
+  return async ({ query }) => {
+    const { data: {
+      id,
+      name
+    } } = await stripeCustomerSearch({
+      variables: {
+        query: query
+      }
+    })
+  }
+  return {
+    id: id,
+    name: name
+  }
+}
