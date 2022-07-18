@@ -13,10 +13,13 @@ export const StripeProvider = ({ children, customerRef = '' }) => {
 
   console.log("customerRef", customerRef)
   // onMount fetch cart items from local storage
+  // onMount fetch customer details from local storage
   useEffect(() => {
     const serializedCart = window.localStorage.getItem('stripeCart')
+    const serializedCustomer = window.localStorage.getItem('stripeCustomer')
     if (serializedCart) {
       setCart(JSON.parse(serializedCart))
+      setCustomer(JSON.parse(serializedCustomer))
     }
   }, [])
 
