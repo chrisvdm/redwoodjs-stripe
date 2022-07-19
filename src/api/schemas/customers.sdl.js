@@ -1,3 +1,6 @@
+// StripePaymentSourceData type incomplete
+// StripePaymentSourceOwner type incomplete
+
 export const schema = `
 scalar Metadata
 
@@ -29,11 +32,76 @@ type StripeCustomer {
     next_invoice_sequence: Int
     preferred_locales: [String]
     sources: [StripePaymentSource]
+    subscriptions: [StripeCustomerSubscription]
+    tax: StripeCustomerTax
+    tax_exempt: String
+    tax_ids: [StripeTaxID]
+    test_clock: String
+}
+
+type StripeTaxID {
+    object: String
+    data: [StripeTaxIDData]
+    has_more: Boolean
+    url: String
+}
+
+type StripeTaxIDData {
+    id: String
+    object: String
+    country: String
+    created: Timestamp
+    customer: String
+    livemode: Boolean
+    type: String
+    value: String
+    verification: StripeTaxIDVerification
+}
+
+type StripeTaxIDVerification {
+    status: String
+    verified_address: String
+    verified_name: String
+}
+
+type StripeCustomerTax {
+    automatic_tax: StripeAutomaticTaxEnum
+    ip_address: String
+    location: StripeCistomerTaxLocation
+}
+
+type StripeCustomerTaxLocation {
+    country: String
+    source: StripeCustomerTaxLocationSourceEnum
+    state: String
+}
+
+enum StripeCustomerTaxLocationSourceEnum {
+    ip_address
+    billing_address
+    payment_method
+    shipping_destination
+}
+
+enum StripeAutomaticTaxEnum {
+    supported
+    not_collecting
+    unrecognised_location
+    failed
+}
+
+type StripeCustomerSubscription {
+    object: String
+    data: [StripeSubscription]
+    has_more: Boolean
+    url: String
 }
 
 type StripePaymentSource {
     object: String
-    data: StripePaymentSourceData
+    data: [StripePaymentSourceData]
+    has_more: Boolean
+    url: String
 }
 
 type StripePaymentSourceData {
@@ -55,6 +123,73 @@ type StripePaymentSourceData {
     account_type: String
     available_payment_methods: [String]
     bank_name: String
+    country: String
+    currency: String
+    last4: String
+    routing_number: String
+    status: String
+    active: Boolean
+    amount: Int
+    amount_received: Int
+    bitcoin_amount: Int
+    bitcoin_amount_received: Int
+    bitcoin_uri: String
+    description: String
+    email: String
+    filled: Boolean
+    inbound_address: String
+    payment: String
+    refund_address: String
+    transactions: [StripeTransactions]
+    uncaptured_funds: Boolean
+    used_for_payment: Boolean
+    address_city: String
+    address_country: String
+    address_line1: String
+    address_line1_check: String
+    address_line2: String
+    address_state: String
+    address_zip: String
+    address_zip_check: String
+    brand: String
+    cvc_check: String
+    dynamic_last4: String
+    exp_month: Int
+    exp_year: Int
+    funding: String
+    name: String
+    recipient: String
+    tokenization_method: String
+    client_secret: String
+    code_verification: StripeCodeVerification
+    flow: String
+    owner: StripePaymentSourceOwner
+}
+
+type StripePaymentSourceOwner {
+
+}
+
+type StripeCodeVerification {
+    attempts_remaining: Int
+    status: String
+}
+
+type StripeTransactions {
+    object: String
+    data: StripeTransactionsData
+    has_more: Boolean
+    url: String
+}
+
+type StripeTransactionsData {
+    id: String
+    object: String
+    amount: Int
+    bitcoin_amount: Int
+    created: Timestamp
+    currency: String
+    receiver: String
 }
 
 type StripeInvoiceSettings {
