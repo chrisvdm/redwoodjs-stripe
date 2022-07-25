@@ -62,8 +62,6 @@ export const useStripeCustomerSearch = (querystring) => {
         }
       }
     )
-  
-  console.log(apolloResult)
     
     return {
       ...apolloResult,
