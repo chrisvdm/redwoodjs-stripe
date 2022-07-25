@@ -4,14 +4,25 @@ import {
   useMemo,
 } from 'react'
 
+import { useStripeCustomerSearch } from '../../hooks'
+
 import { createStripeApi } from '../createStripeApi'
 import { StripeContext } from '../StripeContext'
 
-export const StripeProvider = ({ children, customerRef = '' }) => {
+export const StripeProvider = ({ children, customerQS = "" }) => {
   const [cart, setCart] = useState([])
-  const [customer, setCustomer] = useState(customerRef)
+  // const [qs, setQS] = useState(customerQS)
+  const [customer, setCustomer] = useState()
+  const { data: { stripeCustomerSearch }, refetch } = useStripeCustomerSearch(customerQS)
+  // setCustomer(data.id)
 
-  console.log("customerRef", customerRef)
+  useEffect(() => {
+    const { stripeCustomerSearch } = refetch(customerQS)
+    setCustomer(stripeCustomerSearch)
+  }, [customerQS])
+
+  console.log("PROVIDER", customer)
+  
   // onMount fetch cart items from local storage
   // onMount fetch customer details from local storage
   useEffect(() => {

@@ -93,7 +93,7 @@ enum StripeSubscriptionPaymentMethodTypesEnum {
 }
 
 type StripeSubscriptionPaymentMethodOptions {
-
+    object: String
 }
 
 type StripeSubscriptionPauseCollection {

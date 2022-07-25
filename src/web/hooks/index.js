@@ -1,5 +1,5 @@
 import { loadStripe } from '@stripe/stripe-js'
-import { useMutation } from '@redwoodjs/web'
+import { useMutation, useQuery } from '@redwoodjs/web'
 import gql from 'graphql-tag'
 
 export const useStripeCheckout = () => {
@@ -18,23 +18,6 @@ export const useStripeCheckout = () => {
       }
     `
   )
-  
-  /*
-  Original Mutation
-  const [checkout] = useMutation(
-    gql`
-      mutation Checkout(
-        $mode: Mode!
-        $cart: [ProductInput!]!
-        $customerId: String
-      ) {
-        checkout(mode: $mode, cart: $cart, customerId: $customerId) {
-          id
-        }
-      }
-    `
-  )
-  */
  
   return async ({ cart, successUrl, cancelUrl }) => {
     const newCart = cart.map(item => ({id: item.id, quantity: item.quantity}))
@@ -54,33 +37,14 @@ export const useStripeCheckout = () => {
       }
     })
 
-    console.log(id, sessionUrl)
-
-    // APPROACH A
-    // Redirect user to Stripe Checkout page
-    // Not very secure, Server-side redirects are 
     location.href = sessionUrl;
-    
-    /*
-    // APPROACH B + C
-    // Redirect user to Stripe Checkout page
-    // Stripe Public key needs to be passed directly to hook
-    // APPROACH C 
-    // Requires extra setup step to share env vars with package
-    const stripe = await loadStripe(pk)
-
-    await stripe.redirectToCheckout({
-    sessionId: id,
-    }) 
-    */
   }
     
 }
 
-export const useStripeCustomerSearch = () => {
-  const [stripeCustomerSearch] = useMutation(
-    gql`
-      mutation StripeCustomerSearch(
+export const useStripeCustomerSearch = (querystring) => {
+  const STRIPE_CUSTOMER_SEARCH = gql`
+      query stripeCustomerSearch(
         $query: String
       ) {
         stripeCustomerSearch(query: $query) {
@@ -89,20 +53,24 @@ export const useStripeCustomerSearch = () => {
         }
       }
     `
-  )
 
-  return async ({ query }) => {
-    const { data: {
-      id,
-      name
-    } } = await stripeCustomerSearch({
-      variables: {
-        query: query
+    const apolloResult = useQuery(
+      STRIPE_CUSTOMER_SEARCH, {
+        skip: querystring === null,
+        variables: {
+          query: querystring  
+        }
       }
-    })
-  }
-  return {
-    id: id,
-    name: name
-  }
+    )
+  
+  console.log(apolloResult)
+    
+    return {
+      ...apolloResult,
+      refetch: (nextQueryString) => {
+        return apolloResult.refetch({
+            query: nextQueryString
+        })
+      }
+    }
 }

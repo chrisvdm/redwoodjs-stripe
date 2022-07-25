@@ -9,14 +9,14 @@ scalar Timestamp
 scalar StripeInvoiceCreditBalance
 
 type StripeCustomer {
-    id: ID!
+    id: ID
     address: StripeCustomerAddress
     description: String
     name: String
     phone: String
     shipping: StripeCustomerShipping
     object: String
-    balance: Integer
+    balance: Int
     cash_balance: StripeCustomerCashBalance
     created: String
     currency: String
@@ -67,7 +67,7 @@ type StripeTaxIDVerification {
 type StripeCustomerTax {
     automatic_tax: StripeAutomaticTaxEnum
     ip_address: String
-    location: StripeCistomerTaxLocation
+    location: StripeCustomerTaxLocation
 }
 
 type StripeCustomerTaxLocation {
@@ -167,7 +167,7 @@ type StripePaymentSourceData {
 }
 
 type StripePaymentSourceOwner {
-
+ id: String
 }
 
 type StripeCodeVerification {
@@ -235,7 +235,7 @@ type StripeCashBalanceSettings {
     reconciliation_mode: String
 }
 
-  type Mutation {
-    stripeCustomerSearch(query: String): Customer! @skipAuth
-  }
+type Query {
+    stripeCustomerSearch(query: String): StripeCustomer! @skipAuth
+}
 `
