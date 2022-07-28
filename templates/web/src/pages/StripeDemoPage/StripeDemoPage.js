@@ -49,10 +49,18 @@ const StripeDemoPage = () => {
             </div>
           </header>
           <main className="rws-page-wrapper rws-page__main">
+            <h3>Once-off Items</h3>
             <StripeProductsCell
               params={{
                 productParams: { active: true },
                 priceParams: { type: 'one_time' },
+              }}
+            />
+            <h3>Subscriptions</h3>
+            <StripeProductsCell
+              params={{
+                productParams: { active: true },
+                priceParams: { type: 'recurring' },
               }}
             />
           </main>
