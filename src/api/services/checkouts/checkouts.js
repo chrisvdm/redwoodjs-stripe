@@ -16,6 +16,7 @@ export const checkout = async (payload) => {
 
 export const createStripeCheckoutSession = async ({
   customer = {},
+  mode,
   cart,
   successUrl = "http://localhost:8910/stripe-demo?success=true&sessionId={CHECKOUT_SESSION_ID}",
   cancelUrl = "http://localhost:8910/stripe-demo?success=false" }) => {
@@ -25,6 +26,7 @@ export const createStripeCheckoutSession = async ({
     quantity: product.quantity
   }))
 
+
   // Build payload
   // TODO: Custom payload
   // See https://stripe.com/docs/payments/checkout/custom-success-page#modify-success-url.
@@ -33,7 +35,7 @@ export const createStripeCheckoutSession = async ({
     cancel_url: cancelUrl,
     // eslint-disable-next-line camelcase
     line_items: line_items,
-    mode: 'payment',
+    mode: mode,
     payment_method_types: ['card'],
     ... (Object.hasOwn(customer, "id") && { customer: customer.id })
   }
