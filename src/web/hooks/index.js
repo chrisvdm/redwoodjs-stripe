@@ -10,8 +10,9 @@ export const useStripeCheckout = () => {
         $cart: [ProductInput!]!
         $successUrl: String
         $cancelUrl: String
+        $customer: StripeCustomerInput
       ) {
-        checkout(cart: $cart, successUrl: $successUrl, cancelUrl: $cancelUrl) {
+        checkout(cart: $cart, successUrl: $successUrl, cancelUrl: $cancelUrl, customer: $customer) {
           id
           sessionUrl
         }
@@ -19,8 +20,26 @@ export const useStripeCheckout = () => {
     `
   )
  
-  return async ({ cart, successUrl, cancelUrl }) => {
-    const newCart = cart.map(item => ({id: item.id, quantity: item.quantity}))
+  return async ({ cart, successUrl, cancelUrl, customer }) => {
+
+    const newCart = cart.map(item => ({ id: item.id, quantity: item.quantity }))
+    
+    // Build variable payload
+    const payload = {
+      variables: {
+        cart: newCart,
+        successUrl: successUrl,
+        cancelUrl: cancelUrl,
+        ... ((typeof customer !== "undefined") && {
+          customer: {
+            id: customer.id,
+            name: customer.name,
+            email: customer.email
+          }   
+        })
+      }
+    }
+
     // Create checkout session and return session id
     const {
       data: {
@@ -29,13 +48,7 @@ export const useStripeCheckout = () => {
           sessionUrl
         },
       },
-    } = await checkout({
-      variables: {
-        cart: newCart,
-        successUrl: successUrl,
-        cancelUrl: cancelUrl
-      }
-    })
+    } = await checkout(payload)
 
     location.href = sessionUrl;
   }
@@ -43,6 +56,12 @@ export const useStripeCheckout = () => {
 }
 
 export const useStripeCustomerSearch = (querystring) => {
+  if (querystring === "") 
+    return {
+      data: {},
+      refetch: () => { return { stripeCustomerSearch: {} }}
+    }
+  
   const STRIPE_CUSTOMER_SEARCH = gql`
       query stripeCustomerSearch(
         $query: String
@@ -50,6 +69,7 @@ export const useStripeCustomerSearch = (querystring) => {
         stripeCustomerSearch(query: $query) {
           id
           name
+          email
         }
       }
     `

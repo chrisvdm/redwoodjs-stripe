@@ -13,7 +13,7 @@ export const StripeProvider = ({ children, customerQS = "" }) => {
   const [cart, setCart] = useState([])
   const [customer, setCustomer] = useState({})
   const { data, refetch } = useStripeCustomerSearch(customerQS)
-
+  
   useEffect(() => {
     if (typeof data !== "undefined" && Object.hasOwn(data, "stripeCustomerSearch")) {
       setCustomer(data.stripeCustomerSearch)
@@ -50,7 +50,7 @@ export const StripeProvider = ({ children, customerQS = "" }) => {
   }, [customer])
 
   // Only create new api obj when cart changes
-  const api = useMemo(() => createStripeApi(cart, setCart, customer, setCustomer), [cart])
+  const api = useMemo(() => createStripeApi(cart, setCart, customer), [cart])
   return (
     <StripeContext.Provider value={api}>
       {children}

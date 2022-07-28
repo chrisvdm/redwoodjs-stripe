@@ -11,6 +11,7 @@ scalar StripeInvoiceCreditBalance
 type StripeCustomer {
     id: ID
     address: StripeCustomerAddress
+    email: String
     description: String
     name: String
     phone: String
