@@ -237,6 +237,6 @@ type StripeCashBalanceSettings {
 }
 
 type Query {
-    stripeCustomerSearch(query: String): StripeCustomer! @skipAuth
+    stripeCustomerSearch(query: String): StripeCustomer @skipAuth
 }
 `

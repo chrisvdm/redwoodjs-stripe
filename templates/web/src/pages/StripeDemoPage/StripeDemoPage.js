@@ -18,12 +18,14 @@ const StripeDemoPage = () => {
     setCartVisibilty(!isCartVisible)
   }
 
+  const userEmailFromAuth = 'user@test.com'
+
   return (
     <>
-      <StripeProvider>
+      <StripeProvider customerQS={`email: "${userEmailFromAuth}"`}>
         <MetaTags
           title="Stripe Demo"
-          description="A demo page for redwoodjs-stripe integration package"
+          description="A demo page for the redwoodjs-stripe integration"
         />
         <div className="rws-page">
           <header className="rws-page__header">
@@ -101,10 +103,11 @@ const CartCounter = () => {
 
 const StripeCart = () => {
   const checkout = useStripeCheckout()
-  const { cart, clearCart } = useStripeCart()
+  const { cart, customer, clearCart } = useStripeCart()
 
   const onCheckoutButtonClick = async () => {
     await checkout({
+      customer: customer,
       cart: cart,
       successUrl:
         'http://localhost:8910/stripe-demo?success=true&sessionId={CHECKOUT_SESSION_ID}',

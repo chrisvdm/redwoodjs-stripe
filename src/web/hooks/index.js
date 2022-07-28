@@ -21,7 +21,6 @@ export const useStripeCheckout = () => {
   )
  
   return async ({ cart, successUrl, cancelUrl, customer }) => {
-
     const newCart = cart.map(item => ({ id: item.id, quantity: item.quantity }))
     
     // Build variable payload
@@ -30,7 +29,7 @@ export const useStripeCheckout = () => {
         cart: newCart,
         successUrl: successUrl,
         cancelUrl: cancelUrl,
-        ... ((typeof customer !== "undefined") && {
+        ... ((typeof customer !== "undefined" && customer !== null) && {
           customer: {
             id: customer.id,
             name: customer.name,
@@ -39,6 +38,8 @@ export const useStripeCheckout = () => {
         })
       }
     }
+
+   
 
     // Create checkout session and return session id
     const {
@@ -50,6 +51,7 @@ export const useStripeCheckout = () => {
       },
     } = await checkout(payload)
 
+    // Redirect to Stripe Checkout
     location.href = sessionUrl;
   }
     
@@ -82,7 +84,7 @@ export const useStripeCustomerSearch = (querystring) => {
         }
       }
     )
-    
+  
     return {
       ...apolloResult,
       refetch: (nextQueryString) => {
