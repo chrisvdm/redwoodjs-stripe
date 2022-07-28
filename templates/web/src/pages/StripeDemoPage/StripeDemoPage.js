@@ -6,8 +6,8 @@ import { Icon } from './Icon'
 
 import {
   useStripeCart,
-  useStripeCheckoutHandler,
-  StripeCartProvider,
+  useStripeCheckout,
+  StripeProvider,
 } from 'redwoodjs-stripe/web'
 import StripeProductsCell from 'src/components/StripeProductsCell/StripeProductsCell'
 
@@ -18,10 +18,15 @@ const StripeDemoPage = () => {
     setCartVisibilty(!isCartVisible)
   }
 
+  const userEmailFromAuth = 'user@test.com'
+
   return (
     <>
-      <StripeCartProvider>
-        <MetaTags title="StripeCart" description="StripeCart page" />
+      <StripeProvider customerQS={`email: "${userEmailFromAuth}"`}>
+        <MetaTags
+          title="Stripe Demo"
+          description="A demo page for the redwoodjs-stripe integration"
+        />
         <div className="rws-page">
           <header className="rws-page__header">
             <div className="rws-page-wrapper rws-flex--sb">
@@ -83,7 +88,7 @@ const StripeDemoPage = () => {
             </p>
           </footer>
         </div>
-      </StripeCartProvider>
+      </StripeProvider>
     </>
   )
 }
@@ -98,10 +103,11 @@ const CartCounter = () => {
 
 const StripeCart = () => {
   const checkout = useStripeCheckout()
-  const { cart, clearCart } = useStripeCart()
+  const { cart, customer, clearCart } = useStripeCart()
 
   const onCheckoutButtonClick = async () => {
     await checkout({
+      customer: customer,
       cart: cart,
       successUrl:
         'http://localhost:8910/stripe-demo?success=true&sessionId={CHECKOUT_SESSION_ID}',

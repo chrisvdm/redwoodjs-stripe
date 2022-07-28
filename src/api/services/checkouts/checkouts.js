@@ -15,6 +15,7 @@ export const checkout = async (payload) => {
 
 
 export const createStripeCheckoutSession = async ({
+  customer = {},
   cart,
   successUrl = "http://localhost:8910/stripe-demo?success=true&sessionId={CHECKOUT_SESSION_ID}",
   cancelUrl = "http://localhost:8910/stripe-demo?success=false" }) => {
@@ -24,17 +25,20 @@ export const createStripeCheckoutSession = async ({
     quantity: product.quantity
   }))
 
-  // TODO: Pass custom payload
-  const session = await stripe.checkout.sessions.create({
-    // See https://stripe.com/docs/payments/checkout/custom-success-page#modify-success-url.
+  // Build payload
+  // TODO: Custom payload
+  // See https://stripe.com/docs/payments/checkout/custom-success-page#modify-success-url.
+  const payload = {
     success_url: successUrl,
     cancel_url: cancelUrl,
     // eslint-disable-next-line camelcase
     line_items: line_items,
     mode: 'payment',
-    payment_method_types: ['card']
-  })
-  
+    payment_method_types: ['card'],
+    ... (Object.hasOwn(customer, "id") && { customer: customer.id })
+  }
+
+  const session = await stripe.checkout.sessions.create(payload)
   return session
 }
 
