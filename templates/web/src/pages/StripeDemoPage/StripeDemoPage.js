@@ -7,7 +7,7 @@ import { Icon } from './Icon'
 import {
   useStripeCart,
   useStripeCheckout,
-  StripeCartProvider,
+  StripeProvider,
 } from 'redwoodjs-stripe/web'
 import StripeProductsCell from 'src/components/StripeProductsCell/StripeProductsCell'
 
@@ -20,8 +20,11 @@ const StripeDemoPage = () => {
 
   return (
     <>
-      <StripeCartProvider>
-        <MetaTags title="StripeCart" description="StripeCart page" />
+      <StripeProvider>
+        <MetaTags
+          title="Stripe Demo"
+          description="A demo page for redwoodjs-stripe integration package"
+        />
         <div className="rws-page">
           <header className="rws-page__header">
             <div className="rws-page-wrapper rws-flex--sb">
@@ -83,7 +86,7 @@ const StripeDemoPage = () => {
             </p>
           </footer>
         </div>
-      </StripeCartProvider>
+      </StripeProvider>
     </>
   )
 }
