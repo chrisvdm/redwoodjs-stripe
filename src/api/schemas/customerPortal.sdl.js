@@ -2,12 +2,10 @@ export const schema = `
 scalar Timestamp
 scalar Metadata
 
-union StringOrStripeCustomerPortalConfig = String | StripeCustomerPortalConfig
-
 type StripeCustomerPortal {
     id: ID!
     object: String
-    configuration: StringOrStripeCustomerPortalConfig
+    configuration: StripeCustomerPortalConfig
     created: Timestamp
     customer: String
     livemode: Boolean
@@ -116,9 +114,78 @@ type StripeBusinessProfile {
     terms_of_service_url: String
 }
 
+input StripeCustomerPortalConfigInput {
+    id: ID
+    object: String
+    active: Boolean
+    application: String
+    business_profile: StripeBusinessProfileInput
+    created: Timestamp
+    features: StripeCustomerPortalFeaturesInput
+    is_default: Boolean
+    livemode: Boolean
+    metadata: Metadata
+    updated: Timestamp
+}
+
+input StripeBusinessProfileInput {
+    headline: String
+    privacy_policy_url: String
+    terms_of_service_url: String
+}
+
+input StripeCustomerPortalFeaturesInput {
+    customer_update: StripeCustomerPortalFeaturesCustomerUpdateInput
+    invoice_history: StripeCustomerPortalFeaturesInvoiceHistoryInput
+    payment_method_update: StripeCustomerPortalFeaturesPaymentMethodUpdateInput
+    subscription_cancel: StripeCustomerPortalFeaturesSubscriptionCancelInput
+    subscription_pause: StripeCustomerPortalFeaturesSubscriptionPauseInput
+    subscription_update: StripeCustomerPortalFeatureSubscriptionUpdateInput
+}
+
+input StripeCustomerPortalFeaturesCustomerUpdateInput {
+    allowed_updates: [StripeCustomerAllowedUpdatesEnum]
+    enabled: Boolean
+}
+
+input StripeCustomerPortalFeaturesInvoiceHistoryInput {
+    enabled: Boolean
+}
+
+input StripeCustomerPortalFeaturesPaymentMethodUpdateInput {
+    enabled: Boolean
+}
+
+input StripeCustomerPortalFeaturesSubscriptionCancelInput {
+    cancellation_reason: StripeSubscriptionCancellationReasonInput
+    enabled: Boolean
+    mode: StripeCancellationReasonModeEnum
+    proration_behavior: String
+}
+
+input StripeSubscriptionCancellationReasonInput {
+    enabled: Boolean
+    options: [StripeSubscriptionCancellationReasonOptionsEnum]
+}
+
+input StripeCustomerPortalFeaturesSubscriptionPauseInput {
+    enabled: Boolean
+}
+
+input StripeCustomerPortalFeatureSubscriptionUpdateInput {
+    default_allowed_updates: [StripeCustomerPortalSubscriptionAllowedUpdatesEnum]
+    enabled: Boolean
+    products: [StripeCustomerPortalSubscriptionProductsInput]
+}
+
+input StripeCustomerPortalSubscriptionProductsInput {
+    prices: [String]
+    product: String
+}
+
 input StripeCustomerPortalInput {
     customer: String!
-    confidguration: StringOrStripeCustomerPortalConfig
+    configuration: StripeCustomerPortalConfigInput
     locale: String
     on_behalf_of: String
     return_url: String
