@@ -5,11 +5,13 @@ import * as coupons from './coupons.sdl'
 import * as discounts from './discounts.sdl'
 import * as paymentMethods from './paymentMethods.sdl'
 import * as subscriptions from './subscription.sdl'
+import * as customerPortal from './customerPortal.sdl'
 
 // shape schema object
 export const stripeSchemas = {
     checkouts_sdl: checkouts,
     products_sdl: products,
+    customerPortal_sdl: customerPortal,
     customers_sdl: customers,
     coupons_sdl: coupons,
     discounts_sdl: discounts,
