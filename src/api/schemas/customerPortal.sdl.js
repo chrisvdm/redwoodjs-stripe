@@ -2,7 +2,7 @@ export const schema = `
 scalar Timestamp
 scalar Metadata
 
-union StringOrStripeCustomerPortalConfig = String || StripeCustomerPortalConfig
+union StringOrStripeCustomerPortalConfig = String | StripeCustomerPortalConfig
 
 type StripeCustomerPortal {
     id: ID!
@@ -125,6 +125,6 @@ input StripeCustomerPortalInput {
 }
 
 type Mutation {
-    createStripeCustomerPortalSession(StripeCustomerPortalInput): StripeCustomerPortal @skipAuth
+    createStripeCustomerPortalSession(variables: StripeCustomerPortalInput): StripeCustomerPortal @skipAuth
 }
 `
