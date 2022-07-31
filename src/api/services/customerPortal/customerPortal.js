@@ -1,7 +1,7 @@
 import { stripe } from '../../lib'
 
-export const createStripeCustomerPortalSession = (payload) => {
-    const session = await stripe.billingPortal.sessions.create(payload);
+export const createStripeCustomerPortalSession = async ({variables}) => {
+    const session = await stripe.billingPortal.sessions.create(variables);
     return session
 }
 

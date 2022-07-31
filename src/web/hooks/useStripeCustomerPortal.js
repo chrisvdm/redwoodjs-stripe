@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 export const useStripeCustomerPortal = () => {
     const [createStripeCustomerPortal] = useMutation(
     gql`
-      mutation createStripeCustomerPorta($variables: $StripeCustomerPortalInput ) {
+      mutation createStripeCustomerPorta($variables: StripeCustomerPortalInput ) {
         createStripeCustomerPortalSession(variables: $variables) {
           id
           url
@@ -20,8 +20,9 @@ export const useStripeCustomerPortal = () => {
                 variables: args
             }
         }
+
         // Create Customer Portal Session
-        const session = await createStripeCustomerPortal(payload)
-        console.log(session)
+        const { data: { createStripeCustomerPortalSession: { url } } } = await createStripeCustomerPortal(payload)
+        location.href = url;
     }
 }
