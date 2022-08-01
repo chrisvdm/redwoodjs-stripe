@@ -90,9 +90,11 @@ const StripeCustomerPortalButton = () => {
   }
 
   return (
-    <button className="rws-button" onClick={onButtonClick}>
-      <Icon name="user" />
-    </button>
+    customer && (
+      <button className="rws-button" onClick={onButtonClick}>
+        <Icon name="user" />
+      </button>
+    )
   )
 }
 
