@@ -54,7 +54,7 @@ export const Success = ({ products }) => {
   )
 }
 
-const Product = ({ name, price, id, images }) => {
+const Product = ({ name, price, id, images, type }) => {
   const { addToCart } = useStripeCart()
 
   const onAddToCartButtonClick = (item) => {
@@ -78,19 +78,16 @@ const Product = ({ name, price, id, images }) => {
           <button
             className="rws-button"
             onClick={() =>
-              onAddToCartButtonClick({ name: name, id: id, price: price })
+              onAddToCartButtonClick({
+                name: name,
+                id: id,
+                price: price,
+                type: type,
+              })
             }
           >
             <Icon name="plus" />
           </button>
-
-          {/* <StripeButton
-            onClick={() =>
-              onAddToCartButtonClick({ name: name, id: id, price: price })
-            }
-          >
-            Add to Cart
-          </StripeButton> */}
         </div>
       </div>
     </>

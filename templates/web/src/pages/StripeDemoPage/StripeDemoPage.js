@@ -1,15 +1,20 @@
 // import { Link, routes } from '@redwoodjs/router'
-import { MetaTags } from '@redwoodjs/web'
 import { useState } from 'react'
+
 import './styles.css'
-import { Icon } from './Icon'
 
 import {
   useStripeCart,
   useStripeCheckout,
+  useStripeCustomerPortal,
   StripeProvider,
 } from 'redwoodjs-stripe/web'
+
+import { MetaTags } from '@redwoodjs/web'
+
 import StripeProductsCell from 'src/components/StripeProductsCell/StripeProductsCell'
+
+import { Icon } from './Icon'
 
 const StripeDemoPage = () => {
   const [isCartVisible, setCartVisibilty] = useState(true)
@@ -18,10 +23,11 @@ const StripeDemoPage = () => {
     setCartVisibilty(!isCartVisible)
   }
 
-  const userEmailFromAuth = 'user@test.com'
+  const userEmailFromAuth = 'loggedinuser@domain.com'
 
   return (
     <>
+      {/* customerQS uses a query string to search for a customer on Stripe */}
       <StripeProvider customerQS={`email: "${userEmailFromAuth}"`}>
         <MetaTags
           title="Stripe Demo"
@@ -35,58 +41,35 @@ const StripeDemoPage = () => {
                 <p>a redwoodjs-stripe demo</p>
               </div>
               <div className="rws-header__actions">
-                <button
-                  className="rws-button"
-                  onClick={onCartButtonClick}
-                  data-active={isCartVisible}
-                >
-                  <Icon name="cart" />
-                  <CartCounter />
-                </button>
+                {/* Redirects to Stripe Customer Portal */}
+                <StripeCustomerPortalButton />
+                {/* Toggles cart visibility */}
+                <StripeCartButton
+                  isCartVisible={isCartVisible}
+                  onCartButtonClick={onCartButtonClick}
+                />
               </div>
 
               {isCartVisible && <StripeCart />}
             </div>
           </header>
           <main className="rws-page-wrapper rws-page__main">
+            <h3>Once-off Items</h3>
             <StripeProductsCell
               params={{
                 productParams: { active: true },
                 priceParams: { type: 'one_time' },
               }}
             />
+            <h3>Subscriptions</h3>
+            <StripeProductsCell
+              params={{
+                productParams: { active: true },
+                priceParams: { type: 'recurring' },
+              }}
+            />
           </main>
-          <footer className="rws-page__footer">
-            <p className="rws-page__footer__text">
-              This demo is powered by{' '}
-              <a
-                alt="Learn more about Redwoodjs"
-                href="http://redwoodjs.com/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Redwoodjs
-              </a>{' '}
-              and{' '}
-              <a
-                alt="Learn more about Stripe"
-                target="_blank"
-                href="https://stripe.com/"
-                rel="noreferrer"
-              >
-                Stripe{' '}
-              </a>
-              | View the redwoodjs-stripe repository on{' '}
-              <a
-                alt="View repo on Github"
-                target="_blank"
-                href="https://github.com/chrisvdm/redwoodjs-stripe"
-                rel="noreferrer"
-              >
-                Github
-              </a>
-            </p>
-          </footer>
+          <PageFooter />
         </div>
       </StripeProvider>
     </>
@@ -94,6 +77,39 @@ const StripeDemoPage = () => {
 }
 
 export default StripeDemoPage
+
+const StripeCustomerPortalButton = () => {
+  const { customer } = useStripeCart()
+  const redirectToStripeCustomerPortal = useStripeCustomerPortal()
+
+  const onButtonClick = async () => {
+    await redirectToStripeCustomerPortal({
+      customer: customer.id,
+      return_url: 'http://localhost:8910/stripe-demo',
+    })
+  }
+
+  return (
+    customer && (
+      <button className="rws-button" onClick={onButtonClick}>
+        <Icon name="user" />
+      </button>
+    )
+  )
+}
+
+const StripeCartButton = ({ isCartVisible, onCartButtonClick }) => {
+  return (
+    <button
+      className="rws-button"
+      onClick={onCartButtonClick}
+      data-active={isCartVisible}
+    >
+      <Icon name="cart" />
+      <CartCounter />
+    </button>
+  )
+}
 
 const CartCounter = () => {
   const { cart } = useStripeCart()
@@ -178,5 +194,41 @@ const StripeCartItem = ({ name, price, quantity }) => {
       </p>
       <p>qty: {quantity}</p>
     </li>
+  )
+}
+
+const PageFooter = () => {
+  return (
+    <footer className="rws-page__footer">
+      <p className="rws-page__footer__text">
+        This demo is powered by{' '}
+        <a
+          alt="Learn more about Redwoodjs"
+          href="http://redwoodjs.com/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Redwoodjs
+        </a>{' '}
+        and{' '}
+        <a
+          alt="Learn more about Stripe"
+          target="_blank"
+          href="https://stripe.com/"
+          rel="noreferrer"
+        >
+          Stripe{' '}
+        </a>
+        | View the redwoodjs-stripe repository on{' '}
+        <a
+          alt="View repo on Github"
+          target="_blank"
+          href="https://github.com/chrisvdm/redwoodjs-stripe"
+          rel="noreferrer"
+        >
+          Github
+        </a>
+      </p>
+    </footer>
   )
 }

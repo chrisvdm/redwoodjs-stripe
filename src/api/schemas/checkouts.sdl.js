@@ -31,6 +31,6 @@ export const schema = `
   type Mutation {
     # In GraphQL, we can't reuse types as mutation inputs
     # (otherwise we'd just type "cart" as "[Product!]!")
-    checkout(cart: [ProductInput!]!, cancelUrl: String, successUrl: String, customer: StripeCustomerInput): Session! @skipAuth
+    checkout(cart: [ProductInput!]!, cancelUrl: String, successUrl: String, customer: StripeCustomerInput, mode: String): Session! @skipAuth
   }
 `

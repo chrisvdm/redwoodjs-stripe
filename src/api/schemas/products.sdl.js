@@ -62,7 +62,7 @@ export const schema = `
     productParams: StripeProductParamsInput
     priceParams: StripePriceParamsInput
   }
-
+  
   enum ProductType {
     one_time
     recurring
