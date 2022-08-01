@@ -3,27 +3,42 @@ import Stripe from 'stripe'
 
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
-export const handleStripeWebhooks = (event, context, webhooksObj) => {
-  let stripeEvent
-  try {
-    const sig = event.headers['stripe-signature']
-    stripeEvent = stripe.webhooks.constructEvent(
-      event.body,
-      sig,
-      process.env.STRIPE_WEBHOOK_SECRET_KEY
-    )
+export const handleStripeWebhooks = (event, context, webhooksObj, secure = true) => {
+  if (secure) {
+    const endpointSecret = process.env.STRIPE_WEBHOOK_KEY
+    try {
+      const sig = event.headers['stripe-signature']
+      const stripeEvent = stripe.webhooks.constructEvent(
+        event.body,
+        sig,
+        endpointSecret
+      )
 
-    let results = null
-    if (typeof webhooksObj[stripeEvent.type] !== 'undefined') {
-      results = webhooksObj[stripeEvent.type](event, context)
+      // Find event type in webhookObject
+      if (typeof webhooksObj[stripeEvent.type] !== 'undefined') {  
+        webhooksObj[stripeEvent.type](stripeEvent, context)
+      }
+
+      return {
+        statusCode: 200,
+        results: stripeEvent
+      }
+    } catch (error) {
+      throw error
     }
-    return results
-  } catch (error) {
-    console.log(error)
-    throw error
-  }
-}
+  } else {   
+    try {
+      const unVerifiedStripeEvent = JSON.parse(event.body)
+      if (typeof webhooksObj[unVerifiedStripeEvent.type] !== 'undefined') {
+          webhooksObj[unVerifiedStripeEvent.type](unVerifiedStripeEvent, context)
+      }
 
-export const checkout = () => {
-    console.log("Checkout code will live here one day")
+      return {
+        statusCode: 200,
+        results: unVerifiedStripeEvent
+      }
+    } catch (error) {
+      throw error
+    }
+  }
 }

@@ -5,7 +5,6 @@ export {
 } from './lib'
 
 // export schemas sdl
-// export * as stripeSchemas from './schemas'
 export * from './schemas'
 
 // export services
