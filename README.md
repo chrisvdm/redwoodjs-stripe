@@ -19,6 +19,8 @@ A stripe account (prefferably in test mode)
 
 `yarn create redwood-app myDemo`
 
+`cd myDemo`
+
 2. Install the plugin
 
 `yarn add redwoodjs-stripe`
