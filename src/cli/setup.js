@@ -21,6 +21,11 @@ const prompt = (initialOptions) =>
         message: "What is your Stripe publishable key?",
       },
       {
+        type: "text",
+        name: "stripeWebhookKey",
+        message: "What is your Stripe Webhook Endpoint key (it's okay if you dont have one right now)?",
+      },
+      {
         type: () => shouldSkip(initialOptions,'addDummyProducts') ? null : 'confirm',
         name: "addDummyProducts",
         message: "Would you like us to add dummy products to your Stripe account?",
@@ -42,6 +47,7 @@ const updateDotEnv = async (options) => {
     ...currentEnv,
     STRIPE_SECRET_KEY: options.stripeSecretKey,
     STRIPE_PUBLISHABLE_KEY: options.stripePublishableKey,
+    STRIPE_WEBHOOK_KEY: options.stripeWebhookKey 
   };
 
   await fs.writeFile(dotEnvPath, envfile.stringify(nextEnv));

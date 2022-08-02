@@ -45,11 +45,16 @@ describe("setup", () => {
 
     cmd.userEvent.keyboard("baz[Enter]");
 
+    expect(await cmd.findByText("webhook key")).toBeInTheConsole();
+
+    cmd.userEvent.keyboard("soop[Enter]");
+
     expect(await cmd.findByText("ready!")).toBeInTheConsole();
 
     expect(envfile.parse(await fs.readFile(dotEnvPath))).toEqual({
       STRIPE_SECRET_KEY: "foo",
       STRIPE_PUBLISHABLE_KEY: "baz",
+      STRIPE_WEBHOOK_KEY: "soop"
     });
   });
 
@@ -64,11 +69,16 @@ describe("setup", () => {
 
     cmd.userEvent.keyboard("bar[Enter]");
 
+     expect(await cmd.findByText("webhook key")).toBeInTheConsole();
+
+    cmd.userEvent.keyboard("goop[Enter]");
+
     expect(await cmd.findByText("ready!")).toBeInTheConsole();
 
     expect(envfile.parse(await fs.readFile(path.join(dir, ".env")))).toEqual({
       STRIPE_PUBLISHABLE_KEY: "bar",
       STRIPE_SECRET_KEY: "foo",
+      STRIPE_WEBHOOK_KEY: "goop"
     });
   });
 
