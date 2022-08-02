@@ -39,8 +39,6 @@ After setting up your app via the CLI, you'll find a demo page has been added to
 
 ### `<StripeProvider/>`
 
-This is where most of the logic lives
-
 ### `useStripeCheckout`
 
 ### `useStripeCart`
