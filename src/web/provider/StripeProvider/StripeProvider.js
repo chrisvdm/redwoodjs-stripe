@@ -9,10 +9,14 @@ import { useStripeCustomerSearch } from '../../hooks'
 import { createStripeApi } from '../createStripeApi'
 import { StripeContext } from '../StripeContext'
 
-export const StripeProvider = ({ children, customerQS = "" }) => {
+export const StripeProvider = ({
+  children,
+  customer: {
+    search = ""
+  } }) => {
   const [cart, setCart] = useState([])
-  const [customer, setCustomer] = useState({})
-  const { data, refetch } = useStripeCustomerSearch(customerQS)
+  const [stripeCustomer, setCustomer] = useState({})
+  const { data, refetch } = useStripeCustomerSearch(search)
   
   useEffect(() => {
     if (typeof data !== "undefined" && Object.hasOwn(data, "stripeCustomerSearch")) {
@@ -21,9 +25,9 @@ export const StripeProvider = ({ children, customerQS = "" }) => {
   }, [data])
 
   useEffect(() => {
-    const { stripeCustomerSearch } = refetch(customerQS)
+    const { stripeCustomerSearch } = refetch(search)
     setCustomer(stripeCustomerSearch)
-  }, [customerQS])
+  }, [search])
   
   // onMount fetch cart items from local storage
   // onMount fetch customer details from local storage
@@ -45,12 +49,12 @@ export const StripeProvider = ({ children, customerQS = "" }) => {
 
   useEffect(() => {
      setTimeout(() => {
-      window.localStorage.setItem('stripeCustomer', JSON.stringify(customer))
+      window.localStorage.setItem('stripeCustomer', JSON.stringify(stripeCustomer))
     })
-  }, [customer])
+  }, [stripeCustomer])
 
   // Only create new api obj when cart changes
-  const api = useMemo(() => createStripeApi(cart, setCart, customer), [cart])
+  const api = useMemo(() => createStripeApi(cart, setCart, stripeCustomer), [cart])
   return (
     <StripeContext.Provider value={api}>
       {children}

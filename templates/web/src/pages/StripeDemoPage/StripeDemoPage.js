@@ -23,12 +23,18 @@ const StripeDemoPage = () => {
     setCartVisibilty(!isCartVisible)
   }
 
+  // This is a stub, please implement
   const userEmailFromAuth = 'loggedinuser@domain.com'
+  const IsLoggedIn = true
 
   return (
     <>
-      {/* customerQS uses a query string to search for a customer on Stripe */}
-      <StripeProvider customerQS={`email: "${userEmailFromAuth}"`}>
+      {/* search uses a query string to search for a customer on Stripe */}
+      <StripeProvider
+        customer={{
+          search: IsLoggedIn ? `email: "${userEmailFromAuth}"` : '',
+        }}
+      >
         <MetaTags
           title="Stripe Demo"
           description="A demo page for the redwoodjs-stripe integration"
@@ -79,18 +85,19 @@ const StripeDemoPage = () => {
 export default StripeDemoPage
 
 const StripeCustomerPortalButton = () => {
-  const { customer } = useStripeCart()
+  // This is a stub, please implement
+  const isLoggedIn = true
+
   const redirectToStripeCustomerPortal = useStripeCustomerPortal()
 
   const onButtonClick = async () => {
     await redirectToStripeCustomerPortal({
-      customer: customer.id,
       return_url: 'http://localhost:8910/stripe-demo',
     })
   }
 
   return (
-    customer && (
+    isLoggedIn && (
       <button className="rws-button" onClick={onButtonClick}>
         <Icon name="user" />
       </button>
@@ -119,11 +126,10 @@ const CartCounter = () => {
 
 const StripeCart = () => {
   const checkout = useStripeCheckout()
-  const { cart, customer, clearCart } = useStripeCart()
+  const { cart, clearCart } = useStripeCart()
 
   const onCheckoutButtonClick = async () => {
     await checkout({
-      customer: customer,
       cart: cart,
       successUrl:
         'http://localhost:8910/stripe-demo?success=true&sessionId={CHECKOUT_SESSION_ID}',

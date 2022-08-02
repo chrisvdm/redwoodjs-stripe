@@ -1,8 +1,12 @@
 // import { loadStripe } from '@stripe/stripe-js'
+import { useContext } from 'react'
 import { useMutation } from '@redwoodjs/web'
+import { StripeContext } from '../provider/StripeContext'
 import gql from 'graphql-tag'
 
 export const useStripeCheckout = () => {
+  const context = useContext(StripeContext)
+
   // Create Session Mutation
   const [checkout] = useMutation(
     gql`
@@ -21,8 +25,9 @@ export const useStripeCheckout = () => {
     `
   )
  
-  return async ({ cart, successUrl, cancelUrl, customer, mode}) => {
-    const newCart = cart.map(item => ({ id: item.id, quantity: item.quantity }))
+  return async ({ cart, customer, successUrl, cancelUrl, mode }) => {
+    customer = customer || context.customer
+    const newCart = (cart || context.cart).map(item => ({ id: item.id, quantity: item.quantity }))
 
     // Determines checkout mode based on whether price "type" was passed to cart item or whther a "mode" was passed to checkout hook
     const determinedMode = (() => {
@@ -41,13 +46,13 @@ export const useStripeCheckout = () => {
         successUrl: successUrl,
         cancelUrl: cancelUrl,
         mode: determinedMode,
-        ... ((typeof customer !== "undefined" && customer !== null) && {
+        ... (customer != null ? {
           customer: {
             id: customer.id,
             name: customer.name,
             email: customer.email
-          }   
-        })
+          }
+        } : {})
       }
     }
 

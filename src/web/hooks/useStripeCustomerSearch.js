@@ -1,6 +1,8 @@
 import { useQuery } from '@redwoodjs/web'
 import gql from 'graphql-tag'
 
+import { isEmptyObj } from '../lib'
+
 export const useStripeCustomerSearch = (querystring) => {
   if (querystring === "") 
     return {
@@ -22,7 +24,7 @@ export const useStripeCustomerSearch = (querystring) => {
 
     const apolloResult = useQuery(
       STRIPE_CUSTOMER_SEARCH, {
-        skip: querystring === null,
+        skip: querystring === null || querystring === "",
         variables: {
           query: querystring  
         }

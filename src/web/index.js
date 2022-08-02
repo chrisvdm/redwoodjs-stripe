@@ -1,5 +1,10 @@
 // export hooks
-export { useStripeCheckout, useStripeCustomerSearch, useStripeCustomerPortal } from './hooks'
+export {
+    useStripeCheckout,
+    useStripeCustomerSearch,
+    useStripeCustomerCreate,
+    useStripeCustomerPortal
+} from './hooks'
 
 // export components
 export * from './components'

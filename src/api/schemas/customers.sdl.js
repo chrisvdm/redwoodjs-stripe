@@ -236,7 +236,89 @@ type StripeCashBalanceSettings {
     reconciliation_mode: String
 }
 
+input CreateStripeCustomerInput {
+    address: CreateStripeCustomerAddressInput
+    description: String
+    email: String
+    metadata: Metadata
+    name: String
+    payment_method: String
+    phone: String
+    shipping: CreateStripeCustomerShippingInput
+    balance: Int
+    cash_balance: CreateStripeCustomerCashBalanceInput
+    coupon: String
+    invoice_prefix: String
+    invoice_settings: CreateStripeCustomerInvoiceSettingsInput
+    next_invoice_sequence: String
+    preferred_locales: [String]
+    promotional_code: String
+    source: String
+    tax: CreateStripeCustomerTaxInput
+    tax_exempt: CreateStripeCustomerTaxExemptEnum
+    tax_id_data: [CreateStripeCustomerTaxIDDataInput]
+    test_clock: String
+}
+
+input CreateStripeCustomerTaxIDDataInput {
+    type: String!
+    value: Int!
+}
+
+enum CreateStripeCustomerTaxExemptEnum {
+    none
+    exempt
+    reverse
+}
+
+input CreateStripeCustomerTaxInput {
+    ip_address: String
+}
+
+input CreateStripeCustomerInvoiceSettingsInput {
+    custom_fields: [CreateStripeCustomerInvoiceSettingsCustomFieldsInput]
+    default_payment_method: String
+    footer: String
+    rendering_options: CreateStripeCustomerInvoiceSettingsRenderingOptionsInput
+}
+
+input CreateStripeCustomerInvoiceSettingsRenderingOptionsInput {
+    amount_tax_display: String
+}
+
+input CreateStripeCustomerInvoiceSettingsCustomFieldsInput {
+    name: String!
+    value: String!
+}
+
+input CreateStripeCustomerCashBalanceInput {
+    settings: CreateStripeCustomerCashBalanceSettingsInput
+}
+
+input CreateStripeCustomerCashBalanceSettingsInput {
+    reconciliation_mode: String
+}
+
+input CreateStripeCustomerShippingInput {
+    address: CreateStripeCustomerAddressInput!
+    name: String!
+    phone: String
+}
+
+input CreateStripeCustomerAddressInput {
+    city: String
+    country: String
+    line1: String
+    line2: String
+    postal_code: String
+    state: String
+}
+
 type Query {
     stripeCustomerSearch(query: String): StripeCustomer @skipAuth
+}
+
+type Mutation {
+    createStripeCustomer(data: CreateStripeCustomerInput): StripeCustomer @skipAuth
 }
 `

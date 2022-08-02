@@ -13,3 +13,8 @@ export const stripeCustomerSearch = async ({ query }) => {
   })
   return latest[latest.length-1]
 }
+
+export const createStripeCustomer = async ({ data }) => {
+  const newCustomer = await stripe.customers.create(data)
+  return newCustomer
+}
