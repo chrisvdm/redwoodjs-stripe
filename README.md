@@ -31,13 +31,27 @@ A stripe account (prefferably in test mode)
 
 `yarn rw dev`
 
+## API Reference
+
+After setting up your app via the CLI, you'll find a demo page has been added to your app. This is intended as an in-app API reference, though in proper store it might a little different. 
+
+### `<StripeProvider/>`
+
+This is where most of the logic lives
+
+### `useStripeCheckout`
+
+### `useStripeCart`
+
+### `useStripeCustomerPortal`
+
 ## Current progress
  
 You can take a look at the [Roadmap](https://github.com/chrisvdm/redwoodjs-stripe/issues/1) for this project for more details and a rough timeline. For a quick status update look below. 
 
 **STATUS:** Building MVP
 
-**ETA** July 2022 🤞
+**ETA** August 2022 🤞
 
 ## How you can help
 - Tell me what you would like to see in an Stripe/Redwoodjs plugin on the discussion page. Even though V1 features are pretty much locked in, it will help for planning later releases
