@@ -10,7 +10,7 @@ There's a very unstable version of the plugin available to try out. It's held to
 
 **Prerequisites**
 
-A stripe account (prefferably in test mode)
+A stripe account (preferably in test mode)
 
 [Stripe CLI](https://stripe.com/docs/stripe-cli) installed (if you want to play with webhooks)
 
