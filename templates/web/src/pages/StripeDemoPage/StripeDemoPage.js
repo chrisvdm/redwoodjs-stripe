@@ -17,7 +17,7 @@ import StripeProductsCell from 'src/components/StripeProductsCell/StripeProducts
 import { Icon } from './Icon'
 
 const StripeDemoPage = () => {
-  const [isCartVisible, setCartVisibilty] = useState(true)
+  const [isCartVisible, setCartVisibilty] = useState(false)
 
   const onCartButtonClick = () => {
     setCartVisibilty(!isCartVisible)
