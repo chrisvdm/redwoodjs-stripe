@@ -1,7 +1,13 @@
+import { useContext } from 'react'
 import { useMutation } from '@redwoodjs/web'
+
+import { StripeContext } from '../provider/StripeContext'
+
 import gql from 'graphql-tag'
 
 export const useStripeCustomerPortal = () => {
+    const context = useContext(StripeContext)
+
     const [createStripeCustomerPortal] = useMutation(
     gql`
       mutation createStripeCustomerPorta($variables: StripeCustomerPortalInput ) {
@@ -16,9 +22,12 @@ export const useStripeCustomerPortal = () => {
     return async (args) => {
         // Create Payload
         const payload = {
+          variables: {
             variables: {
-                variables: args
+              ...(context.customer ? { customer: context.customer.id } : {}),
+              ...args
             }
+          }
         }
 
         // Create Customer Portal Session

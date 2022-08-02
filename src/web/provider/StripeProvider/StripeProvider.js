@@ -18,7 +18,7 @@ export const StripeProvider = ({
   const [cart, setCart] = useState([])
   const [user, setCustomer] = useState({})
   const { data, refetch } = useStripeCustomerSearch(search)
-  const createStripeCustomer = useStripeCustomerCreate()
+  // const createStripeCustomer = useStripeCustomerCreate()
 
   // const customerCheck = (returnedCustomer) => {
   //   if (!returnedCustomer) {
