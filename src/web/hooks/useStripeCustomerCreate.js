@@ -1,13 +1,12 @@
 import { useMutation } from '@redwoodjs/web'
 import gql from 'graphql-tag'
 
-export const useStripeCustomerCreate = () => {
+export const useStripeCustomerCreate = (returnValues) => {
     const [createStripeCustomer] = useMutation(
     gql`
       mutation createStripeCustomer($data: CreateStripeCustomerInput ) {
         createStripeCustomer(data: $data) {
-          id
-          email
+          ${returnValues}
         }
       }
     `
