@@ -26,7 +26,7 @@ export const handleStripeWebhooks = (event, context, webhooksObj, secure = true)
     } catch (error) {
       throw error
     }
-  } else {   
+  } else { 
     try {
       const unVerifiedStripeEvent = JSON.parse(event.body)
       if (typeof webhooksObj[unVerifiedStripeEvent.type] !== 'undefined') {

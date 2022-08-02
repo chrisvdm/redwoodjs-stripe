@@ -23,16 +23,29 @@ import { handleStripeWebhooks } from 'redwoodjs-stripe/api'
  * Stripe documentation recommends making any calls to db for syncing inside of webhooks
  */
 export const handler = async (event, context) => {
-  // Add services to handle webhooks
-  const { results } = await handleStripeWebhooks(event, context, {
-    'checkout.session.completed': (e) => e.type,
-    'checkout.session.async_payment_succeeded': (e) => e.type,
-    'checkout.session.async_payment_failed': (e) => e.type,
-    'customer.updated': async (e) => {
-      console.log(e)
-      // Insert a service here that updates your user data in your db
-    }
-  })
+  // Create services to handle webhooks
+  const { results } = await handleStripeWebhooks(
+    event,
+    context,
+    {
+      'checkout.session.completed': (e) => e.type,
+      'checkout.session.async_payment_succeeded': (e) => e.type,
+      'checkout.session.async_payment_failed': (e) => e.type,
+      'customer.updated': async (e) => {
+        console.log('customer.updated:', e)
+        // Add a service here that updates your user in your db to reflect changes made via Stripe
+      },
+      'payment_intent.succeeded': async (e) => {
+        console.log(e)
+      },
+    },
+    false // Toggles "secure" mode. When "true" handler uses STRIPE_WEBHOOK_KEY to verify event origin
+  )
+
+  /* 
+    It would be good practice to save Stripe webhook events to your db as Stripe only stores events for 30 days
+    Add a service here or inside the webhook to store the event
+  */
 
   return {
     statusCode: 200,
