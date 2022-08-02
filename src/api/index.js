@@ -1,7 +1,6 @@
 export {
     handleStripeWebhooks,
-    stripe,
-    checkout
+    stripe
 } from './lib'
 
 // export schemas sdl
