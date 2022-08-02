@@ -45,6 +45,8 @@ This is where most of the logic lives
 
 ### `useStripeCustomerPortal`
 
+### `<StripeProductsCell/>`
+
 ## Current progress
  
 You can take a look at the [Roadmap](https://github.com/chrisvdm/redwoodjs-stripe/issues/1) for this project for more details and a rough timeline. For a quick status update look below. 
