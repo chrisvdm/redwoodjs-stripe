@@ -23,18 +23,15 @@ import { handleStripeWebhooks } from 'redwoodjs-stripe/api'
  * Stripe documentation recommends making any calls to db for syncing inside of webhooks
  */
 export const handler = async (event, context) => {
-  // Create services to handle webhooks
+  // Add services to handle webhooks
   const { results } = await handleStripeWebhooks(event, context, {
     'checkout.session.completed': (e) => e.type,
     'checkout.session.async_payment_succeeded': (e) => e.type,
     'checkout.session.async_payment_failed': (e) => e.type,
     'customer.updated': async (e) => {
       console.log(e)
-      // Insert a service here that updates your user
-    },
-    'payment_intent.succeeded': async (e) => {
-      console.log(e)
-    },
+      // Insert a service here that updates your user data in your db
+    }
   })
 
   return {
