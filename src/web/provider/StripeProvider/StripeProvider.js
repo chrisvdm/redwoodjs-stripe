@@ -1,7 +1,7 @@
 import {
   useEffect,
   useState,
-  useMemo,
+  useMemo
 } from 'react'
 
 import { useStripeCustomerSearch } from '../../hooks'
@@ -15,12 +15,11 @@ export const StripeProvider = ({
     search = ""
   } }) => {
   const [cart, setCart] = useState([])
-  const [stripeCustomer, setCustomer] = useState({})
-  const { data, refetch } = useStripeCustomerSearch(search)
+  const [stripeCustomer, setCustomer] = useState({}) // constantly changing
+  const { data, refetch } = useStripeCustomerSearch(search) // Initial customer value
   
   useEffect(() => {
     if (typeof data !== "undefined" && Object.hasOwn(data, "stripeCustomerSearch")) {
-      console.log(data.stripeCustomerSearch)
       setCustomer(data.stripeCustomerSearch)
     }
   }, [data])
@@ -39,20 +38,14 @@ export const StripeProvider = ({
     }
   }, [])
 
-  // sync with localStorage
+  // sync Cart with localStorage
   useEffect(() => {
     setTimeout(() => {
       window.localStorage.setItem('stripeCart', JSON.stringify(cart))
     })
   }, [cart])
 
-  useEffect(() => {
-     setTimeout(() => {
-      window.localStorage.setItem('stripeCustomer', JSON.stringify(stripeCustomer))
-    })
-  }, [stripeCustomer])
-
-  // Only create new api obj when cart changes
+  // Only create new api obj when cart and stripeCustomer changes
   const api = useMemo(() => createStripeApi(cart, setCart, stripeCustomer), [cart, stripeCustomer])
   return (
     <StripeContext.Provider value={api}>
