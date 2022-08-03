@@ -41,9 +41,9 @@ _The following steps won't be needed for much longer_
 
 7. Play around!
 
-## API Reference
+## Web-side API Reference
 
-After setting up your app via the CLI, you'll find a demo page has been added to your app. This is intended as an in-app API reference, though in proper store it might a little different. 
+After setting up your app via the setup command, you'll find a demo page has been added to your app. This is intended as an in-app API reference, I'm assuming you would want your commerce project to look a different.
 
 ### `<StripeProvider customer/>`
 
@@ -298,6 +298,59 @@ type productParams = {
 ```
 
 The Cell has it's own UI for illustrative purpose. You should replace the UI with your own.
+
+## Api-side API Reference
+
+### Webhook handling
+
+As part of the setup process, a `/stripeWebhook` function is generated. It uses the plugin handler function to verify and manage webhook events.
+
+#### `handleStripeWebhooks(event, context, webhookObject[, verify])`
+
+This function verifies and manages Stripe webhook events. `webhookObj` is an object of
+
+```js
+import { handleStripeWebhooks } from 'redwoodjs-stripe'
+// ...
+const { results } = await handleStripeWebhooks(
+    event,
+    context,
+    {
+      'customer.updated': async (e) => {
+        updateUser(e)
+      },
+      'payment_intent.succeeded': (e) => {
+        sendCustomerThankYouEmail(e)
+      },
+    }
+  )
+```
+
+#### Installing Stripe CLI
+
+In order to take advantage of webhooks and Stripe webhook events, it is advisable that you install the [Stripe CLI](https://stripe.com/docs/cli) on your machine. You can follow the instructions below if you are using homebrew or follow [Stripe's installation guide](https://stripe.com/docs/stripe-cli#install).
+
+`brew install stripe/stripe-cli/stripe`
+
+Log into your Stripe account
+
+`stripe login`
+
+You will be given a webhook secret. Make sure it matches the key in your `.env` file under `STRIPE_WEBHOOK_KEY`
+
+#### Test Stripe webhooks locally
+
+1. Listen for webhook events locally
+
+`stripe listen --forward-to localhost:8911/stripeWebhook`
+
+2. Trigger webhook events locally in terminal
+
+`stripe trigger customer.updated`
+
+### Services
+
+### Schema
 
 ## Current progress
  
