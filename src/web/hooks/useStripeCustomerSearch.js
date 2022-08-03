@@ -4,11 +4,6 @@ import gql from 'graphql-tag'
 import { isEmptyObj } from '../lib'
 
 export const useStripeCustomerSearch = (querystring) => {
-  if (querystring === "") 
-    return {
-      data: {},
-      refetch: () => { return { stripeCustomerSearch: {} }}
-    }
   
   const STRIPE_CUSTOMER_SEARCH = gql`
       query stripeCustomerSearch(
@@ -21,10 +16,10 @@ export const useStripeCustomerSearch = (querystring) => {
         }
       }
     `
-
+  
     const apolloResult = useQuery(
       STRIPE_CUSTOMER_SEARCH, {
-        skip: querystring === null || querystring === "",
+        skip: querystring === "",
         variables: {
           query: querystring  
         }
