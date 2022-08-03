@@ -45,11 +45,9 @@ _The following steps won't be needed for much longer_
 
 After setting up your app via the CLI, you'll find a demo page has been added to your app. This is intended as an in-app API reference, though in proper store it might a little different. 
 
-### `<StripeProvider/>`
+### `<StripeProvider customer/>`
 
-Uses a provider to manage the StripeCart, store customer data and contain logic.
-
-Pass a [querystring](https://stripe.com/docs/search#search-query-language) to `customer.search` to get corresponding Stripe Customer.
+Uses a provider to manage the StripeCart, store customer data and contain the plugin logic on the web side.
 
 **Example 1**
 
@@ -82,6 +80,14 @@ import { StripeProvider } from 'redwoodjs-stripe/web'
 </Set>
 ```
 
+`customer` has the following shape:
+```ts
+type Customer = {
+  search: string | ''
+}
+```
+`search` accepts a [querystring](https://stripe.com/docs/search#search-query-language) that is used to search for a Stripe Customer. The idea is to use data of your authenticated user to build the querystring. In most cases your authentication provider will provide you with an email address that you will be able to use to map to a Stripe Customer.
+
 ### `useStripeCheckout()`
 
 Hook to redirect to Stripe-hosted Checkout. 
@@ -94,15 +100,29 @@ Returns a `checkout` function. See the comments in the example below for more in
 import { useStripeCheckout } from 'redwoodjs-stripe/web'
 // ...
 const checkout = useStripeCheckout()
-// ...
-onButtonClick = async() => {
+
+```
+
+#### `checkout(session)`
+
+Creates a Stripe Checkout Session and redirects to the Stripe Checkout page.
+
+```js
   await checkout({
-    cart: cart // 'cart' is not required when using built-in cart
-    mode: 'recurring' // optional if cart items have 'type' as part their objects, else defaults to 'once-off'
     successUrl:
-        'http://localhost:8910/stripe-demo?success=true&sessionId={CHECKOUT_SESSION_ID}', // Required
-    cancelUrl: 'http://localhost:8910/stripe-demo?success=false', // Required
+        'http://localhost:8910/stripe-demo?success=true&sessionId={CHECKOUT_SESSION_ID}',
+    cancelUrl: 'http://localhost:8910/stripe-demo?success=false'
   })
+ ```
+ 
+`session` has the following shape:
+
+```ts
+type Session = {
+ mode?: string       // optional if cart items have 'type' as part their objects, else defaults to 'once-off'
+ cart?: Product[]    // 'cart' is not required when using built-in cart
+ cancelUrl: string
+ successUrl: string
 }
 ```
 
@@ -127,10 +147,10 @@ const {
 
 #### `cart`
 
-An array of Product objects. Each `item` has the following shape:
+An array of Product objects. Each `product` has the following shape:
 
 ```ts
-{
+type Product = {
   id: string
   name?: string
   images?: string[]
@@ -178,14 +198,106 @@ editCartItem('price_12345', { quantity: 4 })
 `details` has the following shape:
 
 ```ts
-{
+type Details = {
   quantity?: number
 }
 ```
 
-### `useStripeCustomerPortal`
+### `useStripeCustomerPortal()`
 
-### `<StripeProductsCell/>`
+Hook for [Stripe's Customer Portal](https://stripe.com/docs/billing/subscriptions/integrating-customer-portal) logic. Requires a customer query string to have been passed to the `<StripeProvider/>`, in other words an authenticated user. 
+
+Returns a `redirectToStripeCustomerPortal` function. 
+
+```js
+import { useStripeCustomerPortal } from 'redwoodjs-stripe/web'
+// ...
+const redirectToStripeCustomerPortal = useStripeCustomerPortal()
+```
+
+#### `redirectToStripeCustomerPortal(portalSession)`
+
+Creates a Stripe Customer Portal Session and redirects to Stripe's Customer Portal page.
+
+```js
+await redirectToStripeCustomerPortal({
+      return_url: 'http://localhost:8910/stripe-demo',
+    })
+```
+
+`portalSession` has the following shape ([Stripe Customer Portal API reference](https://stripe.com/docs/api/customer_portal/sessions/create)):
+
+```ts
+type PortalSession = {
+    configuration?: config
+    locale?: string
+    on_behalf_of?: string
+    return_url: string
+}
+```
+
+### `<StripeProductsCell params={priceParams, productParams}/>`
+
+As part of the setup process, a `<StripeProductsCell/>` gets generated inside of your app's `components` folder. 
+
+This [Cell](https://redwoodjs.com/docs/cells) returns a list of Products unique to this plugin. It uses a combination of data from [Stripe Prices](https://stripe.com/docs/api/prices) and [Stripe Products](https://stripe.com/docs/api/products). The data is combined as follows: 
+```js
+{
+  id: stripePrice.id,
+  name: stripeProduct.name,
+  description: stripeProduct.description,
+  images: stripeProduct.images,
+  price: stripePrice.unit_amount,
+  type: stripePrice.type,
+}
+```
+
+The `params` passed to the Cell are the same parameters that would be passed to Stripe's Products and Prices list functions. The following example shows how to get a list of Products from `active` Stripe Products that have `recurring` Stripe Prices. In other words, this example shows a Cell that returns a list of active subscriptions.
+
+```js
+import StripeProductsCell from 'src/components/StripeProductsCell/StripeProductsCell'
+// ...
+<StripeProductsCell
+  params={{
+    productParams: { active: true },
+    priceParams: { type: 'recurring' },
+    }}
+  />
+```
+
+`priceParams` has the following shape (for more information, look at the [Stripe Price list API documentation](https://stripe.com/docs/api/prices/list))
+
+```ts
+type priceParams = {
+  active?: boolean
+  currency?: string
+  product?: string
+  created?: stripeCreated
+  ending_before?: string
+  limit?: number
+  lookup_keys?: string
+  recurring?: stripeRecurringPrice
+  starting_after?: string
+  type?: string
+}
+```
+
+`productParams` has the following shape (for more information, look at the [Stripe Products list API documentation](https://stripe.com/docs/api/products/list))
+
+```ts
+type productParams = {
+  active?: boolean
+  created?: stripeCreated
+  ending_before?: string
+  ids?: [string]
+  limit?: number
+  shippable?: boolean
+  starting_after?: string
+  url?: string
+}
+```
+
+The Cell has it's own UI for illustrative purpose. You should replace the UI with your own.
 
 ## Current progress
  
