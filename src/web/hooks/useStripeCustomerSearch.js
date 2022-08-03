@@ -21,10 +21,10 @@ export const useStripeCustomerSearch = (querystring) => {
         }
       }
     `
-
+    console.log("string", querystring)
     const apolloResult = useQuery(
       STRIPE_CUSTOMER_SEARCH, {
-        skip: querystring === null || querystring === "",
+        skip: querystring === null,
         variables: {
           query: querystring  
         }

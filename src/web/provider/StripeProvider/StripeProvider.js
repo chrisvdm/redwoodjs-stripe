@@ -20,6 +20,7 @@ export const StripeProvider = ({
   
   useEffect(() => {
     if (typeof data !== "undefined" && Object.hasOwn(data, "stripeCustomerSearch")) {
+      console.log(data.stripeCustomerSearch)
       setCustomer(data.stripeCustomerSearch)
     }
   }, [data])
@@ -33,10 +34,8 @@ export const StripeProvider = ({
   // onMount fetch customer details from local storage
   useEffect(() => {
     const serializedCart = window.localStorage.getItem('stripeCart')
-    const serializedCustomer = window.localStorage.getItem('stripeCustomer')
     if (serializedCart) {
       setCart(JSON.parse(serializedCart))
-      setCustomer(JSON.parse(serializedCustomer))
     }
   }, [])
 
@@ -54,7 +53,7 @@ export const StripeProvider = ({
   }, [stripeCustomer])
 
   // Only create new api obj when cart changes
-  const api = useMemo(() => createStripeApi(cart, setCart, stripeCustomer), [cart])
+  const api = useMemo(() => createStripeApi(cart, setCart, stripeCustomer), [cart, stripeCustomer])
   return (
     <StripeContext.Provider value={api}>
       {children}

@@ -6,11 +6,11 @@ import { StripeContext } from '../provider/StripeContext'
 import gql from 'graphql-tag'
 
 export const useStripeCustomerPortal = () => {
-    const context = useContext(StripeContext)
+  const context = useContext(StripeContext)
 
-    const [createStripeCustomerPortal] = useMutation(
+    const [createStripeCustomerPortalSession] = useMutation(
     gql`
-      mutation createStripeCustomerPorta($variables: StripeCustomerPortalInput ) {
+      mutation createStripeCustomerPortalSession($variables: StripeCustomerPortalInput ) {
         createStripeCustomerPortalSession(variables: $variables) {
           id
           url
@@ -19,7 +19,9 @@ export const useStripeCustomerPortal = () => {
     `
     )
     
-    return async (args) => {
+  return async (args) => {
+    // Check for customer
+    console.log(context.customer)
         // Create Payload
         const payload = {
           variables: {
@@ -31,7 +33,7 @@ export const useStripeCustomerPortal = () => {
         }
 
         // Create Customer Portal Session
-        const { data: { createStripeCustomerPortalSession: { url } } } = await createStripeCustomerPortal(payload)
+        const { data: { createStripeCustomerPortalSession: { url } } } = await createStripeCustomerPortalSession(payload)
         location.href = url;
     }
 }
