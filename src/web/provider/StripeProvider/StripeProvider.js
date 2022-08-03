@@ -15,8 +15,8 @@ export const StripeProvider = ({
     search = ""
   } }) => {
   const [cart, setCart] = useState([])
-  const [stripeCustomer, setCustomer] = useState({}) // constantly changing
-  const { data, refetch } = useStripeCustomerSearch(search) // Initial customer value
+  const [stripeCustomer, setCustomer] = useState() 
+  const { data, refetch } = useStripeCustomerSearch(search)
   
   useEffect(() => {
     if (typeof data !== "undefined" && Object.hasOwn(data, "stripeCustomerSearch")) {
