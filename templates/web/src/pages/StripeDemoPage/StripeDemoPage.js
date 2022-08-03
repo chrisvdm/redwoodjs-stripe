@@ -16,23 +16,27 @@ import StripeProductsCell from 'src/components/StripeProductsCell/StripeProducts
 
 import { Icon } from './Icon'
 
+// This is a stub, please implement
+const isLoggedIn = true
+
 const StripeDemoPage = () => {
   const [isCartVisible, setCartVisibilty] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   const onCartButtonClick = () => {
     setCartVisibilty(!isCartVisible)
   }
 
-  // This is a stub, please implement
-  const userEmailFromAuth = 'loggedinuser@domain.com'
-  const IsLoggedIn = true
+  const onLoggedInCheckboxChange = () => {
+    setIsLoggedIn(!isLoggedIn)
+  }
 
   return (
     <>
       {/* search uses a query string to search for a customer on Stripe */}
       <StripeProvider
         customer={{
-          search: IsLoggedIn ? `email: "${userEmailFromAuth}"` : '',
+          search: isLoggedIn ? `email: "user@test.com"` : '',
         }}
       >
         <MetaTags
@@ -47,6 +51,11 @@ const StripeDemoPage = () => {
                 <p>a redwoodjs-stripe demo</p>
               </div>
               <div className="rws-header__actions">
+                <input
+                  checked={isLoggedIn}
+                  type="checkbox"
+                  onChange={onLoggedInCheckboxChange}
+                />
                 {/* Redirects to Stripe Customer Portal */}
                 <StripeCustomerPortalButton />
                 {/* Toggles cart visibility */}
@@ -85,9 +94,6 @@ const StripeDemoPage = () => {
 export default StripeDemoPage
 
 const StripeCustomerPortalButton = () => {
-  // This is a stub, please implement
-  const isLoggedIn = true
-
   const redirectToStripeCustomerPortal = useStripeCustomerPortal()
 
   const onButtonClick = async () => {
