@@ -5,6 +5,7 @@ export const createStripeCustomerPortalSession = async ({variables}) => {
     return session
 }
 
-export const configureStripeCustomerPortal = () => {
-
+export const configureStripeCustomerPortal = async (payload) => {
+    const config = await stripe.billingPortal.configurations.create(payload)
+    return config
 }

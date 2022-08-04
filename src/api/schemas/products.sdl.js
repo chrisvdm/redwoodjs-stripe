@@ -3,11 +3,12 @@ export const schema = `
 
   type Product {
     id: ID!
-    name: String!
+    name: String
     images: [String]
     description: String
-    price: Int!
-    type: String!
+    price: Int
+    quantity: Int
+    type: String
   }
 
   input StripeCreatedInput {

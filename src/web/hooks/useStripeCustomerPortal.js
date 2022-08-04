@@ -19,9 +19,8 @@ export const useStripeCustomerPortal = () => {
     `
     )
     
-  return async (args) => {
-    // Check for customer
-    console.log(context.customer)
+  return {
+    redirectToStripeCustomerPortal: async(args, skipAuth = false) => {
         // Create Payload
         const payload = {
           variables: {
@@ -32,8 +31,23 @@ export const useStripeCustomerPortal = () => {
           }
         }
 
+      // Check to skipAuth
+      if (skipAuth) {
+        // Create Customer Portal Session using Test mutation that skips auth
+        const { data: { createStripeCustomerPortalSession: { url } } } = await createStripeCustomerPortalSession(payload)
+        location.href = url;
+      } else {
         // Create Customer Portal Session
         const { data: { createStripeCustomerPortalSession: { url } } } = await createStripeCustomerPortalSession(payload)
         location.href = url;
-    }
+      }
+        
+    },
+    listStripeCustomerPortalConfigs: async (args) => {
+      
+    },
+    createStripeCustomerPortalConfig: async(args) => {
+      
+    },
+  }
 }
