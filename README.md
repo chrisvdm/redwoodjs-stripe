@@ -410,15 +410,20 @@ The following Stripe API objects have sdl files:
 - [Coupons](https://stripe.com/docs/api/coupons)
 - [Discounts](https://stripe.com/docs/api/discounts)
 
+
+
+
 ## Current progress
  
 You can take a look at the [Roadmap](https://github.com/chrisvdm/redwoodjs-stripe/issues/1) for this project for more details and a rough timeline. For a quick status update look below. 
 
 **STATUS:** Documentation 📖 + bug squashing 🪳🔨
+
 **ETA** August 2022 🤞
 
 ## How you can help
 - Try out this very unstable release and give [feedback](https://github.com/chrisvdm/redwoodjs-stripe/discussions/60)
+- Help maintain the [Redwoodjs-stripe-example-store repo](https://github.com/redwoodjs/example-store)
 - Send good vibes :)
 
 ## Useful Links
@@ -436,6 +441,8 @@ You can take a look at the [Roadmap](https://github.com/chrisvdm/redwoodjs-strip
 - Webhook handling 
 - LoFi Cart
 
+## Thank you
 
+The teams from [Stripe](https://stripe.com/) and [Redwoodjs](https://redwoodjs.com/) who have supported this project from day one.
 
 
