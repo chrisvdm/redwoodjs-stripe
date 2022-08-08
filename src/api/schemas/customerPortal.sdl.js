@@ -191,7 +191,21 @@ input StripeCustomerPortalInput {
     return_url: String
 }
 
+input StripeCustomerPortalConfigParamsInput {
+    active: Boolean
+    is_default: Boolean
+    limit: Int
+    ending_before: String
+    starting_after: String
+}
+
+type Query {
+    listStripeCustomerPortalConfig(params: StripeCustomerPortalConfigParamsInput): @skipAuth
+}
+
 type Mutation {
-    createStripeCustomerPortalSession(variables: StripeCustomerPortalInput): StripeCustomerPortal @skipAuth
+    createStripeCustomerPortalConfig(data: StripeCustomerPortalConfigInput): @skipAuth
+    createStripeCustomerPortalSessionSkipAuth:(data: StripeCustomerPortalInput): StripeCustomerPortal @skipAuth
+    createStripeCustomerPortalSession(data: StripeCustomerPortalInput): StripeCustomerPortal @requireAuth
 }
 `

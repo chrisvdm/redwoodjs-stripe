@@ -13,4 +13,4 @@ export const stripeServices = {
 
 export { productByPrice } from './products/products'
 export { stripeCustomerSearch, createStripeCustomer, searchLatestStripeCustomer } from './customers/customers'
-export { createStripeCustomerPortalSession, configureStripeCustomerPortal } from './customerPortal/customerPortal'
+export { createStripeCustomerPortalSession, createStripeCustomerPortalConfig, listStripeCustomerPortalConfig } from './customerPortal/customerPortal'
