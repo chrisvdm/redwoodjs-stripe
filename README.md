@@ -212,17 +212,17 @@ Returns a `redirectToStripeCustomerPortal` function.
 ```js
 import { useStripeCustomerPortal } from 'redwoodjs-stripe/web'
 // ...
-const redirectToStripeCustomerPortal = useStripeCustomerPortal()
+const { redirectToStripeCustomerPortal } = useStripeCustomerPortal()
 ```
 
-#### `redirectToStripeCustomerPortal(portalSession)`
+#### `redirectToStripeCustomerPortal(portalSession, skipAuth = false)`
 
 Creates a Stripe Customer Portal Session and redirects to Stripe's Customer Portal page.
 
 ```js
 await redirectToStripeCustomerPortal({
       return_url: 'http://localhost:8910/stripe-demo',
-    })
+    }, true)
 ```
 
 `portalSession` has the following shape ([Stripe Customer Portal API reference](https://stripe.com/docs/api/customer_portal/sessions/create)):
@@ -233,6 +233,21 @@ type PortalSession = {
     locale?: string
     on_behalf_of?: string
     return_url: string
+}
+```
+
+Set `skipAuth` to `true` when testing the Customer Portal redirect if you have not yet set up user authentication in your app. Once authentication is set up please remove the argument.
+
+#### `createStripeCustomerPortalConfig(portalConfig)`
+
+Creates a [Customer Portal Configuration](https://stripe.com/docs/api/customer_portal/configuration) object.
+
+```js
+```
+
+```ts
+type PortalConfig = {d
+  
 }
 ```
 
