@@ -200,12 +200,12 @@ input StripeCustomerPortalConfigParamsInput {
 }
 
 type Query {
-    listStripeCustomerPortalConfig(params: StripeCustomerPortalConfigParamsInput): @skipAuth
+    listStripeCustomerPortalConfig(params: StripeCustomerPortalConfigParamsInput): [StripeCustomerPortalConfig] @skipAuth
 }
 
 type Mutation {
-    createStripeCustomerPortalConfig(data: StripeCustomerPortalConfigInput): @skipAuth
-    createStripeCustomerPortalSessionSkipAuth:(data: StripeCustomerPortalInput): StripeCustomerPortal @skipAuth
+    createStripeCustomerPortalConfig(data: StripeCustomerPortalConfigInput): StripeCustomerPortalConfig @skipAuth
+    createStripeCustomerPortalSessionSkipAuth(data: StripeCustomerPortalInput): StripeCustomerPortal @skipAuth
     createStripeCustomerPortalSession(data: StripeCustomerPortalInput): StripeCustomerPortal @requireAuth
 }
 `
