@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { useMutation } from '@redwoodjs/web'
+import { useMutation, useQuery } from '@redwoodjs/web'
 
 import { StripeContext } from '../provider/StripeContext'
 
@@ -43,7 +43,18 @@ export const useStripeCustomerPortal = () => {
     ` 
   )
   
- 
+ // Create list Stripe Customer Portal query
+   const STRIPE_CUSTOMER_PORTAL_LIST = gql`
+      query listStripeCustomerPortalConfig(
+        $params: StripeCustomerPortalConfigParamsInput
+      ) {
+        listStripeCustomerPortalConfig(params: $params) {
+          id
+          is_default
+          active
+        }
+      }
+    `
   
   // Returns object with Customer Portal functions
   return {
@@ -77,8 +88,13 @@ export const useStripeCustomerPortal = () => {
         }
       }
 
-      const { data: { listStripeCustomerPortalConfigs: configs } } = await createStripeCustomerPortalConfig(payload)
-      return configs
+      const apolloResult = useQuery(
+        STRIPE_CUSTOMER_PORTAL_LIST, {
+          ...payload
+        }
+      )
+      
+      return apolloResult.data
     },
     createStripeCustomerPortalConfig: async (args) => {
       const payload = {
