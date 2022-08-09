@@ -121,10 +121,10 @@ Creates a Stripe Checkout Session and redirects to the Stripe Checkout page.
 
 ```ts
 type Session = {
- mode?: string       // optional if cart items have 'type' as part their objects, else defaults to 'once-off'
- cart?: Product[]    // 'cart' is not required when using built-in cart
- cancelUrl: string
- successUrl: string
+  mode?: string       // optional if cart items have 'type' as part their objects, else defaults to 'once-off'
+  cart?: Product[]    // 'cart' is not required when using built-in cart
+  cancelUrl: string
+  successUrl: string
 }
 ```
 
