@@ -70,7 +70,7 @@ import { StripeProvider } from 'redwoodjs-stripe/web'
 **Example 2**
 
 Routes.js
-```js
+```jsx
 import { StripeProvider } from 'redwoodjs-stripe/web'
 
 // ...
