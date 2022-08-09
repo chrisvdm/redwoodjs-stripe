@@ -222,9 +222,12 @@ const { redirectToStripeCustomerPortal } = useStripeCustomerPortal()
 Creates a Stripe Customer Portal Session and redirects to Stripe's Customer Portal page.
 
 ```js
-await redirectToStripeCustomerPortal({
-      return_url: 'http://localhost:8910/stripe-demo',
-    }, true)
+await redirectToStripeCustomerPortal(
+  {
+    return_url: 'http://localhost:8910/stripe-demo',
+  },
+  true
+)
 ```
 
 `portalSession` has the following shape ([Stripe Customer Portal API reference](https://stripe.com/docs/api/customer_portal/sessions/create)):
@@ -238,18 +241,17 @@ type PortalSession = {
 }
 ```
 
-Set `skipAuth` to `true` when testing the Customer Portal redirect if you have not yet set up user authentication in your app. Once authentication is set up please remove the argument.
+Set the second parameter, `skipAuth`, to `true` when testing the Customer Portal redirect if you have not yet set up user authentication in your app. Once authentication is set up please remove the argument.
 
 #### `createStripeCustomerPortalConfig(portalConfig)`
 
 Creates a [Customer Portal Configuration](https://stripe.com/docs/api/customer_portal/configuration) object.
 
 ```js
-```
 
 ```ts
-type PortalConfig = {d
-  
+type PortalConfig = {
+  // TODO
 }
 ```
 
@@ -273,13 +275,15 @@ The `params` passed to the Cell are the same parameters that would be passed to 
 
 ```js
 import StripeProductsCell from 'src/components/StripeProductsCell/StripeProductsCell'
+
 // ...
+
 <StripeProductsCell
   params={{
     productParams: { active: true },
     priceParams: { type: 'recurring' },
-    }}
-  />
+  }}
+/>
 ```
 
 `priceParams` has the following shape (for more information, look at the [Stripe Price list API documentation](https://stripe.com/docs/api/prices/list))
@@ -345,7 +349,7 @@ const { results } = await handleStripeWebhooks(
 
 #### Installing Stripe CLI
 
-In order to take advantage of webhooks and Stripe webhook events, it is advisable that you install the [Stripe CLI](https://stripe.com/docs/cli) on your machine. You can follow the instructions below if you are using homebrew or follow [Stripe's installation guide](https://stripe.com/docs/stripe-cli#install).
+To use webhooks and Stripe webhook events, we recommend installing the [Stripe CLI](https://stripe.com/docs/cli). You can follow the instructions below if you're using homebrew; otherwise, follow [Stripe's installation guide](https://stripe.com/docs/stripe-cli#install).
 
 `brew install stripe/stripe-cli/stripe`
 
