@@ -164,7 +164,7 @@ type Product = {
 
 Each object _must_ contain an `id`. This `id` corresponds to the StripePrice's `id` when using the generated StripeProductsCell.
 
-When checking out with both recurring and once-off items then `type` needs to be included in the object.
+If you're checking out with both recurring and once-off items, `type` needs to be included in the object.
 
 #### `clearCart()`
 
