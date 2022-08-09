@@ -6,13 +6,12 @@ This package is being built with the support of the awesome people at [Redwood](
 
 ###  Try it out
 
-There's a very unstable version of the plugin available to try out. It's held together with spit and wishful. It's to give future users a taste of things to come.
+There's a very unstable version of the plugin available to try out. It's held together with spit and wishful thinking. It's to give future users a taste of things to come.
 
 **Prerequisites**
 
-A stripe account (preferably in test mode)
-
-[Stripe CLI](https://stripe.com/docs/stripe-cli) installed (if you want to play with webhooks)
+- A stripe account (preferably in test mode)
+- The [Stripe CLI](https://stripe.com/docs/stripe-cli) installed (if you want to play with webhooks)
 
 **Steps**
 1. Create a fresh Redwood app
