@@ -53,7 +53,7 @@ Uses React context to manage the StripeCart, store customer data and contain the
 
 **Example 1**
 
-```js
+```jsx
 import { StripeProvider } from 'redwoodjs-stripe/web'
 
 // ...
