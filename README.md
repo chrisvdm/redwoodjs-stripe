@@ -231,10 +231,10 @@ await redirectToStripeCustomerPortal({
 
 ```ts
 type PortalSession = {
-    configuration?: config
-    locale?: string
-    on_behalf_of?: string
-    return_url: string
+  configuration?: config
+  locale?: string
+  on_behalf_of?: string
+  return_url: string
 }
 ```
 
