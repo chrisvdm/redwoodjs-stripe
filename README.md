@@ -353,7 +353,7 @@ Log into your Stripe account
 
 `stripe login`
 
-You will be given a webhook secret. Make sure it matches the key in your `.env` file under `STRIPE_WEBHOOK_KEY`
+You'll be given a webhook secret. Make sure it matches the `STRIPE_WEBHOOK_KEY` key in your `.env` file
 
 #### Testing Stripe webhooks locally
 
