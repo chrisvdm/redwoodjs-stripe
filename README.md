@@ -112,8 +112,7 @@ Creates a Stripe Checkout Session and redirects to the Stripe Checkout page.
 
 ```js
   await checkout({
-    successUrl:
-        'http://localhost:8910/stripe-demo?success=true&sessionId={CHECKOUT_SESSION_ID}',
+    successUrl: 'http://localhost:8910/stripe-demo?success=true&sessionId={CHECKOUT_SESSION_ID}',
     cancelUrl: 'http://localhost:8910/stripe-demo?success=false'
   })
  ```
