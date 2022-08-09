@@ -47,7 +47,7 @@ After setting up your app via the setup command, you'll find a demo page has bee
 
 ### `<StripeProvider customer/>`
 
-Uses a provider to manage the StripeCart, store customer data and contain the plugin logic on the web side.
+Uses React context to manage the StripeCart, store customer data and contain the plugin logic on the web side.
 
 **Example 1**
 
