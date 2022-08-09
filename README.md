@@ -183,7 +183,7 @@ addToCart({
 
 #### `removeFromCart(id)`
 
-Removes an item from the `cart` via the item `id`.
+Removes an item from the `cart` via the item's `id`.
 
 ```js
 removeFromCart('price_12345')
