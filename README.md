@@ -460,6 +460,6 @@ You can take a look at the [Roadmap](https://github.com/chrisvdm/redwoodjs-strip
 
 ## Thank you
 
-The teams from [Stripe](https://stripe.com/) and [Redwoodjs](https://redwoodjs.com/) who have supported this project from day one.
+The teams from [Stripe](https://stripe.com/) and [RedwoodJS](https://redwoodjs.com/) who have supported this project from day one.
 
 
