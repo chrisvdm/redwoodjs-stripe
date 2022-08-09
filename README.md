@@ -100,9 +100,10 @@ Returns a `checkout` function. See the comments in the example below for more in
 
 ```js
 import { useStripeCheckout } from 'redwoodjs-stripe/web'
-// ...
-const checkout = useStripeCheckout()
 
+// ...
+
+const checkout = useStripeCheckout()
 ```
 
 #### `checkout(session)`
