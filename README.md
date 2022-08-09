@@ -37,7 +37,7 @@ A stripe account (preferably in test mode)
 >
 > The following steps won't be needed for much longer
 
-5. Checkout a subscription item using "user@test.com" as email.
+5. Checkout a subscription item using "user@test.com" as the email.
 
 6. Configure Customer Portal in the [Stripe Dashboard](https://dashboard.stripe.com/subscriptions) 
 
