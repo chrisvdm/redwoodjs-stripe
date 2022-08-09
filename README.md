@@ -361,7 +361,7 @@ You will be given a webhook secret. Make sure it matches the key in your `.env` 
 
 `stripe listen --forward-to localhost:8911/stripeWebhook`
 
-2. Trigger webhook events locally in terminal
+2. Trigger webhook events locally via the CLI
 
 `stripe trigger customer.updated`
 
