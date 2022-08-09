@@ -417,7 +417,7 @@ const customer = searchLatestStripeCustomer('email: "user@test.com"')
 
 ### Schemas
 
-Schemas are imported from the plugin. You can view at the sdl files [here](https://github.com/chrisvdm/redwoodjs-stripe/tree/main/src/api/schemas). Although I tried to have the sdls match the [Stripe objects](https://stripe.com/docs/api) there may be times you need something more. For that reason my sdl files follow a naming convention so that you can add your own custom Stripe sdl files without there being a conflict. 
+Schemas are imported from the plugin. You can view the sdl files [here](https://github.com/chrisvdm/redwoodjs-stripe/tree/main/src/api/schemas). Although I tried to have the sdls match the [Stripe objects](https://stripe.com/docs/api), there may be times you need something more. For that reason my sdl files follow a naming convention so that you can add your own custom Stripe sdl files without there being a conflict. 
 
 The following Stripe API objects have sdl files: 
 - [Customers](https://stripe.com/docs/api/customers)
