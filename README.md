@@ -33,7 +33,9 @@ A stripe account (preferably in test mode)
 
 `yarn rw dev`
 
-_The following steps won't be needed for much longer_
+> **Note**
+>
+> The following steps won't be needed for much longer
 
 5. Checkout a subscription item using "user@test.com" as email.
 
