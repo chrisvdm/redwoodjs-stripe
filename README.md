@@ -355,7 +355,7 @@ Log into your Stripe account
 
 You will be given a webhook secret. Make sure it matches the key in your `.env` file under `STRIPE_WEBHOOK_KEY`
 
-#### Test Stripe webhooks locally
+#### Testing Stripe webhooks locally
 
 1. Listen for webhook events locally
 
