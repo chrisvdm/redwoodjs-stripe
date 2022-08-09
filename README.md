@@ -45,7 +45,7 @@ A stripe account (preferably in test mode)
 
 ## Web-side API Reference
 
-After setting up your app via the setup command, you'll find a demo page has been added to your app. This is intended as an in-app API reference, I'm assuming you would want your commerce project to look a different.
+After setting up your app via the setup command, you'll see that a demo page has been added to your app. This is intended as an in-app API reference—I'm assuming you would want your commerce project to look a different.
 
 ### `<StripeProvider customer/>`
 
