@@ -365,7 +365,7 @@ You will be given a webhook secret. Make sure it matches the key in your `.env` 
 
 ### Services
 
-Services used in the plugin can also be imported into your project for you to build custom services for those more complicated use-cases.
+Services used in the plugin can also be imported into your project to build custom Services for more-complicated use cases.
 
 #### `createStripeCheckoutSession(session)`
 
