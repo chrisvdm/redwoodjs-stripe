@@ -207,7 +207,7 @@ type Details = {
 
 ### `useStripeCustomerPortal()`
 
-Hook for [Stripe's Customer Portal](https://stripe.com/docs/billing/subscriptions/integrating-customer-portal) logic. Requires a customer query string to have been passed to the `<StripeProvider/>`, in other words an authenticated user. 
+Hook for [Stripe's Customer Portal](https://stripe.com/docs/billing/subscriptions/integrating-customer-portal) logic. Requires a customer query string to have been passed to the `<StripeProvider/>`. In other words, an authenticated user. 
 
 Returns a `redirectToStripeCustomerPortal` function. 
 
