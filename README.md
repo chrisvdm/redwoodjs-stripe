@@ -92,7 +92,7 @@ type Customer = {
 
 ### `useStripeCheckout()`
 
-Hook to redirect to Stripe-hosted Checkout. 
+Hook to redirect to Stripe's hosted [Checkout](https://stripe.com/docs/payments/checkout). 
 
 Returns a `checkout` function. See the comments in the example below for more information on its usage.
 
