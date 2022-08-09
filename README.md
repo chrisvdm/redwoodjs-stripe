@@ -349,7 +349,7 @@ In order to take advantage of webhooks and Stripe webhook events, it is advisabl
 
 `brew install stripe/stripe-cli/stripe`
 
-Log into your Stripe account
+Then, log in to your Stripe account
 
 `stripe login`
 
