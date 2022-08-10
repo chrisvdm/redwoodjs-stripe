@@ -5,7 +5,7 @@ scalar Metadata
 type StripeCustomerPortal {
     id: ID!
     object: String
-    configuration: StripeCustomerPortalConfig
+    configuration: StripeCustomerPortalConfig 
     created: Timestamp
     customer: String
     livemode: Boolean
@@ -192,7 +192,7 @@ input StripeCustomerPortalSubscriptionProductsInput {
 
 input StripeCustomerPortalInput {
     customer: String!
-    configuration: StripeCustomerPortalConfigInput
+    configuration: String
     locale: String
     on_behalf_of: String
     return_url: String

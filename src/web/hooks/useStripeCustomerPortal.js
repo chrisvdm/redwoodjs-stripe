@@ -37,6 +37,17 @@ const STRIPE_DEFAULT_CUSTOMER_PORTAL = gql`
 
   const defaultConfig = defaultListApolloResults.data ? defaultListApolloResults.data.listStripeCustomerPortalConfig.data[0] : null
 
+   // Create Stripe Customer Portal Configuration Mutation
+  const [createStripeCustomerPortalConfig] = useMutation(
+     gql`
+      mutation createStripeCustomerPortalConfig($data: StripeCustomerPortalConfigInput ) {
+        createStripeCustomerPortalConfig(data: $data) {
+          id
+        }
+      }
+    ` 
+  )
+
   // Create Stripe Customer Portal Session Mutation
   const [createStripeCustomerPortalSession] = useMutation(
   gql`
@@ -60,17 +71,7 @@ const STRIPE_DEFAULT_CUSTOMER_PORTAL = gql`
   `
   )
   
-  // Create Stripe Customer Portal Configuration Mutation
-  const [createStripeCustomerPortalConfig] = useMutation(
-     gql`
-      mutation createStripeCustomerPortalConfig($data: StripeCustomerPortalConfigInput ) {
-        createStripeCustomerPortalConfig(data: $data) {
-          id
-          url
-        }
-      }
-    ` 
-  )
+ 
   
   // Returns object with Customer Portal functions
   return {
@@ -104,10 +105,9 @@ const STRIPE_DEFAULT_CUSTOMER_PORTAL = gql`
           data: args
         }
       }
-      const { data: { createStripeCustomerPortalConfig } } = await createStripeCustomerPortalConfig(payload)
-console.log(createStripeCustomerPortalConfig)
-      // const { data: { createStripeCustomerPortalConfig: { id } } } = await createStripeCustomerPortalConfig(payload)
-      return createStripeCustomerPortalConfig
+
+      const { data } = await createStripeCustomerPortalConfig(payload)
+      return data.createStripeCustomerPortalConfig
     },
   }
 }
