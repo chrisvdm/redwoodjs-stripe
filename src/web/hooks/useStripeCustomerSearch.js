@@ -19,8 +19,8 @@ export const useStripeCustomerSearch = (querystring) => {
   
   // if (querystring === '') {
   //   return {
-  //       refetch: () => { return null },
-  //       data: null,
+  //       refetch: () => { return {data: { stripeCustomerSearch: null }} },
+  //       data: { stripeCustomerSearch: null },
   //   }
   // }
   
@@ -32,6 +32,8 @@ export const useStripeCustomerSearch = (querystring) => {
         }
       }
     )
+  
+      // console.log(apolloResult)
   
     return {
       ...apolloResult,

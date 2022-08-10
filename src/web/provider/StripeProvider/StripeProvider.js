@@ -25,6 +25,7 @@ export const StripeProvider = ({
   }, [data])
 
   useEffect(() => {
+    console.log(search)
     const { stripeCustomerSearch } = refetch(search)
     setCustomer(stripeCustomerSearch)
   }, [search])
