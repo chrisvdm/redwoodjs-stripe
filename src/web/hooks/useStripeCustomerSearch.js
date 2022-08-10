@@ -35,10 +35,11 @@ export const useStripeCustomerSearch = (querystring) => {
   
     return {
       ...apolloResult,
-      refetch: (nextQueryString) => {
-        return apolloResult.refetch({
+      refetch: async (nextQueryString) => {
+        const results = await apolloResult.refetch({
             query: nextQueryString
         })
+        return results
       }
     }
 }
