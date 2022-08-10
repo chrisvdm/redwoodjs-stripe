@@ -1,9 +1,10 @@
 import { useQuery } from '@redwoodjs/web'
 import gql from 'graphql-tag'
 
-import { isEmptyObj } from '../lib'
+import { useStripeCustomer } from './useStripeCustomer'
 
 export const useStripeCustomerSearch = (querystring) => {
+  const { createStripeCustomer } = useStripeCustomer()
   
   const STRIPE_CUSTOMER_SEARCH = gql`
       query stripeCustomerSearch(
@@ -33,15 +34,24 @@ export const useStripeCustomerSearch = (querystring) => {
       }
     )
   
-      // console.log(apolloResult)
-  
     return {
       ...apolloResult,
-      refetch: async (nextQueryString) => {
+      refetch: async (nextQueryString, newCustomerData) => {
         const results = await apolloResult.refetch({
             query: nextQueryString
         })
-        return results
+
+        if (!results.data.stripeCustomerSearch && Object.keys(newCustomerData).length > 0 && nextQueryString !== '') {
+          const newCustomer = await createStripeCustomer(newCustomerData)
+          return {
+            ...results,
+            data: {
+              stripeCustomerSearch: newCustomer
+            }
+          }
+        } else {
+          return results
+        }
       }
     }
 }

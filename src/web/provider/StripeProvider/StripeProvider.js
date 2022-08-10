@@ -12,22 +12,23 @@ import { StripeContext } from '../StripeContext'
 export const StripeProvider = ({
   children,
   customer: {
-    search = ""
+    search = "",
+    create = {}
   } }) => {
   const [cart, setCart] = useState([])
   const [stripeCustomer, setCustomer] = useState() 
-  const { data, refetch } = useStripeCustomerSearch(search)
+  const { customerData, refetch } = useStripeCustomerSearch(search)
   
   useEffect(() => {
-    if (typeof data !== "undefined" && Object.hasOwn(data, "stripeCustomerSearch")) {
-      setCustomer(data.stripeCustomerSearch)
+    if (typeof customerData !== "undefined" && Object.hasOwn(customerData, "stripeCustomerSearch")) {
+      setCustomer(customerData.stripeCustomerSearch)
     }
-  }, [data])
+  }, [customerData])
 
-  useEffect(() => {
-    console.log(search)
-    const { stripeCustomerSearch } = refetch(search)
-    setCustomer(stripeCustomerSearch)
+  useEffect(async () => {
+    const results = await refetch(search, create)
+    console.log(results)
+    // setCustomer(stripeCustomerSearch)
   }, [search])
   
   // onMount fetch cart items from local storage

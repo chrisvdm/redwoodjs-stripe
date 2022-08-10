@@ -2,7 +2,7 @@
 export {
     useStripeCheckout,
     useStripeCustomerSearch,
-    useStripeCustomerCreate,
+    useStripeCustomer,
     useStripeCustomerPortal
 } from './hooks'
 
