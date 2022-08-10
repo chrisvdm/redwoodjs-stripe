@@ -29,6 +29,13 @@ type StripeCustomerPortalConfig {
     updated: Timestamp
 }
 
+type StripeCustomerPortalConfigList {
+    object: String
+    has_more: Boolean
+    url: String
+    data: [StripeCustomerPortalConfig]
+}
+
 type StripeCustomerPortalFeatures {
     customer_update: StripeCustomerPortalFeaturesCustomerUpdate
     invoice_history: StripeCustomerPortalFeaturesInvoiceHistory
@@ -200,7 +207,7 @@ input StripeCustomerPortalConfigParamsInput {
 }
 
 type Query {
-    listStripeCustomerPortalConfig(params: StripeCustomerPortalConfigParamsInput): [StripeCustomerPortalConfig] @skipAuth
+    listStripeCustomerPortalConfig(params: StripeCustomerPortalConfigParamsInput): StripeCustomerPortalConfigList @skipAuth
 }
 
 type Mutation {

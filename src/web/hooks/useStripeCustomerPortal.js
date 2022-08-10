@@ -1,12 +1,41 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useMutation, useQuery } from '@redwoodjs/web'
 
 import { StripeContext } from '../provider/StripeContext'
 
 import gql from 'graphql-tag'
 
+
+
 export const useStripeCustomerPortal = () => {
   const context = useContext(StripeContext)
+
+  // Create list Stripe Customer Portal query
+const STRIPE_DEFAULT_CUSTOMER_PORTAL = gql`
+  query listStripeCustomerPortalConfig(
+    $params: StripeCustomerPortalConfigParamsInput
+  ) {
+    listStripeCustomerPortalConfig(params: $params) {
+      data {
+        id
+        is_default
+        active
+      }
+     
+    }
+  }
+`
+  
+  const defaultListApolloResults = useQuery(STRIPE_DEFAULT_CUSTOMER_PORTAL, {
+    variables: {
+      params: {
+        is_default: true,
+        active: true
+      } 
+    }
+  })
+
+  const defaultConfig = defaultListApolloResults.data ? defaultListApolloResults.data.listStripeCustomerPortalConfig.data[0] : null
 
   // Create Stripe Customer Portal Session Mutation
   const [createStripeCustomerPortalSession] = useMutation(
@@ -43,21 +72,10 @@ export const useStripeCustomerPortal = () => {
     ` 
   )
   
- // Create list Stripe Customer Portal query
-   const STRIPE_CUSTOMER_PORTAL_LIST = gql`
-      query listStripeCustomerPortalConfig(
-        $params: StripeCustomerPortalConfigParamsInput
-      ) {
-        listStripeCustomerPortalConfig(params: $params) {
-          id
-          is_default
-          active
-        }
-      }
-    `
-  
   // Returns object with Customer Portal functions
   return {
+    stripeCustomer: context.customer ? context.customer : null,
+    defaultConfig: defaultConfig,
     redirectToStripeCustomerPortal: async(args, skipAuth = false) => {
         // Create Payload
         const payload = {
@@ -78,23 +96,7 @@ export const useStripeCustomerPortal = () => {
         // Create Customer Portal Session
         const { data: { createStripeCustomerPortalSession: { url } } } = await createStripeCustomerPortalSession(payload)
         location.href = url;
-      }
-        
-    },
-    listStripeCustomerPortalConfigs: async (args) => {
-      const payload = {
-        variables: {
-          params: args
-        }
-      }
-
-      const apolloResult = useQuery(
-        STRIPE_CUSTOMER_PORTAL_LIST, {
-          ...payload
-        }
-      )
-      
-      return apolloResult.data
+      }     
     },
     createStripeCustomerPortalConfig: async (args) => {
       const payload = {

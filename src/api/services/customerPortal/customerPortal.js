@@ -17,5 +17,9 @@ export const createStripeCustomerPortalConfig = async ({ data }) => {
 
 export const listStripeCustomerPortalConfig = async ({ params }) => {
     const configArray = await stripe.billingPortal.configurations.list(params)
+    console.log("==============================================")
+    console.log(configArray)
+    console.log("==============================================")
+
     return configArray
 }
