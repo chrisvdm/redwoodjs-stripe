@@ -1,57 +1,74 @@
-import { useQuery } from '@redwoodjs/web'
+import { useApolloClient } from '@apollo/client'
 import gql from 'graphql-tag'
 
 import { useStripeCustomer } from './useStripeCustomer'
+import { useEffect } from 'react'
 
-export const useStripeCustomerSearch = (querystring) => {
-  const { createStripeCustomer } = useStripeCustomer()
-  
-  const STRIPE_CUSTOMER_SEARCH = gql`
-      query stripeCustomerSearch(
-        $query: String
-      ) {
-        stripeCustomerSearch(query: $query) {
-          id
-          name
-          email
-        }
-      }
-    `
-  
-  // if (querystring === '') {
-  //   return {
-  //       refetch: () => { return {data: { stripeCustomerSearch: null }} },
-  //       data: { stripeCustomerSearch: null },
-  //   }
-  // }
-  
-    const apolloResult = useQuery(
-      STRIPE_CUSTOMER_SEARCH, {
-        skip: (querystring === ""),
-        variables: {
-          query: querystring  
-        }
-      }
-    )
-  
-    return {
-      ...apolloResult,
-      refetch: async (nextQueryString, newCustomerData) => {
-        const results = await apolloResult.refetch({
-            query: nextQueryString
-        })
-
-        if (!results.data.stripeCustomerSearch && Object.keys(newCustomerData).length > 0 && nextQueryString !== '') {
-          const newCustomer = await createStripeCustomer(newCustomerData)
-          return {
-            ...results,
-            data: {
-              stripeCustomerSearch: newCustomer
-            }
-          }
-        } else {
-          return results
-        }
+const STRIPE_CUSTOMER_SEARCH = gql`
+    query stripeCustomerSearch(
+      $query: String
+    ) {
+      stripeCustomerSearch(query: $query) {
+        id
+        name
+        email
       }
     }
+  `
+
+const searchCustomer = async ({ client, querystring }) => {
+  const result = await client.query({
+    query: STRIPE_CUSTOMER_SEARCH,
+    variables: {
+      query: querystring
+    }
+  })
+
+  if (result.error) {
+    throw result.error
+  }
+
+  return result.data?.stripeCustomerSearch ?? null
+}
+
+const fetchOrCreateCustomer = async (context) => {
+  const {
+    querystring,
+    newCustomerData,
+    createStripeCustomer
+  } = context
+  
+  const foundCustomer = await searchCustomer(context)
+  const hasNewCustomerObj = Object.keys(newCustomerData).length > 0
+  const hasSearchString = querystring !== ''
+
+  if (foundCustomer !== null) {
+    console.log('## customer found', foundCustomer)
+    return foundCustomer
+  }
+
+  // Creates 1065 new Stripe Customers
+  if (hasNewCustomerObj && hasSearchString) {
+    console.log('## creating customer', newCustomerData)
+    return await createStripeCustomer(newCustomerData)
+  }
+
+  console.log('## not enough informtion to create customer')
+  return null
+}
+
+export const useStripeCustomerSearch = (querystring, newCustomerData, setCustomer) => {
+  const { createStripeCustomer } = useStripeCustomer()
+  const client = useApolloClient()
+
+  useEffect(async () => {
+    const context = {
+      client,
+      querystring,
+      createStripeCustomer,
+      newCustomerData
+    }
+
+    setCustomer(await fetchOrCreateCustomer(context))
+  }, [querystring])
 }

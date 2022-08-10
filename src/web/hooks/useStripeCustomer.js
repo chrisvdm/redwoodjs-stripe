@@ -25,7 +25,7 @@ name`) => {
           data: args
         }
       }
-      
+
       // Create Customer Portal Session
       const { data } = await createStripeCustomer(payload)
       return data.createStripeCustomer

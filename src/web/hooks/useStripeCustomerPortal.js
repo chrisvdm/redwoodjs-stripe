@@ -71,19 +71,30 @@ const STRIPE_DEFAULT_CUSTOMER_PORTAL = gql`
   `
   )
   
- 
+  const ensureCustomer = async () => {
+    const customer = await context.waitForCustomer()
+
+    if (customer === null) {
+      throw new Error([
+        "A customer is required in order to use Stripe Customer Portal.",
+        "This means you need to provide a `customer` prop to `StripeProvider` with the details",
+        "needed to either find or create a stripe customer for the logged in user."
+      ].join(" "))
+    }
+  }
   
   // Returns object with Customer Portal functions
   return {
-    stripeCustomer: context.customer ? context.customer : null,
     defaultConfig: defaultConfig,
     redirectToStripeCustomerPortal: async (args, skipAuth = false) => {
+      const customer = args.customer || await ensureCustomer()
+
         // Create Payload
         const payload = {
           variables: {
             data: {
-              ...(context.customer ? { customer: context.customer.id } : {}),
-              ...args
+              ...args,
+              customer: customer.id,     
             }
           }
         }

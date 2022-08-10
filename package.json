@@ -55,7 +55,8 @@
     "dir-tree": "^1.0.1",
     "graphql-tag": "2.x",
     "jest": "^28.1.1",
-    "parcel": "latest"
+    "parcel": "latest",
+    "@apollo/client": "^3.6.9"
   },
   "dependencies": {
     "@stripe/stripe-js": "1.29.0",
@@ -69,6 +70,7 @@
     "yargs": "^17.5.1"
   },
   "peerDependencies": {
+    "@apollo/client": "3.x",
     "@redwoodjs/core": "1.x",
     "@redwoodjs/web": "1.x",
     "graphql-tag": "2.x",
