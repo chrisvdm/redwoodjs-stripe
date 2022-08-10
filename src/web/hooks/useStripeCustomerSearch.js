@@ -17,9 +17,16 @@ export const useStripeCustomerSearch = (querystring) => {
       }
     `
   
+  // if (querystring === '') {
+  //   return {
+  //       refetch: () => { return null },
+  //       data: null,
+  //   }
+  // }
+  
     const apolloResult = useQuery(
       STRIPE_CUSTOMER_SEARCH, {
-        skip: querystring === "",
+        skip: (querystring === ""),
         variables: {
           query: querystring  
         }
