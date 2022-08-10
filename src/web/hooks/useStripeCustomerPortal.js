@@ -76,7 +76,7 @@ const STRIPE_DEFAULT_CUSTOMER_PORTAL = gql`
   return {
     stripeCustomer: context.customer ? context.customer : null,
     defaultConfig: defaultConfig,
-    redirectToStripeCustomerPortal: async(args, skipAuth = false) => {
+    redirectToStripeCustomerPortal: async (args, skipAuth = false) => {
         // Create Payload
         const payload = {
           variables: {
@@ -104,8 +104,10 @@ const STRIPE_DEFAULT_CUSTOMER_PORTAL = gql`
           data: args
         }
       }
-      const { data: { createStripeCustomerPortalConfig: { id } } } = await createStripeCustomerPortalConfig(payload)
-      return id
+      const { data: { createStripeCustomerPortalConfig } } = await createStripeCustomerPortalConfig(payload)
+console.log(createStripeCustomerPortalConfig)
+      // const { data: { createStripeCustomerPortalConfig: { id } } } = await createStripeCustomerPortalConfig(payload)
+      return createStripeCustomerPortalConfig
     },
   }
 }

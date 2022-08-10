@@ -5,8 +5,8 @@ export const createStripeCustomerPortalSession = async ({ data }) => {
     return session
 }
 
-export const createStripeCustomerPortalSessionSkipAuth = async ({ data }) => {
-    const session = await createStripeCustomerPortalSession(data)
+export const createStripeCustomerPortalSessionSkipAuth = async (payload) => {
+    const session = await createStripeCustomerPortalSession(payload)
     return session
 }
 
@@ -17,9 +17,5 @@ export const createStripeCustomerPortalConfig = async ({ data }) => {
 
 export const listStripeCustomerPortalConfig = async ({ params }) => {
     const configArray = await stripe.billingPortal.configurations.list(params)
-    console.log("==============================================")
-    console.log(configArray)
-    console.log("==============================================")
-
     return configArray
 }
