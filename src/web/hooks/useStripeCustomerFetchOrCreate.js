@@ -16,11 +16,11 @@ const STRIPE_CUSTOMER_SEARCH = gql`
     }
   `
 
-const searchCustomer = async ({ client, querystring }) => {
+const searchCustomer = async ({ client, searchString }) => {
   const result = await client.query({
     query: STRIPE_CUSTOMER_SEARCH,
     variables: {
-      query: querystring
+      query: searchString
     }
   })
 
@@ -33,13 +33,13 @@ const searchCustomer = async ({ client, querystring }) => {
 
 const fetchOrCreateCustomer = async (context) => {
   const {
-    querystring,
+    searchString,
     newCustomerData,
     createStripeCustomer
   } = context
 
   const hasNewCustomerObj = Object.keys(newCustomerData).length > 0
-  const hasSearchString = querystring !== ''
+  const hasSearchString = searchString !== ''
 
   if (!hasNewCustomerObj || !hasSearchString) {
     return null
@@ -54,18 +54,18 @@ const fetchOrCreateCustomer = async (context) => {
   return await createStripeCustomer(newCustomerData)
 }
 
-export const useStripeCustomerFetchOrCreate = (querystring, newCustomerData, setCustomer) => {
+export const useStripeCustomerFetchOrCreate = (searchString, newCustomerData, setCustomer) => {
   const { createStripeCustomer } = useStripeCustomer()
   const client = useApolloClient()
 
   useEffect(async () => {
     const context = {
       client,
-      querystring,
+      searchString,
       createStripeCustomer,
       newCustomerData
     }
 
     setCustomer(await fetchOrCreateCustomer(context))
-  }, [querystring])
+  }, [searchString])
 }
