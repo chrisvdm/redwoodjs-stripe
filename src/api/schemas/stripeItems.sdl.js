@@ -70,7 +70,7 @@ export const schema = `
   }
 
   type Query {
-    listStripeItems(params: StripeItemsParamsInput): [StripeItem!]! @skipAuth
-    retrieveStripeItemByID(id: ID!): StripeItem! @skipAuth
+    stripeItems(params: StripeItemsParamsInput): [StripeItem!]! @skipAuth
+    stripeItem(id: ID!): StripeItem @skipAuth
   }
 `

@@ -11,6 +11,6 @@ export const stripeServices = {
     stripeItems_stripeItems: stripeItems
 }
 
-export { retrieveStripeItemByID, listStripeItems } from './stripeItems/stripeItems'
+export { stripeItem, stripeItems } from './stripeItems/stripeItems'
 export { stripeCustomerSearch, createStripeCustomer, searchLatestStripeCustomer } from './customers/customers'
 export { createStripeCustomerPortalSession, createStripeCustomerPortalConfig, listStripeCustomerPortalConfig } from './customerPortal/customerPortal'
