@@ -1,50 +1,44 @@
 # redwoodjs-stripe
 
-A Redwood/Stripe integration made easy!
+A Redwood/Stripe integration made easy! 
 
-This package is being built with the support of the awesome people at [Redwood](https://redwoodjs.com/) and [Stripe](https://stripe.com/)
+This plugin is being built with the support of the awesome people at [Redwood](https://redwoodjs.com/) and [Stripe](https://stripe.com/)
 
-###  Try it out
+## Installation
 
-There's a very unstable version of the plugin available to try out. It's held together with spit and wishful thinking. It's to give future users a taste of things to come.
+Installation of the plugin involves a setup step which collects your Stripe API keys and integrates things.
 
-**Prerequisites**
+**Preflight**
+- [Stripe CLI](https://github.com/stripe/stripe-cli) for webhook integration
+- [Stripe API keys](https://dashboard.stripe.com/dashboard) nearby
 
-- A stripe account (preferably in test mode)
-- The [Stripe CLI](https://stripe.com/docs/stripe-cli) installed (if you want to play with webhooks)
+**In terminal**
+```
+yarn add redwoodjs-stripe
+yarn redwoodjs-stripe setup
+yarn rw dev
+```
 
-**Steps**
-1. Create a fresh Redwood app
+Once the plugin is installed and set up navigate to [localhost:8910/stripe-demo](http://localhost:8910/stripe-demo) to see a little demo of how to use the plugin
 
-`yarn create redwood-app myDemo`
+## Usage
 
-`cd myDemo`
+The idea for this plugin was that after running a setup command you would receive all the boilerplate needed to build your own online store using Redwoodjs and Stripe and also provide you with a library to customise your store.
 
-2. Install the plugin
+The plugin library is divided into a `web` side and an `api` side. You'd import methods from each _side_ depending on where you need them in your app ([RedwoodJS documentation](https://redwoodjs.com/docs/tutorial/chapter1/file-structure) on "sides"):
 
-`yarn add redwoodjs-stripe`
+```js
+// web-side
+import { useStripeCheckout } from 'redwoodjs-stripe/web'
 
-3. Setup the plugin and follow the prompts
+// app-side
+import { createStripeCustomer } from 'redwoodjs-stripe/api'
 
-`yarn redwoodjs-stripe setup`
+```
 
-4. Start up your app and then navigate to [localhost:8910/stripe-demo](http://localhost:8910/stripe-demo)
+### Web-side API Reference
 
-`yarn rw dev`
-
-> **Note**
->
-> The following steps won't be needed for much longer
-
-5. Checkout a subscription item using "user@test.com" as the email.
-
-6. Configure Customer Portal in the [Stripe Dashboard](https://dashboard.stripe.com/subscriptions) 
-
-7. Play around!
-
-## Web-side API Reference
-
-After setting up your app via the setup command, you'll see that a demo page has been added to your app. This is intended as an in-app API reference—I'm assuming you would want your commerce project to look a different.
+After setting up your app via the setup command, you'll see that a demo page has been added to your app. This is intended as an in-app API reference.
 
 ### `<StripeProvider customer/>`
 
@@ -348,21 +342,17 @@ const { results } = await handleStripeWebhooks(
 
 #### Installing Stripe CLI
 
-To use webhooks and Stripe webhook events, we recommend installing the [Stripe CLI](https://stripe.com/docs/cli). You can follow the instructions below if you're using homebrew; otherwise, follow [Stripe's installation guide](https://stripe.com/docs/stripe-cli#install).
+To use webhooks and Stripe webhook events, we recommend installing the [Stripe CLI](https://github.com/stripe/stripe-cli). 
 
-`brew install stripe/stripe-cli/stripe`
-
-Then, log in to your Stripe account
-
-`stripe login`
-
-You'll be given a webhook secret. Make sure it matches the `STRIPE_WEBHOOK_KEY` key in your `.env` file
+After logging in you'll be given a webhook secret. Make sure it matches the `STRIPE_WEBHOOK_SK` key in your `.env` file
 
 #### Testing Stripe webhooks locally
 
 1. Listen for webhook events locally
 
 `stripe listen --forward-to localhost:8911/stripeWebhook`
+
+>If you'd prefer to use snakecase, then you can just change `api/src/functions/stripeWebhook/stripeWebhook.js` to `api/src/functions/stripe_webhook/stripe_webhook.js` and the other files in that folder
 
 2. Trigger webhook events locally via the CLI
 
@@ -437,12 +427,12 @@ The following Stripe API objects have sdl files:
  
 You can take a look at the [Roadmap](https://github.com/chrisvdm/redwoodjs-stripe/issues/1) for this project for more details and a rough timeline. For a quick status update look below. 
 
-**STATUS:** Documentation 📖 + bug squashing 🪳🔨
+**STATUS:** Release Candidate!!!
 
 **ETA** August 2022 🤞
 
 ## How you can help
-- Try out this very unstable release and give [feedback](https://github.com/chrisvdm/redwoodjs-stripe/discussions/60)
+- Try out this release and give [feedback](https://github.com/chrisvdm/redwoodjs-stripe/discussions/60)
 - Help maintain the [Redwoodjs-stripe-example-store repo](https://github.com/redwoodjs/example-store)
 - Send good vibes :)
 
