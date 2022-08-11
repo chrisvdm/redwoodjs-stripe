@@ -54,7 +54,7 @@ const fetchOrCreateCustomer = async (context) => {
   return await createStripeCustomer(newCustomerData)
 }
 
-export const useStripeCustomerSearch = (querystring, newCustomerData, setCustomer) => {
+export const useStripeCustomerFetchOrCreate = (querystring, newCustomerData, setCustomer) => {
   const { createStripeCustomer } = useStripeCustomer()
   const client = useApolloClient()
 

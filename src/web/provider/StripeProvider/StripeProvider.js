@@ -7,7 +7,7 @@ import {
   useCallback
 } from 'react'
 
-import { useStripeCustomerSearch } from '../../hooks'
+import { useStripeCustomerFetchOrCreate } from '../../hooks'
 
 import { createStripeApi } from '../createStripeApi'
 import { StripeContext } from '../StripeContext'
@@ -21,7 +21,7 @@ export const StripeProvider = ({
 }) => {
   const [cart, setCart] = useState([])
   const [stripeCustomer, setCustomer] = useState(null)
-  useStripeCustomerSearch(search, create, setCustomer)
+  useStripeCustomerFetchOrCreate(search, create, setCustomer)
 
   const whenCustomerResolved = useWatcher(stripeCustomer, isNotNull)
 
