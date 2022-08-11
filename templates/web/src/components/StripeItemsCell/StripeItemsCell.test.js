@@ -1,6 +1,7 @@
 import { render } from '@redwoodjs/testing/web'
-import { Loading, Empty, Failure, Success } from './StripeProductsCell'
-import { standard } from './StripeProductsCell.mock'
+
+import { Loading, Empty, Failure, Success } from './StripeItemsCell'
+import { standard } from './StripeItemsCell.mock'
 
 // Generated boilerplate tests do not account for all circumstances
 // and can fail without adjustments, e.g. Float and DateTime types.
@@ -8,7 +9,7 @@ import { standard } from './StripeProductsCell.mock'
 //        https://redwoodjs.com/docs/testing#testing-cells
 // https://redwoodjs.com/docs/testing#jest-expect-type-considerations
 
-describe('StripePricesCell', () => {
+describe('StripeItemsCell', () => {
   it('renders Loading successfully', () => {
     expect(() => {
       render(<Loading />)
@@ -35,7 +36,7 @@ describe('StripePricesCell', () => {
 
   it('renders Success successfully', async () => {
     expect(() => {
-      render(<Success stripePrices={standard().stripePrices} />)
+      render(<Success stripeItems={standard().stripeItems} />)
     }).not.toThrow()
   })
 })

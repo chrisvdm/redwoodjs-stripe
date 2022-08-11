@@ -12,7 +12,7 @@ import {
 
 import { MetaTags } from '@redwoodjs/web'
 
-import StripeProductsCell from 'src/components/StripeProductsCell/StripeProductsCell'
+import StripeItemsCell from 'src/components/StripeItemsCell/StripeItemsCell'
 
 import { Icon } from './Icon'
 
@@ -79,14 +79,14 @@ const StripeDemoPage = () => {
           </header>
           <main className="rws-page-wrapper rws-page__main">
             <h3>Once-off Items</h3>
-            <StripeProductsCell
+            <StripeItemsCell
               params={{
                 productParams: { active: true },
                 priceParams: { type: 'one_time' },
               }}
             />
             <h3>Subscriptions</h3>
-            <StripeProductsCell
+            <StripeItemsCell
               params={{
                 productParams: { active: true },
                 priceParams: { type: 'recurring' },
