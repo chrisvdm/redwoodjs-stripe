@@ -37,24 +37,21 @@ const fetchOrCreateCustomer = async (context) => {
     newCustomerData,
     createStripeCustomer
   } = context
-  
-  const foundCustomer = await searchCustomer(context)
+
   const hasNewCustomerObj = Object.keys(newCustomerData).length > 0
   const hasSearchString = querystring !== ''
 
+  if (!hasNewCustomerObj || !hasSearchString) {
+    return null
+  }
+  
+  const foundCustomer = await searchCustomer(context)
+
   if (foundCustomer !== null) {
-    console.log('## customer found', foundCustomer)
     return foundCustomer
   }
 
-  // Creates 1065 new Stripe Customers
-  if (hasNewCustomerObj && hasSearchString) {
-    console.log('## creating customer', newCustomerData)
-    return await createStripeCustomer(newCustomerData)
-  }
-
-  console.log('## not enough informtion to create customer')
-  return null
+  return await createStripeCustomer(newCustomerData)
 }
 
 export const useStripeCustomerSearch = (querystring, newCustomerData, setCustomer) => {

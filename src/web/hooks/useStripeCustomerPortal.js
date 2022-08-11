@@ -81,6 +81,8 @@ const STRIPE_DEFAULT_CUSTOMER_PORTAL = gql`
         "needed to either find or create a stripe customer for the logged in user."
       ].join(" "))
     }
+
+    return customer
   }
   
   // Returns object with Customer Portal functions
