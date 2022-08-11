@@ -1,5 +1,5 @@
 import * as checkouts from './checkouts.sdl'
-import * as products from './products.sdl'
+import * as stripeItems from './stripeItems.sdl'
 import * as customers from './customers.sdl'
 import * as coupons from './coupons.sdl'
 import * as discounts from './discounts.sdl'
@@ -15,6 +15,6 @@ export const stripeSchemas = {
     customers_sdl: customers,
     discounts_sdl: discounts,
     paymentMethods_sdl: paymentMethods,
-    products_sdl: products,
+    stripeItems_sdl: stripeItems,
     subscriptions_sdl: subscriptions
 }
