@@ -5,7 +5,7 @@ scalar Metadata
 type StripeCustomerPortal {
     id: ID!
     object: String
-    configuration: StripeCustomerPortalConfig
+    configuration: StripeCustomerPortalConfig 
     created: Timestamp
     customer: String
     livemode: Boolean
@@ -27,6 +27,13 @@ type StripeCustomerPortalConfig {
     livemode: Boolean
     metadata: Metadata
     updated: Timestamp
+}
+
+type StripeCustomerPortalConfigList {
+    object: String
+    has_more: Boolean
+    url: String
+    data: [StripeCustomerPortalConfig]
 }
 
 type StripeCustomerPortalFeatures {
@@ -185,13 +192,27 @@ input StripeCustomerPortalSubscriptionProductsInput {
 
 input StripeCustomerPortalInput {
     customer: String!
-    configuration: StripeCustomerPortalConfigInput
+    configuration: String
     locale: String
     on_behalf_of: String
     return_url: String
 }
 
+input StripeCustomerPortalConfigParamsInput {
+    active: Boolean
+    is_default: Boolean
+    limit: Int
+    ending_before: String
+    starting_after: String
+}
+
+type Query {
+    listStripeCustomerPortalConfig(params: StripeCustomerPortalConfigParamsInput): StripeCustomerPortalConfigList @skipAuth
+}
+
 type Mutation {
-    createStripeCustomerPortalSession(variables: StripeCustomerPortalInput): StripeCustomerPortal @skipAuth
+    createStripeCustomerPortalConfig(data: StripeCustomerPortalConfigInput): StripeCustomerPortalConfig @skipAuth
+    createStripeCustomerPortalSessionSkipAuth(data: StripeCustomerPortalInput): StripeCustomerPortal @skipAuth
+    createStripeCustomerPortalSession(data: StripeCustomerPortalInput): StripeCustomerPortal @requireAuth
 }
 `

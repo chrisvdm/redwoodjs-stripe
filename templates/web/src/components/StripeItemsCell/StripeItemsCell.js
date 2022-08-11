@@ -1,4 +1,5 @@
 import { useStripeCart } from 'redwoodjs-stripe/web'
+
 import { Icon } from './Icon'
 import './styles.css'
 /*
@@ -17,8 +18,8 @@ import './styles.css'
 */
 
 export const QUERY = gql`
-  query Products($params: StripeProductsParamsInput) {
-    products(params: $params) {
+  query StripeItems($params: StripeItemsParamsInput) {
+    stripeItems(params: $params) {
       id
       name
       description
@@ -37,16 +38,16 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error.message}</div>
 )
 
-export const Success = ({ products }) => {
+export const Success = ({ stripeItems }) => {
   return (
     <ul className="rws-products__list">
-      {products.map((product) => {
+      {stripeItems.map((item) => {
         return (
           <li
             className="rws-products__list__item"
-            key={`stripe-products-cell-${product.id}`}
+            key={`stripe-products-cell-${item.id}`}
           >
-            <Product {...product} />
+            <StripeItem {...item} />
           </li>
         )
       })}
@@ -54,7 +55,7 @@ export const Success = ({ products }) => {
   )
 }
 
-const Product = ({ name, price, id, images, type }) => {
+const StripeItem = ({ name, price, id, images, type }) => {
   const { addToCart } = useStripeCart()
 
   const onAddToCartButtonClick = (item) => {

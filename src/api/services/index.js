@@ -1,5 +1,5 @@
 import * as checkouts from './checkouts/checkouts'
-import * as products from './products/products'
+import * as stripeItems from './stripeItems/stripeItems'
 import * as customers from './customers/customers'
 import * as customerPortal from './customerPortal/customerPortal'
 
@@ -8,9 +8,9 @@ export const stripeServices = {
     checkouts_checkouts: checkouts,
     customers_customers: customers,
     customerPortal_customerPortal: customerPortal,
-    products_products: products
+    stripeItems_stripeItems: stripeItems
 }
 
-export { productByPrice } from './products/products'
-export { stripeCustomerSearch, createStripeCustomer } from './customers/customers'
-export { createStripeCustomerPortalSession, configureStripeCustomerPortal } from './customerPortal/customerPortal'
+export { stripeItem, stripeItems } from './stripeItems/stripeItems'
+export { stripeCustomerSearch, createStripeCustomer, searchLatestStripeCustomer } from './customers/customers'
+export { createStripeCustomerPortalSession, createStripeCustomerPortalConfig, listStripeCustomerPortalConfig } from './customerPortal/customerPortal'

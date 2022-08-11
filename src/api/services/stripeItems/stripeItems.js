@@ -1,6 +1,6 @@
 import { stripe } from '../../lib'
 
-export const products = async ({ params = { productParams: {}, priceParams: {} } }) => {
+export const stripeItems = async ({ params = { productParams: {}, priceParams: {} } }) => {
   
   const { productParams = {}, priceParams = {} } = params
   
@@ -32,7 +32,7 @@ export const products = async ({ params = { productParams: {}, priceParams: {} }
   return itemList
 }
 
-export const productByPrice = async ({ id }) => {
+export const stripeItem = async ({ id }) => {
   const price = await stripe.prices.retrieve(id.toString())
 
   const product = await stripe.products.retrieve(price.product)

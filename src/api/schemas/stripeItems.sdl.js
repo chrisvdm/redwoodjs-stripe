@@ -1,13 +1,14 @@
 export const schema = `
   scalar URL
 
-  type Product {
+  type StripeItem {
     id: ID!
-    name: String!
+    name: String
     images: [String]
     description: String
-    price: Int!
-    type: String!
+    price: Int
+    quantity: Int
+    type: StripeItemTypeEnum
   }
 
   input StripeCreatedInput {
@@ -55,21 +56,21 @@ export const schema = `
     lookup_keys: String
     recurring: StripeRecurringPriceInput
     starting_after: String
-    type: ProductType
+    type: StripeItemTypeEnum
   }
 
-  input StripeProductsParamsInput {
+  input StripeItemsParamsInput {
     productParams: StripeProductParamsInput
     priceParams: StripePriceParamsInput
   }
   
-  enum ProductType {
+  enum StripeItemTypeEnum {
     one_time
     recurring
   }
 
   type Query {
-    products(params: StripeProductsParamsInput): [Product!]! @skipAuth
-    productByPrice(id: ID!): Product! @skipAuth
+    stripeItems(params: StripeItemsParamsInput): [StripeItem!]! @skipAuth
+    stripeItem(id: ID!): StripeItem @skipAuth
   }
 `

@@ -1,4 +1,4 @@
 export { useStripeCheckout } from './useStripeCheckout'
 export { useStripeCustomerPortal } from './useStripeCustomerPortal'
-export { useStripeCustomerSearch } from './useStripeCustomerSearch'
-export { useStripeCustomerCreate } from './useStripeCustomerCreate'
+export { useStripeCustomerFetchOrCreate } from './useStripeCustomerFetchOrCreate'
+export { useStripeCustomer } from './useStripeCustomer'

@@ -12,15 +12,14 @@ import {
 
 import { MetaTags } from '@redwoodjs/web'
 
-import StripeProductsCell from 'src/components/StripeProductsCell/StripeProductsCell'
+import StripeItemsCell from 'src/components/StripeItemsCell/StripeItemsCell'
 
 import { Icon } from './Icon'
 
-// This is a stub, please implement
-const isLoggedIn = true
-
 const StripeDemoPage = () => {
   const [isCartVisible, setCartVisibilty] = useState(false)
+
+  // This is a stub, unrelated to plugin, just to demo
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   const onCartButtonClick = () => {
@@ -31,12 +30,22 @@ const StripeDemoPage = () => {
     setIsLoggedIn(!isLoggedIn)
   }
 
+  // Details for logged in User
+  const authUser = {
+    email: 'john@domain.com',
+    name: 'John Smith',
+  }
+
   return (
     <>
       {/* search uses a query string to search for a customer on Stripe */}
       <StripeProvider
         customer={{
-          search: isLoggedIn ? `email: "user@test.com"` : '',
+          search: isLoggedIn ? `email: "${authUser.email}"` : '',
+          create: {
+            email: authUser.email,
+            name: authUser.name,
+          },
         }}
       >
         <MetaTags
@@ -57,7 +66,7 @@ const StripeDemoPage = () => {
                   onChange={onLoggedInCheckboxChange}
                 />
                 {/* Redirects to Stripe Customer Portal */}
-                <StripeCustomerPortalButton />
+                <StripeCustomerPortalButton isLoggedIn={isLoggedIn} />
                 {/* Toggles cart visibility */}
                 <StripeCartButton
                   isCartVisible={isCartVisible}
@@ -70,14 +79,14 @@ const StripeDemoPage = () => {
           </header>
           <main className="rws-page-wrapper rws-page__main">
             <h3>Once-off Items</h3>
-            <StripeProductsCell
+            <StripeItemsCell
               params={{
                 productParams: { active: true },
                 priceParams: { type: 'one_time' },
               }}
             />
             <h3>Subscriptions</h3>
-            <StripeProductsCell
+            <StripeItemsCell
               params={{
                 productParams: { active: true },
                 priceParams: { type: 'recurring' },
@@ -93,15 +102,55 @@ const StripeDemoPage = () => {
 
 export default StripeDemoPage
 
-const StripeCustomerPortalButton = () => {
-  const redirectToStripeCustomerPortal = useStripeCustomerPortal()
+const StripeCustomerPortalButton = ({ isLoggedIn }) => {
+  const {
+    redirectToStripeCustomerPortal,
+    createStripeCustomerPortalConfig,
+    defaultConfig,
+  } = useStripeCustomerPortal()
 
   const onButtonClick = async () => {
-    await redirectToStripeCustomerPortal({
-      return_url: 'http://localhost:8910/stripe-demo',
-    })
+    // Ideally you would have a default customer portal already set up on the Stripe Dashboard
+    // This is here purely for the demo
+    if (defaultConfig) {
+      await redirectToStripeCustomerPortal(
+        {
+          return_url: 'http://localhost:8910/stripe-demo',
+        },
+        true
+      )
+    } else {
+      // Best to create a new Customer Portal configuration this via Stripe Dashboard
+      const config = await createStripeCustomerPortalConfig({
+        business_profile: {
+          headline: 'a Store is a demo store',
+        },
+        features: {
+          customer_update: {
+            enabled: true,
+            allowed_updates: ['shipping', 'email', 'address', 'phone'],
+          },
+          invoice_history: {
+            enabled: true,
+          },
+          subscription_cancel: {
+            enabled: true,
+            mode: 'immediately',
+          },
+          subscription_pause: {
+            enabled: true,
+          },
+        },
+      })
+      await redirectToStripeCustomerPortal(
+        {
+          return_url: 'http://localhost:8910/stripe-demo',
+          configuration: config.id,
+        },
+        true
+      )
+    }
   }
-
   return (
     isLoggedIn && (
       <button className="rws-button" onClick={onButtonClick}>
@@ -131,7 +180,7 @@ const CartCounter = () => {
 }
 
 const StripeCart = () => {
-  const checkout = useStripeCheckout()
+  const { checkout } = useStripeCheckout()
   const { cart, clearCart } = useStripeCart()
 
   const onCheckoutButtonClick = async () => {
