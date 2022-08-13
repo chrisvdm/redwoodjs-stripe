@@ -1,6 +1,6 @@
 {
   "name": "redwoodjs-stripe",
-  "version": "0.1.0-alpha.8",
+  "version": "0.1.0-rc.1",
   "description": "A Redwood/Stripe integration made easy",
   "main": "./dist/cjs/api/index.js",
   "bin": {
@@ -49,14 +49,14 @@
   },
   "homepage": "https://github.com/chrisvdm/redwoodjs-stripe#readme",
   "devDependencies": {
+    "@apollo/client": "^3.6.9",
     "@babel/runtime-corejs3": "^7.17.9",
     "@parcel/transformer-graphql": "latest",
     "core-js": "^3.22.5",
     "dir-tree": "^1.0.1",
     "graphql-tag": "2.x",
     "jest": "^28.1.1",
-    "parcel": "latest",
-    "@apollo/client": "^3.6.9"
+    "parcel": "latest"
   },
   "dependencies": {
     "@stripe/stripe-js": "1.29.0",
