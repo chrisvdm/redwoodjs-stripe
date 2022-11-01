@@ -28,6 +28,7 @@ export const useStripeCheckout = () => {
   return {
     checkout: async ({ cart, customer, successUrl, cancelUrl, mode }) => {
       customer = customer || (await context.waitForCustomer())
+      cart = cart || context.cart
       const newCart = (cart || context.cart).map(item => ({ id: item.id, quantity: item.quantity }))
 
       // Determines checkout mode based on whether price "type" was passed to cart item or whther a "mode" was passed to checkout hook
