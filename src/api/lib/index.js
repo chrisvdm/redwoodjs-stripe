@@ -3,6 +3,17 @@ import Stripe from 'stripe'
 
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
+export const lastEntry = (array) => {
+  const latest = array.sort((first, next) => {
+    const firstDate = new Date(0)
+    firstDate.setUTCSeconds(first.created)
+    const nextDate = new Date(0)
+    nextDate.setUTCSeconds(next.created)
+    return firstDate - nextDate
+  })
+  return latest[latest.length-1]
+}
+
 export const handleStripeWebhooks = (event, context, webhooksObj, secure = true) => {
   if (secure) {
     const endpointSecret = process.env.STRIPE_WEBHOOK_KEY

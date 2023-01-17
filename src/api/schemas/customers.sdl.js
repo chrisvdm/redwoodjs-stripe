@@ -316,6 +316,7 @@ input CreateStripeCustomerAddressInput {
 
 type Query {
     stripeCustomerSearch(query: String): StripeCustomer @skipAuth
+    stripeCustomerRetrieve(id: String): StripeCustomer @skipAuth
 }
 
 type Mutation {

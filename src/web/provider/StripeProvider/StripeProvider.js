@@ -15,13 +15,14 @@ import { StripeContext } from '../StripeContext'
 export const StripeProvider = ({
   children,
   customer: {
+    id = "",
     search = "",
     create = {}
   }
 }) => {
   const [cart, setCart] = useState([])
   const [stripeCustomer, setCustomer] = useState(null)
-  useStripeCustomerFetchOrCreate(search, create, setCustomer)
+  useStripeCustomerFetchOrCreate(id,search, create, setCustomer)
 
   // Returns a fn that returns a promise when stripeCustomer is null
   // else returns resolved stripeCustomer value

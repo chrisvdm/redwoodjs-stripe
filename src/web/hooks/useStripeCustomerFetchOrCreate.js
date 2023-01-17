@@ -15,6 +15,17 @@ const STRIPE_CUSTOMER_SEARCH = gql`
       }
     }
   `
+const STRIPE_CUSTOMER_RETRIEVE = gql`
+    query stripeCustomerRetrieve(
+      $id: String
+    ) {
+      stripeCustomerRetrieve(id: $id) {
+        id 
+        name
+        email
+      }
+    }
+  `
 
 const searchCustomer = async ({ client, searchString }) => {
   const result = await client.query({
@@ -31,8 +42,24 @@ const searchCustomer = async ({ client, searchString }) => {
   return result.data?.stripeCustomerSearch ?? null
 }
 
+const retrieveCustomer = async ({ id, client}) => {
+  const result = await client.query({
+    query: STRIPE_CUSTOMER_RETRIEVE,
+    variables: {
+      id: id
+    }
+  })
+
+  if (result.error) {
+    throw result.error
+  }
+
+  return result.data?.stripeCustomerRetrieve ?? null
+}
+
 const fetchOrCreateCustomer = async (context) => {
   const {
+    id,
     searchString,
     newCustomerData,
     createStripeCustomer
@@ -45,7 +72,7 @@ const fetchOrCreateCustomer = async (context) => {
     return null
   }
   
-  const foundCustomer = await searchCustomer(context)
+  const foundCustomer = id !== '' && !!id ? await retrieveCustomer(context) : await searchCustomer(context)
 
   if (foundCustomer !== null) {
     return foundCustomer
@@ -54,12 +81,13 @@ const fetchOrCreateCustomer = async (context) => {
   return await createStripeCustomer(newCustomerData)
 }
 
-export const useStripeCustomerFetchOrCreate = (searchString, newCustomerData, setCustomer) => {
+export const useStripeCustomerFetchOrCreate = (id, searchString, newCustomerData, setCustomer) => {
   const { createStripeCustomer } = useStripeCustomer()
   const client = useApolloClient()
 
   useEffect(async () => {
     const context = {
+      id,
       client,
       searchString,
       createStripeCustomer,
