@@ -22,8 +22,8 @@ export const StripeProvider = ({
 }) => {
   const [cart, setCart] = useState([])
   const [stripeCustomer, setCustomer] = useState(null)
-  useStripeCustomerFetchOrCreate(id,search, create, setCustomer)
 
+  useStripeCustomerFetchOrCreate(id, search, create, setCustomer)
   // Returns a fn that returns a promise when stripeCustomer is null
   // else returns resolved stripeCustomer value
   const whenCustomerResolved = useWatcher(stripeCustomer, isNotNull)

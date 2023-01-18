@@ -66,13 +66,13 @@ const fetchOrCreateCustomer = async (context) => {
   } = context
 
   const hasNewCustomerObj = Object.keys(newCustomerData).length > 0
-  const hasSearchString = searchString !== ''
+  const hasSearchString = searchString !== '' && !!searchString
+  const hasID = id !== '' && !!id
 
-  if (!hasNewCustomerObj || !hasSearchString) {
+  if (!hasNewCustomerObj && !hasSearchString && !hasID) {
     return null
   }
-  
-  const foundCustomer = id !== '' && !!id ? await retrieveCustomer(context) : await searchCustomer(context)
+  const foundCustomer = hasID ? await retrieveCustomer(context) : await searchCustomer(context)
 
   if (foundCustomer !== null) {
     return foundCustomer
@@ -84,7 +84,6 @@ const fetchOrCreateCustomer = async (context) => {
 export const useStripeCustomerFetchOrCreate = (id, searchString, newCustomerData, setCustomer) => {
   const { createStripeCustomer } = useStripeCustomer()
   const client = useApolloClient()
-
   useEffect(async () => {
     const context = {
       id,
@@ -93,7 +92,7 @@ export const useStripeCustomerFetchOrCreate = (id, searchString, newCustomerData
       createStripeCustomer,
       newCustomerData
     }
-
-    setCustomer(await fetchOrCreateCustomer(context))
-  }, [searchString])
+    const stripeCustomer = await fetchOrCreateCustomer(context)
+    setCustomer(stripeCustomer)
+  }, [searchString, id])
 }
