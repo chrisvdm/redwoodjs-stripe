@@ -6,7 +6,6 @@ import gql from 'graphql-tag'
 
 export const useStripeCheckout = () => {
   const context = useContext(StripeContext)
-
   // Create Session Mutation
   const [checkout] = useMutation(
     gql`
@@ -27,7 +26,8 @@ export const useStripeCheckout = () => {
  
   return {
     checkout: async ({ cart, customer, successUrl, cancelUrl, mode }) => {
-      customer = customer || (await context.waitForCustomer())
+      // customer = !!customer ? customer : (await context.waitForCustomer())
+      customer = customer || context.customer
       cart = cart || context.cart
       const newCart = (cart || context.cart).map(item => ({ id: item.id, quantity: item.quantity }))
 
