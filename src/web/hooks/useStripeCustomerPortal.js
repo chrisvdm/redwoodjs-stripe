@@ -5,8 +5,6 @@ import { StripeContext } from '../provider/StripeContext'
 
 import gql from 'graphql-tag'
 
-
-
 export const useStripeCustomerPortal = () => {
   const context = useContext(StripeContext)
 
@@ -72,7 +70,7 @@ const STRIPE_DEFAULT_CUSTOMER_PORTAL = gql`
   )
   
   const ensureCustomer = async () => {
-    const customer = await context.waitForCustomer()
+    const customer = await context.customer()
 
     if (customer === null) {
       throw new Error([
@@ -89,8 +87,10 @@ const STRIPE_DEFAULT_CUSTOMER_PORTAL = gql`
   return {
     defaultConfig: defaultConfig,
     redirectToStripeCustomerPortal: async (args, skipAuth = false) => {
-      const customer = args.customer || await ensureCustomer()
+      console.log('sfdfdsfds')
+      console.log(context)
 
+      const customer = args.customer || await ensureCustomer()
         // Create Payload
         const payload = {
           variables: {
