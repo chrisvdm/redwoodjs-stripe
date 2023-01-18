@@ -57,9 +57,10 @@
     "dir-tree": "^1.0.1",
     "graphql-tag": "2.x",
     "jest": "^28.1.1",
-    "parcel": "latest"
+    "parcel": "^2.8.2"
   },
   "dependencies": {
+    "@parcel/config-default": "^2.8.2",
     "@stripe/stripe-js": "1.29.0",
     "cli-testing-library": "^1.0.4",
     "envfile": "^6.17.0",
