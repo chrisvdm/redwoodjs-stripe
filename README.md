@@ -482,8 +482,19 @@ Accepts a [Search API query](https://stripe.com/docs/search#search-query-languag
 ```js
 import { searchLatestStripeCustomer } from 'redwoodjs-stripe/api';
 // ...
-const customer = searchLatestStripeCustomer('email: "user@test.com"');
+const customer = await searchLatestStripeCustomer('email: "user@test.com"');
 ```
+
+##### `createStripeCustomer(customer)`
+
+Accepts an object with data to create a new Stripe customer and returns the newly created Stripe Customer object.
+
+```js
+import { createStripeCustomer } from 'redwoodjs-stripe/api';
+// ...
+const customer = await createStripeCustomer({ email });
+```
+
 
 #### Schemas
 
