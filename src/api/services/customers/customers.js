@@ -14,7 +14,7 @@ export const searchLatestStripeCustomer = async (query) => {
   return lastEntry(customer.data)
 }
 
-export const stripeCustomerRetrieve = async ({ id }) => {
+export const retrieveStripeCustomer = async ({ id }) => {
   const customer = await stripe.customers.retrieve(id)
   return customer
 }

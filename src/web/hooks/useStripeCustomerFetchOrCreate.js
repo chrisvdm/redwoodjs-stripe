@@ -15,11 +15,11 @@ const STRIPE_CUSTOMER_SEARCH = gql`
       }
     }
   `
-const STRIPE_CUSTOMER_RETRIEVE = gql`
-    query stripeCustomerRetrieve(
+const RETRIEVE_STRIPE_CUSTOMER = gql`
+    query retrieveStripeCustomer(
       $id: String
     ) {
-      stripeCustomerRetrieve(id: $id) {
+      retrieveStripeCustomer(id: $id) {
         id 
         name
         email
@@ -44,7 +44,7 @@ const searchCustomer = async ({ client, searchString }) => {
 
 const retrieveCustomer = async ({ id, client}) => {
   const result = await client.query({
-    query: STRIPE_CUSTOMER_RETRIEVE,
+    query: RETRIEVE_STRIPE_CUSTOMER,
     variables: {
       id: id
     }
@@ -54,7 +54,7 @@ const retrieveCustomer = async ({ id, client}) => {
     throw result.error
   }
 
-  return result.data?.stripeCustomerRetrieve ?? null
+  return result.data?.retrieveStripeCustomer ?? null
 }
 
 const fetchOrCreateCustomer = async (context) => {
