@@ -1,12 +1,14 @@
-import * as checkouts from './checkouts/checkouts'
+import { checkout, createStripeCheckoutSession }  from './checkouts/checkouts'
 import * as stripeItems from './stripeItems/stripeItems'
-import * as customers from './customers/customers'
+import { stripeCustomerSearch, retrieveStripeCustomer, createStripeCustomer, searchLatestStripeCustomer} from './customers/customers'
 import * as customerPortal from './customerPortal/customerPortal'
 
 // shape services object
 export const stripeServices = {
-    checkouts_checkouts: checkouts,
-    customers_customers: customers,
+    checkouts_checkouts: { checkout, createStripeCheckoutSession },
+    customers_customers: {
+        stripeCustomerSearch, retrieveStripeCustomer, createStripeCustomer, searchLatestStripeCustomer
+    },
     customerPortal_customerPortal: customerPortal,
     stripeItems_stripeItems: stripeItems
 }
