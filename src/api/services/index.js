@@ -13,7 +13,7 @@ export const stripeServices = {
     stripeItems_stripeItems: stripeItems
 }
 
-export { retrieveStripeCheckoutSession, createStripeCheckoutSession } from './checkouts/checkouts'
+export { checkout,retrieveStripeCheckoutSession, createStripeCheckoutSession } from './checkouts/checkouts'
 export { stripeItem, stripeItems } from './stripeItems/stripeItems'
 export { stripeCustomerSearch, retrieveStripeCustomer, createStripeCustomer, searchLatestStripeCustomer } from './customers/customers'
 export { createStripeCustomerPortalSession, createStripeCustomerPortalConfig, listStripeCustomerPortalConfig } from './customerPortal/customerPortal'
