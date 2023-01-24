@@ -25,7 +25,7 @@ export const schema = `
   }
 
   type Query {
-    getSession(id: ID!): Session! @skipAuth
+    retrieveStripeCheckoutSession(id: ID!): Session! @skipAuth
   }
 
   type Mutation {
