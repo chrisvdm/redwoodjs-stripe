@@ -1,4 +1,3 @@
-// import { loadStripe } from '@stripe/stripe-js'
 import { useContext } from 'react'
 import { useMutation } from '@redwoodjs/web'
 import { StripeContext } from '../provider/StripeContext'
@@ -53,7 +52,8 @@ export const useStripeCheckout = () => {
               id: customer.id,
               name: customer.name,
               email: customer.email
-            }
+            },
+            customer_email: customer.email
           } : {})
         }
       }
