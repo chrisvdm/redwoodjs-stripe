@@ -17,7 +17,7 @@ const STRIPE_CUSTOMER_SEARCH = gql`
   `
 const RETRIEVE_STRIPE_CUSTOMER = gql`
     query retrieveStripeCustomer(
-      $id: String
+      $id: String!
     ) {
       retrieveStripeCustomer(id: $id) {
         id 
@@ -42,7 +42,7 @@ const searchCustomer = async ({ client, searchString }) => {
   return result.data?.stripeCustomerSearch ?? null
 }
 
-const retrieveCustomer = async ({ id, client}) => {
+const retrieveCustomer = async ({ id, client }) => {
   const result = await client.query({
     query: RETRIEVE_STRIPE_CUSTOMER,
     variables: {

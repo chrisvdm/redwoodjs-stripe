@@ -30,8 +30,7 @@
     }
   },
   "scripts": {
-    "dev": "(parcel watch & npx chokidar-cli 'dist/**/*' -c 'yalc push && (cd ../example-store && yalc add redwoodjs-stripe)')",
-    "watch": "parcel watch",
+    "dev": "(npx chokidar-cli 'src/**/*' -c 'yarn build && yalc push && (cd ../example-store && yalc add redwoodjs-stripe)')",
     "build": "parcel build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

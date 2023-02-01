@@ -21,7 +21,7 @@ name`) => {
   
   const RETRIEVE_STRIPE_CUSTOMER = gql`
     query retrieveStripeCustomer(
-      $id: String
+      $id: String!
     ) {
       retrieveStripeCustomer(id: $id) {
         id 
