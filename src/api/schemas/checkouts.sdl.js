@@ -35,7 +35,7 @@ export const schema = `
     invoice: String
     invoice_creation: StripeCheckoutSessionInvoiceCreation
     livemode: Boolean
-    locale: StripeCheckoutSessionLocaleEnum
+    locale: String
     payment_link: String
     payment_method_collection: StripeCheckoutSessionCustomerCreationEnum
     payment_method_options: StripeCheckoutSessionPaymentMethodOptions
@@ -198,7 +198,7 @@ export const schema = `
     setup_future_usage: StripePaymentOptionsSetupFutureUseEnum
   }
 
-  type StripePaymentOptionsSetupFutureUseNone
+  type StripePaymentOptionsSetupFutureUseNone {
     setup_future_usage: StripePaymentOptionsSetupFutureUseNoneEnum
   }
 
@@ -469,7 +469,7 @@ export const schema = `
     microdeposits
   }
 
-  enum  StripePaymentOptionsACSSDebitMandateOptionsTransactionTypeEnum {
+  enum StripePaymentOptionsACSSDebitMandateOptionsTransactionTypeEnum {
     personal
     business
   }
@@ -795,50 +795,6 @@ export const schema = `
     ZM
     ZW
     ZZ
-  }
-
-  enum StripeCheckoutSessionLocaleEnum {
-    auto
-    bg
-    cs
-    da
-    de
-    el
-    en
-    en-GB
-    es
-    es-419
-    et
-    fi
-    fil
-    fr
-    fr-CA
-    hr
-    hu
-    id
-    it
-    ja
-    ko
-    lt
-    lv
-    ms
-    mt
-    nb
-    nl
-    pl
-    pt
-    pt-BR
-    ro
-    ru
-    sk
-    sl
-    sv
-    th
-    tr
-    vi
-    zh
-    zh-HK
-    zh-TW
   }
 
   input ProductInput {
