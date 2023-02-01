@@ -21,8 +21,8 @@ export const schema = `
     object: String
     after_expiration: StripeCheckoutSessionAfterExpiration
     allow_promotion_codes: Boolean
-    amount_subtotal: Integer
-    amount_total: Integer
+    amount_subtotal: Int
+    amount_total: Int
     automatic_tax: StripeCheckoutSessionAutomaticTax
     billing_address_location: StripeCheckoutSessionBillingAddressEnum
     consent: StripeCheckoutSessionConsent
@@ -49,13 +49,13 @@ export const schema = `
     submit_type: StripeCheckoutSessionSubmitTypeEnum
     subscription: String
     tax_id_collection: StripeCheckoutSessionTaxIDCollection
-    total_details: StripeCheckoutSessionTotalsDetails
+    total_details: StripeCheckoutSessionTotalDetails
   }
 
   type StripeCheckoutSessionTotalDetails {
-    amount_discount: Integer
-    amount_shipping: Integer
-    amount_tax: Integer
+    amount_discount: Int
+    amount_shipping: Int
+    amount_tax: Int
     breakdown: StripeCheckoutSessionTotalDetailsBreakdown
   }
 
@@ -65,7 +65,7 @@ export const schema = `
   }
 
   type StripeCheckoutSessionTotalDetailsBreakdownTaxes {
-    amount: Integer
+    amount: Int
     rate: StripeCheckoutSessionTaxesRate
   }
 
@@ -81,13 +81,13 @@ export const schema = `
     juristriction: String
     livemode: Boolean
     metadata: Metadata
-    percentage: Integer
+    percentage: Int
     state: String
     tax_type: String
   }
 
   type StripeCheckoutSessionTotalDetailsBreakdownDiscounts {
-    amount: Integer
+    amount: Int
     discount: StripeDiscount
   }
 
@@ -96,7 +96,7 @@ export const schema = `
   }
 
   type StripeCheckoutSessionShippingOption {
-    shipping_amount: Integer
+    shipping_amount: Int
     shipping_rate: String
   }
 
@@ -106,15 +106,15 @@ export const schema = `
   }
 
   type StripeCheckoutSessionShippingCost {
-    amount_subtotal: Integer
-    amount_tax: Integer
-    amount_total: Integer
+    amount_subtotal: Int
+    amount_tax: Int
+    amount_total: Int
     shipping_rate: String
     taxes: [StripeCheckoutSessionShippingCost]
   }
 
   type StripeCheckoutSessionShippingCost {
-    amount: Integer
+    amount: Int
     rate: StripeCheckoutSessionShippingCostRate
   }
 
@@ -130,7 +130,7 @@ export const schema = `
     juristriction: String
     livemode: Boolean
     metadata: Metadata
-    percentage: Integer
+    percentage: Int
     state: String
     tax_type: String
   }
@@ -157,7 +157,7 @@ export const schema = `
     eps: StripePaymentOptionsSetupFutureUseNone
     fpx: StripePaymentOptionsSetupFutureUseNone
     giropay: StripePaymentOptionsSetupFutureUseNone
-    grabpay: StripePaymentOptionsGrabpay
+    grabpay: StripePaymentOptionsSetupFutureUseNone
     ideal: StripePaymentOptionsSetupFutureUseNone
     klarna: StripePaymentOptionsSetupFutureUse
     konbini: StripePaymentOptionsKonbini
@@ -170,27 +170,31 @@ export const schema = `
     us_bank_account: StripePaymentOptionsUSBankAccount
   }
 
+  type StripePaymentsOptionsPix {
+    expires_after_seconds: Int
+  }
+
   type StripePaymentOptionsUSBankAccount {
     financial_connections: StripeCheckoutFinancialConnections
     setup_future_usage: StripePaymentOptionsSetupFutureUseEnum
     verification_method: StripePaymentOptionsVerificationMethodEnum
   }
 
-  type StripePaymentOptionsFinancialConnections {
+  type StripeCheckoutFinancialConnections {
     permissions: [StripeCheckoutFinancialConnectionsEnum]
   }
 
   type StripePaymentOptionsPix {
-    expires_after_seconds: Integer
+    expires_after_seconds: Int
   }
 
   type StripePaymentOptionsOXXO {
-    expires_after_days: Integer
+    expires_after_days: Int
     setup_future_usage: StripePaymentOptionsSetupFutureUseNoneEnum
   }
 
   type StripePaymentOptionsKonbini {
-    expires_after_days: Integer
+    expires_after_days: Int
     setup_future_usage: StripePaymentOptionsSetupFutureUseNoneEnum
   }
 
@@ -231,7 +235,7 @@ export const schema = `
   }
 
   type StripePaymentOptionsBoleto {
-    expires_after_days: Integer
+    expires_after_days: Int
     setup_future_usage: StripePaymentOptionsSetupFutureUseEnum
   }
 
@@ -343,21 +347,21 @@ export const schema = `
   type StripeLineItemData {
     id: ID!
     object: String
-    amount_discount: Integer
-    amount_subtotal: Integer
-    amount_tax: Integer
+    amount_discount: Int
+    amount_subtotal: Int
+    amount_tax: Int
     currency: String
     description: String
     discounts: [StripeLineItemDiscount]
     price: StripeLineItemPrice
-    quantity: Integer
+    quantity: Int
     taxes: [StripeLineItemTaxes]
     has_more: Boolean
     url: String
   }
 
   type StripeLineItemTaxes {
-    amount: Integer
+    amount: Int
     rate: StripeCheckoutSessionTaxesRate
   }
 
@@ -381,27 +385,27 @@ export const schema = `
     tiers_mode: String
     transform_quantity: StripeLineItemPriceTransformQuantity
     type: String
-    unit_amount: Integer
+    unit_amount: Int
     unit_amount_decimal: Float
   }
 
   type StripeLineItemPriceTransformQuantity {
-    divide_by: Integer
+    divide_by: Int
     round: StripeLineItemPriceTransformQuantityRoundEnum
   }
 
   type StripeLineItemPriceTiers {
-    flat_amount: Integer
+    flat_amount: Int
     flat_amount_decimal: Float
-    unit_amount: Integer
+    unit_amount: Int
     unit_amount_decimal: Float
-    up_to: Integer
+    up_to: Int
   }
 
   type StripeLineItemPriceRecurring {
     aggregate_usage: String
     interval: StripeLineItemPriceRecurringIntervalEnum
-    interval_count: Integer
+    interval_count: Int
     usage_type: StripeLineItemPriceRecurringUsageTypeEnum
   }
 
@@ -423,15 +427,15 @@ export const schema = `
   }
 
   type StripeLineItemPriceCustomUnitAmount {
-    maximum: Integer
-    minimum: Integer
-    preset: Integer
+    maximum: Int
+    minimum: Int
+    preset: Int
   }
 
   scalar StripeLineItemPriceCurrencyOptions
 
   type StripeLineItemDiscount {
-    amount: Integer
+    amount: Int
     discount: StripeDiscount
   }
 
