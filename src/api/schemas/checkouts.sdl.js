@@ -45,6 +45,59 @@ export const schema = `
     shipping_address_collection: StripeCheckoutSessionShippingAddressCollection
     shipping_cost: StripeCheckoutSessionShippingCost
     shipping_details: StripeCheckoutSessionShippingDetails
+    shipping_options: [StripeCheckoutSessionShippingOption]
+    submit_type: StripeCheckoutSessionSubmitTypeEnum
+    subscription: String
+    tax_id_collection: StripeCheckoutSessionTaxIDCollection
+    total_details: StripeCheckoutSessionTotalsDetails
+  }
+
+  type StripeCheckoutSessionTotalDetails {
+    amount_discount: Integer
+    amount_shipping: Integer
+    amount_tax: Integer
+    breakdown: StripeCheckoutSessionTotalDetailsBreakdown
+  }
+
+  type StripeCheckoutSessionTotalDetailsBreakdown {
+    discounts: [StripeCheckoutSessionTotalDetailsBreakdownDiscounts]
+    taxes: [StripeCheckoutSessionTotalDetailsBreakdownTaxes]
+  }
+
+  type StripeCheckoutSessionTotalDetailsBreakdownTaxes {
+    amount: Integer
+    rate: StripeCheckoutSessionTaxesRate
+  }
+
+  type StripeCheckoutSessionTaxesRate {
+    id: String
+    object: String
+    active: Boolean
+    country: String
+    created: String
+    description: String
+    display_name: String
+    inclusive: Boolean
+    juristriction: String
+    livemode: Boolean
+    metadata: Metadata
+    percentage: Integer
+    state: String
+    tax_type: String
+  }
+
+  type StripeCheckoutSessionTotalDetailsBreakdownDiscounts {
+    amount: Integer
+    discount: StripeDiscount
+  }
+
+  type StripeCheckoutSessionTaxIDCollection {
+    enabled: Boolean
+  }
+
+  type StripeCheckoutSessionShippingOption {
+    shipping_amount: Integer
+    shipping_rate: String
   }
 
   type StripeCheckoutSessionShippingDetails {
@@ -84,7 +137,6 @@ export const schema = `
 
   type StripeCheckoutSessionShippingAddressCollection {
     allowed_countries: [StripeCheckoutSessionShippingAddressCollectionAllowedCountriesEnum]
-
   }
 
   type StripeCheckoutSessionPhoneNumberCollection {
@@ -92,7 +144,110 @@ export const schema = `
   }
 
   type StripeCheckoutSessionPaymentMethodOptions {
+    acss_debit: StripePaymentOptionsACSSDebit
+    affirm: StripePaymentOptionsSetupFutureUseNone
+    afterpay_clearpay: StripePaymentOptionsSetupFutureUseNone
+    alipay: StripePaymentOptionsSetupFutureUseNone
+    au_becs_debit: StripePaymentOptionsSetupFutureUseNone
+    bacs_debit: StripePaymentOptionsSetupFutureUse
+    bancontact: StripePaymentOptionsSetupFutureUseNone
+    boleto: StripePaymentOptionsBoleto
+    card: StripePaymentOptionsCard
+    customer_balance: StripePaymentOptionsCustomerBalance
+    eps: StripePaymentOptionsSetupFutureUseNone
+    fpx: StripePaymentOptionsSetupFutureUseNone
+    giropay: StripePaymentOptionsSetupFutureUseNone
+    grabpay: StripePaymentOptionsGrabpay
+    ideal: StripePaymentOptionsSetupFutureUseNone
+    klarna: StripePaymentOptionsSetupFutureUse
+    konbini: StripePaymentOptionsKonbini
+    oxxo: StripePaymentOptionsOXXO
+    p24: StripePaymentOptionsSetupFutureUseNone
+    paynow: StripePaymentOptionsSetupFutureUseNone
+    pix: StripePaymentsOptionsPix
+    sepa_debit: StripePaymentOptionsSetupFutureUse
+    sofort: StripePaymentOptionsSetupFutureUseNone
+    us_bank_account: StripePaymentOptionsUSBankAccount
+  }
 
+  type StripePaymentOptionsUSBankAccount {
+    financial_connections: StripeCheckoutFinancialConnections
+    setup_future_usage: StripePaymentOptionsSetupFutureUseEnum
+    verification_method: StripePaymentOptionsVerificationMethodEnum
+  }
+
+  type StripePaymentOptionsFinancialConnections {
+    permissions: [StripeCheckoutFinancialConnectionsEnum]
+  }
+
+  type StripePaymentOptionsPix {
+    expires_after_seconds: Integer
+  }
+
+  type StripePaymentOptionsOXXO {
+    expires_after_days: Integer
+    setup_future_usage: StripePaymentOptionsSetupFutureUseNoneEnum
+  }
+
+  type StripePaymentOptionsKonbini {
+    expires_after_days: Integer
+    setup_future_usage: StripePaymentOptionsSetupFutureUseNoneEnum
+  }
+
+  type StripePaymentOptionsSetupFutureUse {
+    setup_future_usage: StripePaymentOptionsSetupFutureUseEnum
+  }
+
+  type StripePaymentOptionsSetupFutureUseNone
+    setup_future_usage: StripePaymentOptionsSetupFutureUseNoneEnum
+  }
+
+
+  type StripePaymentOptionsCustomerBalance {
+    bank_transfer: StripePaymentOptionsCustomerBalanceBankTransfer
+    funding_type: String
+    setup_future_usage: StripePaymentOptionsSetupFutureUseNoneEnum
+  }
+
+  type StripePaymentOptionsCustomerBalanceBankTransfer {
+    eu_bank_transfer: StripePaymentOptionsCustomerBalanceBankTransferEU
+    requested_address_types: [StripePaymentOptionsCustomerBalanceBankTransferAddressTypesEnum]
+    type: StripePaymentOptionsCustomerBalanceBankTransferEnum
+  }
+
+  type StripePaymentOptionsCustomerBalanceBankTransferEU {
+    country: String
+  }
+
+  type StripePaymentOptionsCard {
+    installments: StripePaymentOptionsCardInstallments
+    setup_future_usage: StripePaymentOptionsSetupFutureUseEnum
+    statement_descriptor_suffix_kana: String
+    statement_descriptor_suffix_kanji: String
+  }
+
+  type StripePaymentOptionsCardInstallments {
+    enabled: Boolean
+  }
+
+  type StripePaymentOptionsBoleto {
+    expires_after_days: Integer
+    setup_future_usage: StripePaymentOptionsSetupFutureUseEnum
+  }
+
+  type StripePaymentOptionsACSSDebit {
+    currency: StripePaymentOptionsACSSDebitCurrencyEnum
+    mandate_options: StripePaymentOptionsACSSDebitMandateOptions
+    setup_future_usage: StripePaymentOptionsSetupFutureUseEnum
+    verification_method: StripePaymentOptionsVerificationMethodEnum
+  }
+
+  type StripePaymentOptionsACSSDebitMandateOptions {
+    custom_mandate_url: String
+    default_for: StripePaymentOptionsACSSDebitMandateOptionsDefaultForEnum
+    interval_description: String
+    payment_schedule: StripePaymentOptionsACSSDebitMandateOptionsPaymentScheduleEnum
+    transaction_type: StripePaymentOptionsACSSDebitMandateOptionsTransactionTypeEnum
   }
 
   type StripeCheckoutSessionInvoiceCreation {
@@ -202,15 +357,166 @@ export const schema = `
   }
 
   type StripeLineItemTaxes {
-
+    amount: Integer
+    rate: StripeCheckoutSessionTaxesRate
   }
 
   type StripeLineItemPrice {
-
+    id: String
+    object: String
+    active: Boolean
+    billing_scheme: String
+    created: String
+    currency: String
+    currency_options: StripeLineItemPriceCurrencyOptions
+    custom_unit_amount: StripeLineItemPriceCustomUnitAmount
+    livemode: Boolean
+    lookup_key: String
+    metadata: Metadata
+    nickname: String
+    product: String
+    recurring: StripeLineItemPriceRecurring
+    tax_behavior: String
+    tiers: [StripeLineItemPriceTiers]
+    tiers_mode: String
+    transform_quantity: StripeLineItemPriceTransformQuantity
+    type: String
+    unit_amount: Integer
+    unit_amount_decimal: Float
   }
 
-  type StripeLineItemDiscount {
+  type StripeLineItemPriceTransformQuantity {
+    divide_by: Integer
+    round: StripeLineItemPriceTransformQuantityRoundEnum
+  }
 
+  type StripeLineItemPriceTiers {
+    flat_amount: Integer
+    flat_amount_decimal: Float
+    unit_amount: Integer
+    unit_amount_decimal: Float
+    up_to: Integer
+  }
+
+  type StripeLineItemPriceRecurring {
+    aggregate_usage: String
+    interval: StripeLineItemPriceRecurringIntervalEnum
+    interval_count: Integer
+    usage_type: StripeLineItemPriceRecurringUsageTypeEnum
+  }
+
+  enum StripeLineItemPriceTransformQuantityRoundEnum {
+    up
+    down
+  }
+
+  enum StripeLineItemPriceRecurringUsageTypeEnum {
+    metered
+    licensed
+  }
+
+  enum StripeLineItemPriceRecurringIntervalEnum {
+    month
+    year
+    week
+    day
+  }
+
+  type StripeLineItemPriceCustomUnitAmount {
+    maximum: Integer
+    minimum: Integer
+    preset: Integer
+  }
+
+  scalar StripeLineItemPriceCurrencyOptions
+
+  type StripeLineItemDiscount {
+    amount: Integer
+    discount: StripeDiscount
+  }
+
+  enum StripePaymentOptionsCustomerBalanceBankTransferEnum {
+    eu_bank_transfer
+    gb_bank_transfer
+    jp_bank_transfer
+    mx_bank_transfer
+  }
+
+  enum StripeLineItemPriceRecurringUsageTypeEnum {
+    metered
+    licensed
+  }
+
+  enum StripeLineItemPriceRecurringIntervalEnum {
+    month
+    year
+    week
+    day
+  }
+
+  enum StripePaymentOptionsCustomerBalanceBankTransferAddressTypesEnum {
+    sort_code
+    zengin
+    sepa
+    spei
+    iban
+  }
+
+
+  enum StripePaymentOptionsVerificationMethodEnum {
+    automatic
+    instant
+    microdeposits
+  }
+
+  enum  StripePaymentOptionsACSSDebitMandateOptionsTransactionTypeEnum {
+    personal
+    business
+  }
+
+  enum StripePaymentOptionsACSSDebitMandateOptionsPaymentScheduleEnum {
+    interval
+    sporadic
+    combined
+  }
+
+  enum StripePaymentOptionsACSSDebitMandateOptionsDefaultForEnum {
+    invoice
+    subscription
+  }
+
+  enum StripePaymentOptionsACSSDebitCurrencyEnum {
+    cad
+    usd
+  }
+
+   enum StripePaymentOptionsSetupFutureUseNoneEnum {
+    none
+  }
+
+  enum StripePaymentOptionsVerificationMethodEnum {
+    automatic
+    instant
+  }
+
+  enum StripePaymentOptionsSetupFutureUseEnum {
+    on_session
+    off_session
+    none
+  }
+
+  enum StripeCheckoutFinancialConnectionsEnum {
+    payment_method
+    balances
+    transactions
+    ownership
+  }
+
+  enum StripeCheckoutSessionSubmitTypeEnum {
+    auto
+    pay
+    book
+    donate
   }
 
   enum StripeCheckoutSessionCustomerCreationEnum {

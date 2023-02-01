@@ -13,11 +13,11 @@ export const useStripeCheckout = () => {
         $successUrl: String
         $cancelUrl: String
         $customer: StripeCustomerInput
-        $mode: String
+        $mode: StripeCheckoutModeEnum
       ) {
         checkout(cart: $cart, successUrl: $successUrl, cancelUrl: $cancelUrl, customer: $customer, mode: $mode) {
           id
-          sessionUrl
+          url
         }
       }
     `
@@ -63,13 +63,16 @@ export const useStripeCheckout = () => {
         data: {
           checkout: {
             id,
-            sessionUrl
-          },
+            url
+          }
         },
       } = await checkout(payload)
 
       // Redirect to Stripe Checkout
-      location.href = sessionUrl;
-    } 
+      location.href = url;
+    },
+    retrieveStripeCheckoutSession: id => {
+      console.log(id)
+    }
   } 
 }
