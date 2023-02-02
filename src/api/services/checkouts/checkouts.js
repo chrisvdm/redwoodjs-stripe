@@ -9,7 +9,7 @@ export const checkout = async (payload) => {
 
   return {
     id,
-    sessionUrl: url
+    url
   }; 
 }
 
