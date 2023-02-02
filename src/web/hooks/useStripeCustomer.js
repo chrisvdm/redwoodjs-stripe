@@ -1,4 +1,5 @@
 import { useMutation } from '@redwoodjs/web'
+import { useContext } from 'react'
 import gql from 'graphql-tag'
 import { useApolloClient } from '@apollo/client'
 
@@ -32,7 +33,7 @@ name`) => {
   `
     
   return {
-    customer: StripeContext.customer,
+    customer: useContext(StripeContext).customer,
     retrieveStripeCustomer: async (id) => {
       const client = useApolloClient()
       
