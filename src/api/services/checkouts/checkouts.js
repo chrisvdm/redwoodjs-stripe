@@ -9,7 +9,7 @@ export const checkout = async (payload) => {
 
   return {
     id,
-    sessionUrl: url
+    url
   }; 
 }
 
@@ -46,4 +46,9 @@ export const createStripeCheckoutSession = async ({
 
 export const redirectToStripeCheckout = async url => {
   // probably best this logic lives in an serverless function
+}
+
+export const retrieveStripeCheckoutSession = async ({ id }) => {
+  const session = await stripe.checkout.sessions.retrieve(id)
+  return session
 }
