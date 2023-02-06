@@ -5,7 +5,7 @@ import gql from 'graphql-tag'
 
 export const useStripeCheckout = () => {
   const context = useContext(StripeContext)
-  
+
   // Create Session Mutation
   const [checkout] = useMutation(
     gql`
@@ -80,7 +80,7 @@ export const useStripeCheckout = () => {
           }
         },
       } = await checkout(payload)
-      debugger
+      
       // Redirect to Stripe Checkout
       location.href = url;
     },
