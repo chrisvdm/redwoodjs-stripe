@@ -14,15 +14,18 @@ import { StripeContext } from '../StripeContext'
 
 export const StripeProvider = ({
   children,
-  customer: {
-    id = "",
-    search = ""
+  customer = {
+    id : "",
+    search : ""
   }
 }) => {
   const [cart, setCart] = useState([])
   const [stripeCustomer, setCustomer] = useState(null)
-  
+  const { id = '', search = '' } = customer
+
+  // Fetches Stripe Customer object 
   useStripeCustomerFetch(id, search, setCustomer)
+
   // Returns a fn that returns a promise when stripeCustomer is null
   // else returns resolved stripeCustomer value
   const whenCustomerResolved = useWatcher(stripeCustomer, isNotNull)
