@@ -4,6 +4,7 @@ import Stripe from 'stripe'
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   appInfo: {
     name: 'redwoodjs-stripe',
+    version: '0.1.0-rc.4',
     url: 'https://github.com/chrisvdm/redwoodjs-stripe'
   }
 })
