@@ -42,10 +42,6 @@ const StripeDemoPage = () => {
       <StripeProvider
         customer={{
           search: isLoggedIn ? `email: "${authUser.email}"` : '',
-          create: {
-            email: authUser.email,
-            name: authUser.name,
-          },
         }}
       >
         <MetaTags

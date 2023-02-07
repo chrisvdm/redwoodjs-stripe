@@ -1,7 +1,7 @@
 // export hooks
 export {
     useStripeCheckout,
-    useStripeCustomerFetchOrCreate,
+    useStripeCustomerFetch,
     useStripeCustomer,
     useStripeCustomerPortal
 } from './hooks'
