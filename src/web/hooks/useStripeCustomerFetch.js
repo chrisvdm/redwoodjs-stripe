@@ -72,7 +72,7 @@ const fetchCustomer = async (context) => {
 
   if (hasID) {
     foundCustomer = await retrieveCustomer(context)
-  } else if (hasSearchString && foundCustomer !== null) {
+  } else if (hasSearchString && foundCustomer === null) {
     foundCustomer = await searchCustomer(context)
   }
 
