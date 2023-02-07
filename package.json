@@ -30,7 +30,7 @@
     }
   },
   "scripts": {
-    "dev": "(npx chokidar-cli 'src/**/*' -c 'yarn build && yalc push && (cd ../example-store && yalc add redwoodjs-stripe)')",
+    "dev": "(npx chokidar-cli 'src/**/*' -c 'yarn build && yalc push && (cd ../rc-final-test && yalc add redwoodjs-stripe)')",
     "build": "parcel build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -66,7 +66,6 @@
     "fs-extra": "^10.1.0",
     "listr": "^0.14.3",
     "prompts": "^2.4.2",
-    "stripe": "^8.220.0",
     "tmp-promise": "^3.0.3",
     "yargs": "^17.5.1"
   },
