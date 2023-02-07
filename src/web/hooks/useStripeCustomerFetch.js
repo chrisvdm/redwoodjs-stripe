@@ -1,7 +1,6 @@
 import { useApolloClient } from '@apollo/client'
 import gql from 'graphql-tag'
 
-import { useStripeCustomer } from './useStripeCustomer'
 import { useEffect } from 'react'
 
 const STRIPE_CUSTOMER_SEARCH = gql`
@@ -57,42 +56,38 @@ const retrieveCustomer = async ({ id, client }) => {
   return result.data?.retrieveStripeCustomer ?? null
 }
 
-const fetchOrCreateCustomer = async (context) => {
+const fetchCustomer = async (context) => {
   const {
     id,
-    searchString,
-    newCustomerData,
-    createStripeCustomer
+    searchString
   } = context
-
-  const hasNewCustomerObj = Object.keys(newCustomerData).length > 0
   const hasSearchString = searchString !== '' && !!searchString
   const hasID = id !== '' && !!id
 
-  if (!hasNewCustomerObj && !hasSearchString && !hasID) {
+  if (!hasSearchString && !hasID) {
     return null
   }
-  const foundCustomer = hasID ? await retrieveCustomer(context) : await searchCustomer(context)
 
-  if (foundCustomer !== null) {
-    return foundCustomer
+  let foundCustomer = null
+
+  if (hasID) {
+    foundCustomer = await retrieveCustomer(context)
+  } else if (hasSearchString && foundCustomer === null) {
+    foundCustomer = await searchCustomer(context)
   }
 
-  return await createStripeCustomer(newCustomerData)
+  return foundCustomer
 }
 
-export const useStripeCustomerFetchOrCreate = (id, searchString, newCustomerData, setCustomer) => {
-  const { createStripeCustomer } = useStripeCustomer()
-  const client = useApolloClient()
+export const useStripeCustomerFetch = (id, searchString, setCustomer) => {
+ const client = useApolloClient()
   useEffect(async () => {
     const context = {
       id,
       client,
       searchString,
-      createStripeCustomer,
-      newCustomerData
     }
-    const stripeCustomer = await fetchOrCreateCustomer(context)
+    const stripeCustomer = await fetchCustomer(context)
     setCustomer(stripeCustomer)
   }, [searchString, id])
 }
