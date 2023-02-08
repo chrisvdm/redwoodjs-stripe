@@ -124,8 +124,6 @@ type Customer = {
 
 `search` accepts a [Search API query](https://stripe.com/docs/search#search-query-language) that is used to search for a Stripe Customer. The idea is to use data of your authenticated user to build the search query. In most cases your authentication provider will provide you with an email address that you will be able to use to map to a Stripe Customer.
 
-`create` accepts a [Stripe Customer](https://stripe.com/docs/api/customers/create) object that uses the authenticated user data to create a new **Stripe Customer** if the authenticated user is not already a Stripe Customer.
-
 **Example**
 
 ```js
@@ -141,11 +139,7 @@ const { authUser } = useAuthentication()
  <Set
    wrap={StripeProvider}
    customer={{ 
-     search: isLoggedIn ? `email: "${authUser.email}"` : '',
-     create: {
-       email: authUser.email,
-       name: authUser.name
-     }
+     search: isLoggedIn ? `email: "${authUser.email}"` : ''
    }}
  >
    <Route path="/category" page={CategoryPage} name="category" />
