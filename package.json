@@ -30,7 +30,7 @@
     }
   },
   "scripts": {
-    "dev": "(npx chokidar-cli 'src/**/*' -c 'yarn build && yalc push && (cd ../rc-final-test && yalc add redwoodjs-stripe)')",
+    "dev": "rwStripeDev(){ yarn chokidar 'src/**/*' -c 'yarn build && yalc push && (cd '\"$1\"' && yalc add redwoodjs-stripe)'; }; rwStripeDev",
     "build": "parcel build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -52,11 +52,13 @@
     "@apollo/client": "^3.6.9",
     "@babel/runtime-corejs3": "^7.17.9",
     "@parcel/transformer-graphql": "latest",
+    "chokidar-cli": "^3.0.0",
     "core-js": "^3.22.5",
     "dir-tree": "^1.0.1",
     "graphql-tag": "2.x",
     "jest": "^28.1.1",
-    "parcel": "^2.8.2"
+    "parcel": "^2.8.2",
+    "yalc": "^1.0.0-pre.53"
   },
   "dependencies": {
     "@parcel/config-default": "^2.8.2",
