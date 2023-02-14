@@ -52,8 +52,10 @@
     "@apollo/client": "^3.6.9",
     "@babel/runtime-corejs3": "^7.17.9",
     "@parcel/config-default": "^2.8.2",
+    "@parcel/core": "^2.8.3",
     "@parcel/transformer-graphql": "latest",
     "chokidar-cli": "^3.0.0",
+    "cli-testing-library": "^1.0.4",
     "core-js": "^3.22.5",
     "dir-tree": "^1.0.1",
     "graphql-tag": "2.x",
@@ -63,7 +65,6 @@
   },
   "dependencies": {
     "@stripe/stripe-js": "1.29.0",
-    "cli-testing-library": "^1.0.4",
     "envfile": "^6.17.0",
     "fs-extra": "^10.1.0",
     "listr": "^0.14.3",
