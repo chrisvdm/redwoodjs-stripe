@@ -63,7 +63,6 @@
   },
   "dependencies": {
     "@stripe/stripe-js": "1.29.0",
-    "cli-testing-library": "^1.0.4",
     "envfile": "^6.17.0",
     "fs-extra": "^10.1.0",
     "listr": "^0.14.3",
@@ -76,6 +75,7 @@
     "@apollo/client": "3.x",
     "@redwoodjs/core": "4.x",
     "@redwoodjs/web": "4.x",
+    "cli-testing-library": "^1.0.4",
     "graphql-tag": "2.x",
     "react": "17.0.2",
     "react-dom": "17.0.2"
