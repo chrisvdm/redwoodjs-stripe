@@ -58,7 +58,8 @@
     "dir-tree": "^1.0.1",
     "graphql-tag": "2.x",
     "jest": "^28.1.1",
-    "parcel": "^2.8.2"
+    "parcel": "^2.8.2",
+    "yalc": "^1.0.0-pre.53"
   },
   "dependencies": {
     "@stripe/stripe-js": "1.29.0",
