@@ -3,9 +3,7 @@
   "version": "0.1.0-rc.5",
   "description": "A Redwood/Stripe integration made easy",
   "main": "./dist/cjs/api/index.js",
-  "bin": {
-    "redwoodjs-stripe": "./src/cli/cli.js"
-  },
+  "bin": "./src/cli/cli.js",
   "files": [
     "src",
     "dist",
@@ -30,7 +28,9 @@
     }
   },
   "scripts": {
-    "dev": "rwStripeDev(){ yarn chokidar 'src/**/*' -c 'yarn build && yalc push && (cd '\"$1\"' && yalc add redwoodjs-stripe)'; }; rwStripeDev",
+    "dev": "yarn dev:watch",
+    "dev:watch": "yarn chokidar 'src/**/*' -c 'yarn dev:build \"$1\"'",
+    "dev:build": "yarn build && yalc push && (cd \"$1\" && yalc add redwoodjs-stripe);",
     "build": "parcel build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -51,6 +51,7 @@
   "devDependencies": {
     "@apollo/client": "^3.6.9",
     "@babel/runtime-corejs3": "^7.17.9",
+    "@parcel/config-default": "^2.8.2",
     "@parcel/transformer-graphql": "latest",
     "chokidar-cli": "^3.0.0",
     "core-js": "^3.22.5",
@@ -61,7 +62,6 @@
     "yalc": "^1.0.0-pre.53"
   },
   "dependencies": {
-    "@parcel/config-default": "^2.8.2",
     "@stripe/stripe-js": "1.29.0",
     "cli-testing-library": "^1.0.4",
     "envfile": "^6.17.0",
