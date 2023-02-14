@@ -44,7 +44,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["parcel", "virtual:14535e6fb95276e28cc77807f50be0c32fcb141d2d4dfcfbce48d58de2d5b6ac6e0d33b83b184c36f81bd9811e4790b363e425bd80f916fb7e2431e502996465#npm:2.8.3"],\
             ["prompts", "npm:2.4.2"],\
             ["stripe", "npm:11.10.0"],\
-            ["tmp-promise", "npm:3.0.3"],\
             ["yalc", "npm:1.0.0-pre.53"],\
             ["yargs", "npm:17.6.2"]\
           ],\
@@ -6570,7 +6569,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["parcel", "virtual:14535e6fb95276e28cc77807f50be0c32fcb141d2d4dfcfbce48d58de2d5b6ac6e0d33b83b184c36f81bd9811e4790b363e425bd80f916fb7e2431e502996465#npm:2.8.3"],\
             ["prompts", "npm:2.4.2"],\
             ["stripe", "npm:11.10.0"],\
-            ["tmp-promise", "npm:3.0.3"],\
             ["yalc", "npm:1.0.0-pre.53"],\
             ["yargs", "npm:17.6.2"]\
           ],\
@@ -7210,26 +7208,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/timsort-npm-0.3.0-868a28166c-1a66cb897d.zip/node_modules/timsort/",\
           "packageDependencies": [\
             ["timsort", "npm:0.3.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["tmp", [\
-        ["npm:0.2.1", {\
-          "packageLocation": "./.yarn/cache/tmp-npm-0.2.1-a9c8d9c0ca-8b12146541.zip/node_modules/tmp/",\
-          "packageDependencies": [\
-            ["tmp", "npm:0.2.1"],\
-            ["rimraf", "npm:3.0.2"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["tmp-promise", [\
-        ["npm:3.0.3", {\
-          "packageLocation": "./.yarn/cache/tmp-promise-npm-3.0.3-6df4ad8df9-f854f5307d.zip/node_modules/tmp-promise/",\
-          "packageDependencies": [\
-            ["tmp-promise", "npm:3.0.3"],\
-            ["tmp", "npm:0.2.1"]\
           ],\
           "linkType": "HARD"\
         }]\

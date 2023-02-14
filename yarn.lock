@@ -5210,7 +5210,6 @@ __metadata:
     parcel: ^2.8.2
     prompts: ^2.4.2
     stripe: ^11.9.1
-    tmp-promise: ^3.0.3
     yalc: ^1.0.0-pre.53
     yargs: ^17.5.1
   peerDependencies:
@@ -5221,6 +5220,7 @@ __metadata:
     graphql-tag: 2.x
     react: 17.0.2
     react-dom: 17.0.2
+    tmp-promise: ^3.0.3
   bin:
     redwoodjs-stripe: ./src/cli/cli.js
   languageName: unknown
@@ -5817,24 +5817,6 @@ __metadata:
   version: 0.3.0
   resolution: "timsort@npm:0.3.0"
   checksum: 1a66cb897dacabd7dd7c91b7e2301498ca9e224de2edb9e42d19f5b17c4b6dc62a8d4cbc64f28be82aaf1541cb5a78ab49aa818f42a2989ebe049a64af731e2a
-  languageName: node
-  linkType: hard
-
-"tmp-promise@npm:^3.0.3":
-  version: 3.0.3
-  resolution: "tmp-promise@npm:3.0.3"
-  dependencies:
-    tmp: ^0.2.0
-  checksum: f854f5307dcee6455927ec3da9398f139897faf715c5c6dcee6d9471ae85136983ea06662eba2edf2533bdcb0fca66d16648e79e14381e30c7fb20be9c1aa62c
-  languageName: node
-  linkType: hard
-
-"tmp@npm:^0.2.0":
-  version: 0.2.1
-  resolution: "tmp@npm:0.2.1"
-  dependencies:
-    rimraf: ^3.0.0
-  checksum: 8b1214654182575124498c87ca986ac53dc76ff36e8f0e0b67139a8d221eaecfdec108c0e6ec54d76f49f1f72ab9325500b246f562b926f85bcdfca8bf35df9e
   languageName: node
   linkType: hard
 
