@@ -2121,6 +2121,46 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@redwoodjs-stripe/api@workspace:api":
+  version: 0.0.0-use.local
+  resolution: "@redwoodjs-stripe/api@workspace:api"
+  dependencies:
+    fs-extra: ^10.1.0
+    stripe: ^11.9.1
+  languageName: unknown
+  linkType: soft
+
+"@redwoodjs-stripe/cli@workspace:cli":
+  version: 0.0.0-use.local
+  resolution: "@redwoodjs-stripe/cli@workspace:cli"
+  dependencies:
+    envfile: ^6.17.0
+    fs-extra: ^10.1.0
+    listr: ^0.14.3
+    prompts: ^2.4.2
+    stripe: ^11.9.1
+    tmp-promise: ^3.0.3
+    yargs: ^17.5.1
+  bin:
+    cli: ./src/cli/cli.js
+  languageName: unknown
+  linkType: soft
+
+"@redwoodjs-stripe/web@workspace:web":
+  version: 0.0.0-use.local
+  resolution: "@redwoodjs-stripe/web@workspace:web"
+  dependencies:
+    tmp-promise: ^3.0.3
+  peerDependencies:
+    "@apollo/client": 3.x
+    "@redwoodjs/core": 4.x
+    "@redwoodjs/web": 4.x
+    graphql-tag: 2.x
+    react: 17.0.2
+    react-dom: 17.0.2
+  languageName: unknown
+  linkType: soft
+
 "@samverschueren/stream-to-observable@npm:^0.3.0":
   version: 0.3.1
   resolution: "@samverschueren/stream-to-observable@npm:0.3.1"
@@ -8189,8 +8229,6 @@ __metadata:
     graphql-tag: 2.x
     react: 17.0.2
     react-dom: 17.0.2
-  bin:
-    redwoodjs-stripe: ./src/cli/cli.js
   languageName: unknown
   linkType: soft
 

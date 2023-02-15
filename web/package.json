@@ -1,0 +1,21 @@
+{
+  "name": "@redwoodjs-stripe/web",
+  "version": "0.1.0-rc.6",
+  "main": "./dist/web-cjs/index.js",
+  "files": [
+    "src",
+    "dist",
+    "*.js"
+  ],
+  "dependencies": {
+    "tmp-promise": "^3.0.3"
+  },
+  "peerDependencies": {
+    "@apollo/client": "3.x",
+    "@redwoodjs/core": "4.x",
+    "@redwoodjs/web": "4.x",
+    "graphql-tag": "2.x",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  }
+}

@@ -2,23 +2,17 @@
   "name": "redwoodjs-stripe",
   "version": "0.1.0-rc.6",
   "description": "A Redwood/Stripe integration made easy",
-  "main": "./dist/cjs/api/index.js",
-  "bin": "./src/cli/cli.js",
-  "files": [
-    "src",
-    "dist",
-    "templates",
-    "*.js"
-  ],
   "targets": {
     "api-cjs": {
-      "source": "src/api/index.js",
+      "source": "api/src/index.js",
+      "distDir": "api/dist/api-cjs",
       "isLibrary": true,
       "context": "node",
       "outputFormat": "commonjs"
     },
     "web-cjs": {
-      "source": "src/web/index.js",
+      "source": "web/src/index.js",
+      "distDir": "web/dist/web-cjs",
       "isLibrary": true,
       "context": "browser",
       "outputFormat": "commonjs",
@@ -27,7 +21,13 @@
       ]
     }
   },
+  "browserslist": {
+    "development": [
+      "last 1 version"
+    ]
+  },
   "scripts": {
+    "release": "lerna release",
     "dev": "yarn dev:watch",
     "dev:watch": "yarn chokidar 'src/**/*' -c 'yarn dev:build \"$1\"'",
     "dev:build": "yarn build && yalc push && (cd \"$1\" && yalc add redwoodjs-stripe);",

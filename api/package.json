@@ -1,0 +1,14 @@
+{
+  "name": "@redwoodjs-stripe/api",
+  "version": "0.1.0-rc.6",
+  "main": "./dist/api-cjs/index.js",
+  "files": [
+    "src",
+    "dist",
+    "*.js"
+  ],
+  "dependencies": {
+    "fs-extra": "^10.1.0",
+    "stripe": "^11.9.1"
+  }
+}

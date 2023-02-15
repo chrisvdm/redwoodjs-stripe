@@ -14,11 +14,26 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       {\
         "name": "redwoodjs-stripe",\
         "reference": "workspace:."\
+      },\
+      {\
+        "name": "@redwoodjs-stripe/api",\
+        "reference": "workspace:api"\
+      },\
+      {\
+        "name": "@redwoodjs-stripe/cli",\
+        "reference": "workspace:cli"\
+      },\
+      {\
+        "name": "@redwoodjs-stripe/web",\
+        "reference": "workspace:web"\
       }\
     ],\
     "enableTopLevelFallback": true,\
     "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
     "fallbackExclusionList": [\
+      ["@redwoodjs-stripe/api", ["workspace:api"]],\
+      ["@redwoodjs-stripe/cli", ["workspace:cli"]],\
+      ["@redwoodjs-stripe/web", ["workspace:web"]],\
       ["redwoodjs-stripe", ["workspace:."]]\
     ],\
     "fallbackPool": [\
@@ -2946,6 +2961,43 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "typescript"\
           ],\
           "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@redwoodjs-stripe/api", [\
+        ["workspace:api", {\
+          "packageLocation": "./api/",\
+          "packageDependencies": [\
+            ["@redwoodjs-stripe/api", "workspace:api"],\
+            ["fs-extra", "npm:10.1.0"],\
+            ["stripe", "npm:11.10.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@redwoodjs-stripe/cli", [\
+        ["workspace:cli", {\
+          "packageLocation": "./cli/",\
+          "packageDependencies": [\
+            ["@redwoodjs-stripe/cli", "workspace:cli"],\
+            ["envfile", "npm:6.18.0"],\
+            ["fs-extra", "npm:10.1.0"],\
+            ["listr", "npm:0.14.3"],\
+            ["prompts", "npm:2.4.2"],\
+            ["stripe", "npm:11.10.0"],\
+            ["tmp-promise", "npm:3.0.3"],\
+            ["yargs", "npm:17.6.2"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@redwoodjs-stripe/web", [\
+        ["workspace:web", {\
+          "packageLocation": "./web/",\
+          "packageDependencies": [\
+            ["@redwoodjs-stripe/web", "workspace:web"],\
+            ["tmp-promise", "npm:3.0.3"]\
+          ],\
+          "linkType": "SOFT"\
         }]\
       ]],\
       ["@samverschueren/stream-to-observable", [\
