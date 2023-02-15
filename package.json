@@ -4,6 +4,7 @@
   "description": "A Redwood/Stripe integration made easy",
   "main": "./dist/cjs/api/index.js",
   "bin": "./src/cli/cli.js",
+  "workspaces":[ "packages/*"],
   "files": [
     "src",
     "dist",
