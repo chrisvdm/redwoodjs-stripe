@@ -8,7 +8,10 @@
       "distDir": "api/dist/api-cjs",
       "isLibrary": true,
       "context": "node",
-      "outputFormat": "commonjs"
+      "outputFormat": "commonjs",
+      "publishConfig": {
+    "access": "public"
+  }
     },
     "web-cjs": {
       "source": "web/src/index.js",
@@ -18,7 +21,10 @@
       "outputFormat": "commonjs",
       "includeNodeModules": [
         "@stripe/stripe-js"
-      ]
+      ],
+      "publishConfig": {
+    "access": "public"
+  }
     }
   },
   "browserslist": {
@@ -27,7 +33,7 @@
     ]
   },
   "scripts": {
-    "publish": "lerna publish --access=public",
+    "publish": "lerna publish",
     "dev": "yarn dev:watch",
     "dev:watch": "yarn chokidar 'src/**/*' -c 'yarn dev:build \"$1\"'",
     "dev:build": "yarn build && yalc push && (cd \"$1\" && yalc add redwoodjs-stripe);",
