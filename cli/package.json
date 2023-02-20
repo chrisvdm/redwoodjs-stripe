@@ -8,6 +8,9 @@
     "templates",
     "*.js"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "envfile": "^6.17.0",
     "fs-extra": "^10.1.0",
@@ -17,5 +20,5 @@
     "tmp-promise": "^3.0.3",
     "yargs": "^17.5.1"
   },
-  "gitHead": "30ae777a455844bf33127c505bec0f410a474ee3"
+  "gitHead": "3c7c9be1f49534429e3ffd96e759d7341dc63e5b"
 }

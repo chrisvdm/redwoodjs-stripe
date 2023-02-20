@@ -22,5 +22,8 @@
   ],
   "author": "chrisvdm",
   "license": "MIT",
-  "gitHead": "30ae777a455844bf33127c505bec0f410a474ee3"
+  "gitHead": "3c7c9be1f49534429e3ffd96e759d7341dc63e5b",
+  "publishConfig": {
+    "access": "public"
+  }
 }

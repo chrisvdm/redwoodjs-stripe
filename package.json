@@ -8,10 +8,7 @@
       "distDir": "api/dist/api-cjs",
       "isLibrary": true,
       "context": "node",
-      "outputFormat": "commonjs",
-      "publishConfig": {
-    "access": "public"
-  }
+      "outputFormat": "commonjs"
     },
     "web-cjs": {
       "source": "web/src/index.js",
@@ -21,10 +18,7 @@
       "outputFormat": "commonjs",
       "includeNodeModules": [
         "@stripe/stripe-js"
-      ],
-      "publishConfig": {
-    "access": "public"
-  }
+      ]
     }
   },
   "browserslist": {
