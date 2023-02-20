@@ -27,7 +27,7 @@
     ]
   },
   "scripts": {
-    "release": "lerna release",
+    "publish": "lerna publish",
     "dev": "yarn dev:watch",
     "dev:watch": "yarn chokidar 'src/**/*' -c 'yarn dev:build \"$1\"'",
     "dev:build": "yarn build && yalc push && (cd \"$1\" && yalc add redwoodjs-stripe);",
