@@ -16,5 +16,6 @@
     "stripe": "^11.9.1",
     "tmp-promise": "^3.0.3",
     "yargs": "^17.5.1"
-  }
+  },
+  "gitHead": "30ae777a455844bf33127c505bec0f410a474ee3"
 }
