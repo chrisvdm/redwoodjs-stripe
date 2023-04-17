@@ -1,4 +1,4 @@
-import { handleStripeWebhooks } from 'redwoodjs-stripe/api'
+import { handleStripeWebhooks } from '@redwoodjs-stripe/api'
 
 // import { handleDBSync } from 'src/services/users'
 

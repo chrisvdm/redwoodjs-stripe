@@ -19,6 +19,13 @@
       "includeNodeModules": [
         "@stripe/stripe-js"
       ]
+    },
+    "cli-cjs": {
+      "source": "cli/src/cli.js",
+      "distDir": "cli/dist/cli-cjs",
+      "isLibrary": true,
+      "context": "browser",
+      "outputFormat": "commonjs"
     }
   },
   "browserslist": {
@@ -28,9 +35,9 @@
   },
   "scripts": {
     "publish": "lerna publish",
-    "dev": "yarn dev:watch",
-    "dev:watch": "yarn chokidar 'src/**/*' -c 'yarn dev:build \"$1\"'",
-    "dev:build": "yarn build && yalc push && (cd \"$1\" && yalc add redwoodjs-stripe);",
+    "dev": "yarn dev:watch cli && yarn dev:watch api && yarn dev:watch web",
+    "dev:watch": "yarn chokidar '\"$2\"/src/**/*' -c 'yarn dev:build \"$1\"'",
+    "dev:build": "yarn build && yalc push  && (cd \"$1\" && yalc add @redwoodjs-stripe/\"$2\");",
     "build": "parcel build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
