@@ -1,6 +1,6 @@
 {
   "name": "@redwoodjs-stripe/cli",
-  "version": "0.1.0-rc.9.monorepo-test.5",
+  "version": "0.1.0-rc.9.monorepo-test.6",
   "bin": "./dist/cli.js",
   "files": [
     "src",
