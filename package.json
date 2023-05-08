@@ -3,7 +3,7 @@
   "private": true,
   "description": "A Redwood/Stripe integration made easy",
   "scripts": {
-    "publish": "lerna publish",
+    "release": "lerna publish",
     "clean": "rm -rf ./{cli,api,web}/dist",
     "build:cli": "esbuild --platform=node --format=cjs --outdir=./cli/dist/ $(find cli/src -name '*.js' -and -not -name '*.test.js')",
     "build:web": "esbuild --platform=browser --outdir=./web/dist/ --loader:.js=jsx $(find web/src -name '*.js' -or -name '*.css' -and -not -name '*.test.js')",
