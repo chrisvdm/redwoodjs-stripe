@@ -1,6 +1,6 @@
 {
   "name": "@redwoodjs-stripe/web",
-  "version": "0.1.0-rc.9",
+  "version": "0.1.0-rc.9.monorepo-test.1",
   "main": "./dist/index.js",
   "files": [
     "src",
