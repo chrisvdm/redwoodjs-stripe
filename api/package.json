@@ -1,7 +1,7 @@
 {
   "name": "@redwoodjs-stripe/api",
   "version": "0.1.0-rc.9",
-  "main": "./dist/api-cjs/index.js",
+  "main": "./dist/index.js",
   "files": [
     "src",
     "dist",
