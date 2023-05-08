@@ -9,9 +9,6 @@
     "build:web": "esbuild --platform=browser --outdir=./web/dist/ --loader:.js=jsx $(find web/src -name '*.js' -or -name '*.css' -and -not -name '*.test.js')",
     "build:api": "esbuild --platform=node --format=cjs --outdir=./api/dist/ $(find api/src -name '*.js' -and -not -name '*.test.js')",
     "build": "yarn clean && yarn build:api && yarn build:web && yarn build:cli",
-    "dev": "yarn dev:watch cli && yarn dev:watch api && yarn dev:watch web",
-    "dev:watch": "yarn chokidar '\"$2\"/src/**/*' -c 'yarn dev:build \"$1\"'",
-    "dev:build": "yarn build && yalc push  && (cd \"$1\" && yalc add @redwoodjs-stripe/\"$2\");",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
