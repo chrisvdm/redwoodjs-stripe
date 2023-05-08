@@ -38,8 +38,7 @@ This plugin is being built with the support of the awesome people at [Redwood](h
 **In terminal**
 
 ```
-yarn add redwoodjs-stripe
-yarn redwoodjs-stripe setup
+npx @redwoodjs-stripe/cli setup
 yarn rw dev
 ```
 

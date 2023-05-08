@@ -94,6 +94,11 @@ const copyTemplateFiles = async (options) => {
 const shouldSkip = (options, step) => [...(options.skip || [])].includes(step);
 
 const scaffold = async (options) => {
+  if (!shouldSkip(options, 'pluginDeps')) {
+    await exec('(cd web && yarn add @redwoodjs-stripe/web)', { cwd: options.dir });
+    await exec('(cd api && yarn add @redwoodjs-stripe/api)', { cwd: options.dir });
+  }
+
   await updateDotEnv(options);
 
   if (!shouldSkip(options, 'rwGenerate')) {
