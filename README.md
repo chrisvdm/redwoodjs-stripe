@@ -52,10 +52,10 @@ The plugin library is divided into a `web` side and an `api` side. You'd import 
 
 ```js
 // web-side
-import { useStripeCheckout } from 'redwoodjs-stripe/web';
+import { useStripeCheckout } from '@redwoodjs-stripe/web';
 
 // app-side
-import { createStripeCustomer } from 'redwoodjs-stripe/api';
+import { createStripeCustomer } from '@redwoodjs-stripe/api';
 ```
 
 ### Web-side API Reference
@@ -437,7 +437,7 @@ After logging in you'll be given a webhook secret. Make sure it matches the `STR
 Creates a Stripe Checkout Session and returns a Session object.
 
 ```js
-import { createStripeCheckoutSession } from 'redwoodjs-stripe/api';
+import { createStripeCheckoutSession } from '@redwoodjs-stripe/api';
 // ...
 const newSession = await createStripeCheckoutSession({
   mode: 'payment',
@@ -473,7 +473,7 @@ type CartItem = {
 Accepts a [Search API query](https://stripe.com/docs/search#search-query-language) and returns the Customer object of the last created Customer that matches the search query.
 
 ```js
-import { searchLatestStripeCustomer } from 'redwoodjs-stripe/api';
+import { searchLatestStripeCustomer } from '@redwoodjs-stripe/api';
 // ...
 const customer = await searchLatestStripeCustomer('email: "user@test.com"');
 ```
@@ -483,7 +483,7 @@ const customer = await searchLatestStripeCustomer('email: "user@test.com"');
 Accepts an object with data to create a new Stripe customer and returns the newly created Stripe Customer object.
 
 ```js
-import { createStripeCustomer } from 'redwoodjs-stripe/api';
+import { createStripeCustomer } from '@redwoodjs-stripe/api';
 // ...
 const customer = await createStripeCustomer({ email });
 ```
