@@ -81,7 +81,7 @@ const addDummyProducts = async (options) => {
 };
 
 const copyTemplateFiles = async (options) => {
-  const srcDir = path.join(__dirname, '..', '..', 'templates');
+  const srcDir = path.join(__dirname, '..', 'templates');
   const destDir = options.dir;
 
   await fs.mkdirp(srcDir);
