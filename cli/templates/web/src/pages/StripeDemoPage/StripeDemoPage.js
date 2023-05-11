@@ -8,7 +8,7 @@ import {
   useStripeCheckout,
   useStripeCustomerPortal,
   StripeProvider,
-} from 'redwoodjs-stripe/web'
+} from '@redwoodjs-stripe/web'
 
 import { MetaTags } from '@redwoodjs/web'
 

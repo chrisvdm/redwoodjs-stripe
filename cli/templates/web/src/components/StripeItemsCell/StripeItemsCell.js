@@ -1,4 +1,4 @@
-import { useStripeCart } from 'redwoodjs-stripe/web'
+import { useStripeCart } from '@redwoodjs-stripe/web'
 
 import { Icon } from './Icon'
 import './styles.css'

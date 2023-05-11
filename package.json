@@ -1,37 +1,14 @@
 {
   "name": "redwoodjs-stripe",
-  "version": "0.1.0-rc.11",
+  "private": true,
   "description": "A Redwood/Stripe integration made easy",
-  "main": "./dist/cjs/api/index.js",
-  "bin": "./src/cli/cli.js",
-  "files": [
-    "src",
-    "dist",
-    "templates",
-    "*.js"
-  ],
-  "targets": {
-    "api-cjs": {
-      "source": "src/api/index.js",
-      "isLibrary": true,
-      "context": "node",
-      "outputFormat": "commonjs"
-    },
-    "web-cjs": {
-      "source": "src/web/index.js",
-      "isLibrary": true,
-      "context": "browser",
-      "outputFormat": "commonjs",
-      "includeNodeModules": [
-        "@stripe/stripe-js"
-      ]
-    }
-  },
   "scripts": {
-    "dev": "yarn dev:watch",
-    "dev:watch": "yarn chokidar 'src/**/*' -c 'yarn dev:build \"$1\"'",
-    "dev:build": "yarn build && yalc push && (cd \"$1\" && yalc add redwoodjs-stripe);",
-    "build": "parcel build",
+    "release": "yarn build && lerna publish",
+    "clean": "rm -rf ./{cli,api,web}/dist",
+    "build:cli": "esbuild --platform=node --format=cjs --outdir=./cli/dist/ $(find cli/src -name '*.js' -and -not -name '*.test.js')",
+    "build:web": "esbuild --platform=browser --format=cjs --outdir=./web/dist/ --jsx=automatic --loader:.js=jsx $(find web/src -name '*.js' -or -name '*.css' -and -not -name '*.test.js')",
+    "build:api": "esbuild --platform=node --format=cjs --outdir=./api/dist/ $(find api/src -name '*.js' -and -not -name '*.test.js')",
+    "build": "yarn clean && yarn build:api && yarn build:web && yarn build:cli",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -51,16 +28,14 @@
   "devDependencies": {
     "@apollo/client": "^3.6.9",
     "@babel/runtime-corejs3": "^7.17.9",
-    "@parcel/config-default": "^2.8.2",
-    "@parcel/core": "^2.8.3",
-    "@parcel/transformer-graphql": "latest",
     "chokidar-cli": "^3.0.0",
     "cli-testing-library": "^1.0.4",
     "core-js": "^3.22.5",
     "dir-tree": "^1.0.1",
+    "esbuild": "^0.17.18",
     "graphql-tag": "2.x",
     "jest": "^28.1.1",
-    "parcel": "^2.8.2",
+    "lerna": "^6.5.1",
     "yalc": "^1.0.0-pre.53"
   },
   "dependencies": {
@@ -78,5 +53,10 @@
     "graphql-tag": "2.x",
     "react": "17.0.2",
     "react-dom": "17.0.2"
-  }
+  },
+  "workspaces": [
+    "api",
+    "web",
+    "cli"
+  ]
 }

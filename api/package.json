@@ -1,0 +1,29 @@
+{
+  "name": "@redwoodjs-stripe/api",
+  "version": "0.1.0-rc.9.monorepo-test.6",
+  "main": "./dist/index.js",
+  "files": [
+    "src",
+    "dist",
+    "*.js"
+  ],
+  "dependencies": {
+    "fs-extra": "^10.1.0",
+    "stripe": "^11.9.1"
+  },
+  "description": "API side code for redwoodjs-stripe project",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "stripe",
+    "redwoodjs",
+    "api"
+  ],
+  "author": "chrisvdm",
+  "license": "MIT",
+  "gitHead": "dc236d24165114a18811fe36e62482ff4ae75d36",
+  "publishConfig": {
+    "access": "public"
+  }
+}
