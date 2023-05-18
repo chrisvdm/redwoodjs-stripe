@@ -1,4 +1,4 @@
-🚀**A Redwood/Stripe integration made easy!**🚀
+_A Redwood/Stripe integration made easy!_
 
 The aim of this plugin is to make setting up a Redwoodjs commerce app as simple as possible, with minimal configuration. After running a single setup command users will have a demo storefront generated into their app which uses a simple cart machine for cart items and uses Stripe Checkout to checkout. The demo store can either be customised by the user or used as documentation for building their own storefront.
 
