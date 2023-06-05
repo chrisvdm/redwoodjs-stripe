@@ -50,9 +50,13 @@ export const StripeProvider = ({
 
   // sync Cart with localStorage
   useEffect(() => {
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       window.localStorage.setItem('stripeCart', JSON.stringify(cart))
     })
+
+    return () => {
+      clearTimeout(timeoutId)
+    }
   }, [cart])
 
   // Only create new api obj when cart and stripeCustomer changes
