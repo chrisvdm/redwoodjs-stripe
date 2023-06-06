@@ -1,0 +1,6 @@
+41 error Error: Command failed with exit code 128: git tag v0.1.0-rc.11 -m v0.1.0-rc.11
+41 error fatal: tag 'v0.1.0-rc.11' already exists
+41 error     at makeError (/Users/Chris/dev/rw/redwoodjs-stripe/node_modules/execa/lib/error.js:60:11)
+41 error     at handlePromise (/Users/Chris/dev/rw/redwoodjs-stripe/node_modules/execa/index.js:118:26)
+41 error     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+41 error     at async Promise.all (index 0)
