@@ -9,7 +9,9 @@
     "build:web": "esbuild --platform=browser --format=cjs --outdir=./web/dist/ --jsx=automatic --loader:.js=jsx $(find web/src -name '*.js' -or -name '*.css' -and -not -name '*.test.js')",
     "build:api": "esbuild --platform=node --format=cjs --outdir=./api/dist/ $(find api/src -name '*.js' -and -not -name '*.test.js')",
     "build": "yarn clean && yarn build:api && yarn build:web && yarn build:cli",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev-setup": "yarn workspace api link && yarn workspace web link"
+  
   },
   "repository": {
     "type": "git",
