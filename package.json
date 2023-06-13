@@ -11,7 +11,6 @@
     "build": "yarn clean && yarn build:api && yarn build:web && yarn build:cli",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev-setup": "yarn workspace api link && yarn workspace web link"
-  
   },
   "repository": {
     "type": "git",

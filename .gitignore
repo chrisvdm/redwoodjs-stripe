@@ -15,3 +15,5 @@ yarn-error.log
 yalc.lock
 
 *.swp
+
+lerna-debug.log

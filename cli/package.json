@@ -1,0 +1,24 @@
+{
+  "name": "@redwoodjs-stripe/cli",
+  "version": "0.1.0-rc.10",
+  "bin": "./dist/cli.js",
+  "files": [
+    "src",
+    "dist",
+    "templates",
+    "*.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "envfile": "^6.17.0",
+    "fs-extra": "^10.1.0",
+    "listr": "^0.14.3",
+    "prompts": "^2.4.2",
+    "stripe": "^11.9.1",
+    "tmp-promise": "^3.0.3",
+    "yargs": "^17.5.1"
+  },
+  "gitHead": "dc236d24165114a18811fe36e62482ff4ae75d36"
+}
