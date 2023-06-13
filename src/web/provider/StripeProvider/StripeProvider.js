@@ -54,11 +54,11 @@ export const StripeProvider = ({
 
   // sync Cart with localStorage
   useEffect(() => {
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       window.localStorage.setItem('stripeCart', JSON.stringify(cart))
     })
     return () => {
-      clearTimeout()
+      clearTimeout(timeout)
     }
   }, [cart])
 
