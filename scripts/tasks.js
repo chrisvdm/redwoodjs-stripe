@@ -68,7 +68,7 @@ const syncPkg = async (pkg) => {
 
         if (event === 'unlink') {
             // note: A file was removed, but we don't know over here what the corresponding
-            // destination file to be removed was (e.g. if extensino changed), we
+            // destination file to be removed is (e.g. if the extension changed). We
             // assume the extension is the same, but we'll have stale files if not 
             await fs.remove(path.resolve(pkgDestDir, path.relative(pkgSrcDir, filepath)))
             await resetContext()
