@@ -2,25 +2,34 @@ const Tasks = require('listr');
 const util = require('util');
 const fs = require('fs')
 const exec = util.promisify(require('child_process').exec);
-import * as esbuild from 'esbuild'
+const esbuild = require('esbuild')
 
+const watchForChanges = async ({appDir}) => {
+    let ctxCli = await esbuild.context({
+        entryPoints: ['./cli/src/cli.js'],
+        outdir: './cli/dist/',
+        platform: 'node',
+        format: 'cjs'
+    })
+    
+    let ctxApi = await esbuild.context({
+        entryPoints: ['./api/src/index.js'],
+        outdir: './api/dist/',
+        platform: 'node',
+        format: 'cjs'
+    })
+    
+    let ctxWeb = await esbuild.context({
+        entryPoints: ['./web/src/index.js'],
+        outdir: './web/dist/',
+        platform: 'node',
+        format: 'cjs'
+    })
 
-const linkPackages = async (options, task) => {
-    task.title = 'Linking api side'
-    await exec(`(cd ${options.appDir}/api && npx link ../../redwoodjs-stripe/api)`, { cwd: options.dir });
-    task.title = 'Linking web side'
-    await exec(`(cd ${options.appDir}/web && npx link ../../redwoodjs-stripe/web)`, { cwd: options.dir });
-}
-   
-const watchForChanges = async (options) => {
-let ctx = await esbuild.context({
-  entryPoints: ['app.js'],
-  outfile: 'out.js',
-  bundle: true,
-})
-
-await ctx.watch()
-console.log('watching...')
+    await ctxApi.watch()
+    await ctxCli.watch()
+    await ctxWeb.watch()
+    console.log('watching for changes...')
 }
 
 const argsFormatter = (args) => {
@@ -31,11 +40,7 @@ const argsFormatter = (args) => {
     argArray.filter(i => i.startsWith('--')).forEach(f => { flags.push(f.slice(2)) })
     const appDir = argArray.filter(i => !i.startsWith('--'))[0]
 
-    // Check for app directory
-    const dirExists = fs.existsSync(appDir)
-    if (!dirExists) {
-        throw new Error("   Please give a relative path to app directory")
-    }
+    
 
     return {
         flags: flags,
@@ -49,21 +54,8 @@ const argsFormatter = (args) => {
       ...argsFormatter(process.argv)
   };
     
-  const tasks = [
-    {
-        title: 'Linking @redwoodjs-stripe packages to app directory',
-        task: (ctx, task) => linkPackages(options, task),
-        skip: () => {
-            if (options.flags.includes('setup')) {
-                return false
-            } 
-        }
-    },
-    {
-      title: 'Watching for changes',
-      task: () => watchForChanges(options),
-    },
-  ];
-
-  await new Tasks(tasks.filter(Boolean)).run();
+    if (options.flags.includes('setup')) {
+      await linkPackages(options)
+    } 
+    watchForChanges(options)
 })()
