@@ -207,11 +207,11 @@ input StripeCustomerPortalConfigParamsInput {
 }
 
 type Query {
-    listStripeCustomerPortalConfig(params: StripeCustomerPortalConfigParamsInput): StripeCustomerPortalConfigList @skipAuth
+    listStripeCustomerPortalConfig(params: StripeCustomerPortalConfigParamsInput): StripeCustomerPortalConfigList @requireAuth
 }
 
 type Mutation {
-    createStripeCustomerPortalConfig(data: StripeCustomerPortalConfigInput): StripeCustomerPortalConfig @skipAuth
+    createStripeCustomerPortalConfig(data: StripeCustomerPortalConfigInput): StripeCustomerPortalConfig @requireAuth
     createStripeCustomerPortalSessionSkipAuth(data: StripeCustomerPortalInput): StripeCustomerPortal @skipAuth
     createStripeCustomerPortalSession(data: StripeCustomerPortalInput): StripeCustomerPortal @requireAuth
 }
