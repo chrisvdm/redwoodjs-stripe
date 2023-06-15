@@ -78,14 +78,14 @@ const StripeItem = ({ name, price, id, images, type }) => {
 
           <button
             className="rws-button"
-            onClick={() =>
+            onClick={() => {
               onAddToCartButtonClick({
                 name: name,
                 id: id,
                 price: price,
                 type: type,
               })
-            }
+            }}
           >
             <Icon name="plus" />
           </button>

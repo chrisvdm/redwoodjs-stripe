@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { useMutation, useQuery } from '@redwoodjs/web'
 
 import { StripeContext } from '../provider/StripeContext'
