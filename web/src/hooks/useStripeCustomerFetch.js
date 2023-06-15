@@ -81,13 +81,17 @@ const fetchCustomer = async (context) => {
 
 export const useStripeCustomerFetch = (id, searchString, setCustomer) => {
  const client = useApolloClient()
-  useEffect(async () => {
-    const context = {
-      id,
-      client,
-      searchString,
+  useEffect(() => {
+    const doFetch = async () => {
+      const context = {
+        id,
+        client,
+        searchString,
+      }
+      const stripeCustomer = await fetchCustomer(context)
+      setCustomer(stripeCustomer)
     }
-    const stripeCustomer = await fetchCustomer(context)
-    setCustomer(stripeCustomer)
+
+    doFetch()
   }, [searchString, id])
 }

@@ -25,7 +25,6 @@ export const createStripeApi = (cart, setCart, customer, waitForCustomer) => ({
       ]
     }
 
-    console.log(newCart)
     setCart(newCart)
   },
   removeFromCart: (item) => {
