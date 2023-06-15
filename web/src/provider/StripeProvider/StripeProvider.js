@@ -42,9 +42,13 @@ export const StripeProvider = ({
   
   // onMount fetch cart items from local storage
   useEffect(() => {
+    let ignore = false
     const serializedCart = window.localStorage.getItem('stripeCart')
     if (serializedCart) {
       setCart(JSON.parse(serializedCart))
+    }
+    return () => {
+      ignore = true
     }
   }, [])
 
