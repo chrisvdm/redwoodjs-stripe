@@ -35,9 +35,8 @@
     "glob": "^10.2.7",
     "graphql-tag": "2.x",
     "jest": "^28.1.1",
-    "lerna": "^6.5.1",
-    "sync-directory": "^6.0.4",
-    "yalc": "^1.0.0-pre.53"
+    "lerna": "^7.0.2",
+    "sync-directory": "^6.0.4"
   },
   "dependencies": {
     "@stripe/stripe-js": "1.29.0",
