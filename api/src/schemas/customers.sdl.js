@@ -11,7 +11,7 @@ scalar StripeInvoiceCreditBalance
 type StripeCustomer {
     id: ID
     address: StripeCustomerAddress
-    email: String
+    email: String @requireAuth
     description: String
     name: String
     phone: String
@@ -315,8 +315,8 @@ input CreateStripeCustomerAddressInput {
 }
 
 type Query {
-    stripeCustomerSearch(query: String): StripeCustomer @skipAuth
-    retrieveStripeCustomer(id: String!): StripeCustomer @skipAuth
+    stripeCustomerSearch(query: String): StripeCustomer @requireAuth
+    retrieveStripeCustomer(id: String!): StripeCustomer @requireAuth
 }
 
 type Mutation {

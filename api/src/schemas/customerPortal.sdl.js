@@ -207,7 +207,7 @@ input StripeCustomerPortalConfigParamsInput {
 }
 
 type Query {
-    listStripeCustomerPortalConfig(params: StripeCustomerPortalConfigParamsInput): StripeCustomerPortalConfigList @skipAuth
+    listStripeCustomerPortalConfig(params: StripeCustomerPortalConfigParamsInput): StripeCustomerPortalConfigList @requireAuth
 }
 
 type Mutation {
