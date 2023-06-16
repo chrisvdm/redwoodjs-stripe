@@ -1,6 +1,6 @@
 {
   "name": "@redwoodjs-stripe/cli",
-  "version": "0.1.0-rc.13",
+  "version": "0.1.0-rc.14",
   "bin": "./dist/cli.js",
   "files": [
     "src",

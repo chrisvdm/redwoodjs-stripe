@@ -1,6 +1,6 @@
 {
   "name": "@redwoodjs-stripe/api",
-  "version": "0.1.0-rc.13",
+  "version": "0.1.0-rc.14",
   "main": "./dist/index.js",
   "files": [
     "src",
