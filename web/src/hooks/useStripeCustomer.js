@@ -7,9 +7,7 @@ import { StripeContext } from '../provider/StripeContext'
 
 
 
-export const useStripeCustomer = (returnValues = `id
-email
-name`) => {
+export const useStripeCustomer = (returnValues = `id`) => {
     const [createStripeCustomer] = useMutation(
     gql`
       mutation createStripeCustomer($data: CreateStripeCustomerInput ) {
