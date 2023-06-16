@@ -211,7 +211,7 @@ type Query {
 }
 
 type Mutation {
-    createStripeCustomerPortalConfig(data: StripeCustomerPortalConfigInput): StripeCustomerPortalConfig @requireAuth
+    createStripeCustomerPortalConfig(data: StripeCustomerPortalConfigInput): StripeCustomerPortalConfig @skipAuth
     createStripeCustomerPortalSessionSkipAuth(data: StripeCustomerPortalInput): StripeCustomerPortal @skipAuth
     createStripeCustomerPortalSession(data: StripeCustomerPortalInput): StripeCustomerPortal @requireAuth
 }

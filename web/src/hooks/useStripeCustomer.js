@@ -59,7 +59,7 @@ name`) => {
         }
       }
 
-      // Create Customer Portal Session
+      // Create Customer
       const { data } = await createStripeCustomer(payload)
       return data.createStripeCustomer
     }

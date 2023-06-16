@@ -25,7 +25,6 @@ export const StripeProvider = ({
 
   // Fetches Stripe Customer object 
   useStripeCustomerFetch(id, search, setCustomer)
-
   // Returns a fn that returns a promise when stripeCustomer is null
   // else returns resolved stripeCustomer value
   const whenCustomerResolved = useWatcher(stripeCustomer, isNotNull)
