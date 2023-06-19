@@ -11,17 +11,17 @@ const prompt = (initialOptions) =>
   prompts(
     [
       {
-        type: 'text',
+        type: 'password',
         name: 'stripeSecretKey',
         message: 'What is your Stripe secret key?',
       },
       {
-        type: 'text',
+        type: 'password',
         name: 'stripePublishableKey',
         message: 'What is your Stripe publishable key?',
       },
       {
-        type: 'text',
+        type: 'password',
         name: 'stripeWebhookKey',
         message:
           "What is your Stripe Webhook Endpoint key (it's okay if you dont have one right now)?",
