@@ -95,8 +95,8 @@ const shouldSkip = (options, step) => [...(options.skip || [])].includes(step);
 
 const scaffold = async (options) => {
   if (!shouldSkip(options, 'pluginDeps')) {
-    await exec('(cd web && yarn add @redwoodjs-stripe/web)', { cwd: options.dir });
-    await exec('(cd api && yarn add @redwoodjs-stripe/api)', { cwd: options.dir });
+    await exec('yarn add @redwoodjs-stripe/web', { cwd: path.join(options.dir, 'web') });
+    await exec('yarn add @redwoodjs-stripe/api', { cwd: path.join(options.dir, 'api') });
   }
 
   await updateDotEnv(options);
