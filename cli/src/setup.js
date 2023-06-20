@@ -1,10 +1,9 @@
 // @ts-check
 
-const Tasks = require('listr');
+// const Tasks = require('listr');
 const { Listr } = require('listr2');
 const prompts = require('prompts');
 const fs = require('fs-extra');
-const envfile = require('envfile');
 const path = require('path');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
