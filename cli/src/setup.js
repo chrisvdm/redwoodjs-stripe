@@ -1,3 +1,6 @@
+// @ts-check
+
+const Tasks = require('listr');
 const { Listr } = require('listr2');
 const prompts = require('prompts');
 const fs = require('fs-extra');
@@ -36,7 +39,7 @@ const prompt = (initialOptions) =>
           'Would you like us to add dummy products to your Stripe account?',
         initial: false,
       },
-    ].filter((item) => initialOptions[item.name] == null),
+    ],
     {
       onCancel: () => {
         cancelled = true;
@@ -81,9 +84,7 @@ const copyTemplateFiles = async (options) => {
 
   await fs.mkdirp(srcDir);
 
-  await fs.copy(srcDir, destDir, {
-    recursive: true,
-  });
+  await fs.copy(srcDir, destDir);
 };
 
 const shouldSkip = (options, step) => [...(options.skip || [])].includes(step);
