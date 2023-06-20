@@ -1,11 +1,11 @@
 // @ts-check
 
-const { Listr } = require('listr2');
-const prompts = require('prompts');
+const path = require('node:path');
+const util = require('node:util');
+const exec = util.promisify(require('node:child_process').exec);
+
 const fs = require('fs-extra');
-const path = require('path');
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
+const { Listr } = require('listr2');
 const Stripe = require('stripe');
 
 let cancelled = false;
