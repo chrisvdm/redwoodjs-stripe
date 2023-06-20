@@ -7,6 +7,8 @@ const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 const Stripe = require('stripe');
 
+let cancelled = false;
+
 const prompt = (initialOptions) =>
   prompts(
     [
@@ -34,7 +36,12 @@ const prompt = (initialOptions) =>
           'Would you like us to add dummy products to your Stripe account?',
         initial: false,
       },
-    ].filter((item) => initialOptions[item.name] == null)
+    ].filter((item) => initialOptions[item.name] == null),
+    {
+      onCancel: () => {
+        cancelled = true;
+      }
+    }
   );
 
 const updateDotEnv = async (options) => {
@@ -109,11 +116,19 @@ const scaffold = async (options) => {
 };
 
 const setup = async (initialOptions) => {
+  const responses = await prompt(initialOptions)
+
+  if (cancelled) {
+    process.exitCode = 1
+    return
+  }
+
   const options = {
     dir: process.cwd(),
     ...initialOptions,
-    ...(await prompt(initialOptions)),
+    ...responses
   };
+
   const tasks = [
     options.addDummyProducts && {
       title: 'Adding dummy products',
