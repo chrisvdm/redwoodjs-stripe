@@ -1,3 +1,4 @@
+import { mockHttpEvent } from '@redwoodjs/testing/api'
 
 import Stripe from 'stripe'
 
@@ -19,7 +20,7 @@ export const lastEntry = (array) => {
   return latest[latest.length-1]
 }
 
-export const handleStripeWebhooks = (event, context, webhooksObj, secure = true) => {
+export const handleStripeWebhooks = (event, context, webhooksObj = {}, secure = true) => {
   if (secure) {
     const endpointSecret = process.env.STRIPE_WEBHOOK_KEY
     try {
@@ -31,7 +32,8 @@ export const handleStripeWebhooks = (event, context, webhooksObj, secure = true)
       )
 
       // Find event type in webhookObject
-      if (typeof webhooksObj[stripeEvent.type] !== 'undefined') {  
+      if (typeof webhooksObj[stripeEvent.type] !== 'undefined') {
+        // execute function for the event
         webhooksObj[stripeEvent.type](stripeEvent, context)
       }
 
@@ -57,4 +59,36 @@ export const handleStripeWebhooks = (event, context, webhooksObj, secure = true)
       throw error
     }
   }
+}
+
+// Generates a test Stripe mock event
+export const generateStripeMockEvent = () => {
+
+const payload = JSON.stringify(
+    {
+      id: 'evt_test_webhook',
+      object: 'event',
+    },
+    null,
+    2
+  )
+
+  process.env.STRIPE_WEBHOOK_SK = 'whsec_test_secret'
+
+  /**
+   * @see {@link https://github.com/stripe/stripe-node/blob/master/README.md#testing-webhook-signing}
+   */
+  const header = stripe.webhooks.generateTestHeaderString({
+    payload,
+    secret: process.env.STRIPE_WEBHOOK_SK,
+  })
+
+  const httpEvent = mockHttpEvent({
+    body: payload,
+    headers: {
+      'stripe-signature': header,
+    },
+  })
+
+  return httpEvent
 }
