@@ -1,4 +1,4 @@
-const Tasks = require('listr');
+const { Listr } = require('listr2');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
@@ -25,9 +25,13 @@ const upgrade = async () => {
       title: 'Upgrading @redwoodjs-stripe/web package',
       task: () => upgradeWeb(options),
     },
-  ];
+  ].filter(Boolean);
 
-  await new Tasks(tasks.filter(Boolean)).run();
+  try {
+    await new Listr(tasks).run();
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 module.exports = {

@@ -1,4 +1,4 @@
-const Tasks = require('listr');
+const { Listr } = require('listr2');
 const prompts = require('prompts');
 const fs = require('fs-extra');
 const envfile = require('envfile');
@@ -123,13 +123,17 @@ const setup = async (initialOptions) => {
       title: 'Scaffolding out project files',
       task: () => scaffold(options),
     },
-  ];
+  ].filter(Boolean);
 
-  await new Tasks(tasks.filter(Boolean)).run();
+  try {
+    await new Listr(tasks).run();
+  } catch (e) {
+    console.error(e);
+  }
 
-  console.log('Your redwoodjs-stripe integration is ready!');
+  console.log('Your RedwoodJS-Stripe integration is ready! 🎉');
   console.log(
-    'Run `yarn rw dev` and then navigate to http://localhost:8910/stripe-demo for a little demo'
+    'Run `yarn rw dev` and then navigate to http://localhost:8910/stripe-demo for a little demo.'
   );
 };
 
