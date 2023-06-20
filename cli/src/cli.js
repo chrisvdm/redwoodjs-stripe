@@ -8,6 +8,7 @@ const { upgrade } = require("./upgrade");
 const main = () => {
   yargs(hideBin(process.argv))
     .scriptName("redwoodjs-stripe")
+    .demandCommand()
     .command({
       command: "setup",
       describe: "Scaffolds out the files needed for using Stripe with Redwood",
