@@ -59,12 +59,9 @@ const updateDotEnv = async (options) => {
 const addDummyProducts = async (options) => {
   const stripe = new Stripe(options.stripeSecretKey);
 
-  const superpowers = JSON.parse(
-    fs.readFileSync(
-      path.join(__dirname, '..', 'templates', 'superpowers.json'),
-      'utf-8'
-    )
-  );
+  // esbuild parses JSON files into JS objects at build time.
+  // See https://esbuild.github.io/content-types/#json.
+  const superpowers = require('./superpowers');
 
   for (const superpower of superpowers) {
     const { prices, ...productData } = superpower;
