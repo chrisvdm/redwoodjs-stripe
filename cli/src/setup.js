@@ -100,11 +100,6 @@ const scaffold = async (options) => {
   }
 
   await updateDotEnv(options);
-
-  if (!shouldSkip(options, 'rwGenerate')) {
-    await exec('yarn rw g page stripe-demo', { cwd: options.dir });
-  }
-
   await copyTemplateFiles(options);
 };
 
