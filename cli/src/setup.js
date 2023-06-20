@@ -1,6 +1,5 @@
 // @ts-check
 
-// const Tasks = require('listr');
 const { Listr } = require('listr2');
 const prompts = require('prompts');
 const fs = require('fs-extra');
