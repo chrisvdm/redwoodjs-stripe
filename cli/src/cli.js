@@ -1,25 +1,30 @@
 #!/usr/bin/env node
-const yargs = require("yargs");
+const yargs = require("yargs/yargs");
+const { hideBin } = require('yargs/helpers')
 
 const { setup } = require("./setup");
 const { upgrade } = require("./upgrade");
 
-const main = () =>
-  yargs.scriptName("redwoodjs-stripe").command({
-    command: "setup",
-    describe: "Scaffolds out the files needed for using stripe with redwood",
-    handler(args) {
-      setup(args);
-    },
-  })
-  .command({
-    command: "upgrade",
-    describe: "Upgrades plugin's api and web side packages",
-    handler(args) {
-      upgrade(args);
-    },
-  })
-  .argv;
+const main = () => {
+  yargs(hideBin(process.argv))
+    .scriptName("redwoodjs-stripe")
+    .demandCommand()
+    .command({
+      command: "setup",
+      describe: "Scaffolds out the files needed for using Stripe with Redwood",
+      async handler(args) {
+        await setup(args);
+      },
+    })
+    .command({
+      command: "upgrade",
+      describe: "Upgrades the plugin's api and web side packages",
+      async handler(args) {
+        await upgrade(args);
+      },
+    })
+    .parse();
+}
 
 if (require.main === module) {
   main();
