@@ -40,20 +40,11 @@ const prompt = (initialOptions) =>
 const updateDotEnv = async (options) => {
   const dotEnvPath = path.join(options.dir, '.env');
 
-  const rawEnv = (await fs.pathExists(dotEnvPath))
-    ? await fs.readFile(dotEnvPath)
-    : '';
-
-  const currentEnv = envfile.parse(rawEnv);
-
-  const nextEnv = {
-    ...currentEnv,
-    STRIPE_SECRET_KEY: options.stripeSecretKey,
-    STRIPE_PUBLISHABLE_KEY: options.stripePublishableKey,
-    STRIPE_WEBHOOK_KEY: options.stripeWebhookKey,
-  };
-
-  await fs.writeFile(dotEnvPath, envfile.stringify(nextEnv));
+  fs.appendFileSync(dotEnvPath, [
+    `STRIPE_SECRET_KEY='${options.stripeSecretKey}'`,
+    `STRIPE_PUBLISHABLE_KEY='${options.stripePublishableKey}'`,
+    `STRIPE_WEBHOOK_KEY='${options.stripeWebhookKey}'`,
+  ].join('\n'))
 };
 
 const addDummyProducts = async (options) => {
