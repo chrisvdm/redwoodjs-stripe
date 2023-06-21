@@ -2,7 +2,7 @@
 
 const fs = require('fs-extra');
 
-export const importPlugin = async () => {
+const importPlugin = async () => {
     const graphQLFile = './api/src/functions/graphql.js'
     const text = {
         rwImports: [
@@ -52,4 +52,8 @@ const insertLinesAfter = (txt, replacementArray, fileData) => {
     const endSection = fileData.slice(SchemaStart)
     const insertedPar =replacementArray.join('\n')
     return firstSection.concat(`\n\n${insertedPar}`, endSection)   
+}
+
+module.exports = {
+    importPlugin
 }
