@@ -1,10 +1,8 @@
 // @ts-check
 
-const util = require('node:util');
 const fs = require('fs-extra');
-const { forEach } = require('core-js/core/array');
 
-(async () => {
+export const importPlugin = async () => {
     const graphQLFile = './api/src/functions/graphql.js'
     const text = {
         rwImports: [
@@ -36,22 +34,22 @@ const { forEach } = require('core-js/core/array');
 
 
         // import plugin services at top of file
-        updatedFile = (text.pluginImport).concat('\n\n', result2)
+        updatedFile = (text.pluginImport).concat('\n\n', updatedFile)
     
         // create new sdls and schemas objects
-        updatedFile = insertLinesAfter("import * as rwServices from \'src/services/**/*.{js,ts}\'", text.apiGraphQL, fileWithImports )
+        updatedFile = insertLinesAfter("import * as rwServices from \'src/services/**/*.{js,ts}\'", text.apiGraphQL, updatedFile )
         
         fs.writeFile(graphQLFile, updatedFile, 'utf8', (err) => {
             if (err) return console.log(err);
         });
       
     })
-})()
+}
 
 const insertLinesAfter = (txt, replacementArray, fileData) => {
     const SchemaStart = fileData.indexOf(txt) + txt.length
     const firstSection = fileData.slice(0, SchemaStart)
     const endSection = fileData.slice(SchemaStart)
     const insertedPar =replacementArray.join('\n')
-    return firstSection.concat(`\n${insertedPar}\n`, endSection)   
+    return firstSection.concat(`\n\n${insertedPar}`, endSection)   
 }

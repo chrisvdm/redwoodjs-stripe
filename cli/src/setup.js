@@ -9,6 +9,8 @@ const fs = require('fs-extra');
 const { Listr } = require('listr2');
 const Stripe = require('stripe');
 
+const { importPlugin } = require('./importPlugin')
+
 let cancelled = false;
 
 const prompt = (initialOptions) =>
@@ -61,7 +63,7 @@ const addDummyProducts = async (options) => {
 
   // esbuild parses JSON files into JS objects at build time.
   // See https://esbuild.github.io/content-types/#json.
-  const superpowers = require('./superpowers');
+  const superpowers = require('./superpowers.json');
 
   for (const superpower of superpowers) {
     const { prices, ...productData } = superpower;
@@ -87,30 +89,6 @@ const copyTemplateFiles = async (options) => {
 };
 
 const shouldSkip = (options, step) => [...(options.skip || [])].includes(step);
-
-const importSchemasAndServices = async () => {
-  const graphQLFile = './api/src/functions/graphql.js'
-  fs.readFile(graphQLFile, 'utf8', (err, data) => {
-    
-  if (err) {
-    return console.log(err);
-  }
-    
-    // Replace services and sdls
-    const result = data.replace(/import sdls from/g, 'import * as rwSdls from');
-    const result2 = result.replace(/import services from/g, 'import * as rwServices from');
-
-    // import plugin services at top of file
-    
-
-    // create new sdls and schemas objects
-    
-
-  fs.writeFile(graphQLFile, result2, 'utf8', (err) => {
-     if (err) return console.log(err);
-  });
-});
-}
 
 const scaffold = async (options) => {
   if (!shouldSkip(options, 'pluginDeps')) {
@@ -146,13 +124,13 @@ const setup = async (initialOptions) => {
       title: 'Adding dummy products',
       task: () => addDummyProducts(options),
     },
-    // {
-    //   title: 'Scaffolding out project files',
-    //   task: () => scaffold(options),
-    // },
     {
-      title: 'Importing Schemas and Services',
-      task: () => importSchemasAndServices()
+      title: 'Scaffolding out project files',
+      task: () => scaffold(options),
+    },
+    {
+      title: 'Importing Schemas and Services from plugin',
+      task: () => importPlugin()
     }
   ].filter(Boolean);
 
