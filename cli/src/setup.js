@@ -4,9 +4,12 @@ const path = require('node:path');
 const util = require('node:util');
 const exec = util.promisify(require('node:child_process').exec);
 
+const prompts = require('prompts');
 const fs = require('fs-extra');
 const { Listr } = require('listr2');
 const Stripe = require('stripe');
+
+const { importPlugin } = require('./importPlugin')
 
 let cancelled = false;
 
@@ -45,6 +48,12 @@ const prompt = (initialOptions) =>
     }
   );
 
+const determineFileType = async () => {
+    const fileName = './api/tsconfig.json'
+    const isTSApp = await fs.existsSync(fileName)
+    return isTSApp ? 'ts' : 'js'
+  }
+
 const updateDotEnv = async (options) => {
   const dotEnvPath = path.join(options.dir, '.env');
 
@@ -60,7 +69,7 @@ const addDummyProducts = async (options) => {
 
   // esbuild parses JSON files into JS objects at build time.
   // See https://esbuild.github.io/content-types/#json.
-  const superpowers = require('./superpowers');
+  const superpowers = require('./superpowers.json');
 
   for (const superpower of superpowers) {
     const { prices, ...productData } = superpower;
@@ -77,7 +86,7 @@ const addDummyProducts = async (options) => {
 };
 
 const copyTemplateFiles = async (options) => {
-  const srcDir = path.join(__dirname, '..', 'templates');
+  const srcDir = path.join(__dirname, '..', `templates/${options.fileType}`);
   const destDir = options.dir;
 
   await fs.mkdirp(srcDir);
@@ -112,6 +121,7 @@ const setup = async (initialOptions) => {
 
   const options = {
     dir: process.cwd(),
+    fileType: await determineFileType(),
     ...initialOptions,
     ...responses
   };
@@ -125,6 +135,10 @@ const setup = async (initialOptions) => {
       title: 'Scaffolding out project files',
       task: () => scaffold(options),
     },
+    {
+      title: 'Importing Schemas and Services from plugin',
+      task: () => importPlugin(options)
+    }
   ].filter(Boolean);
 
   try {
