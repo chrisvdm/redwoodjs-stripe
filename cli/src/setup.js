@@ -105,9 +105,15 @@ const scaffold = async (options) => {
   await updateDotEnv(options);
 
   if (!shouldSkip(options, 'rwGenerate')) {
-    await exec('yarn rw g page stripe-demo', { cwd: options.dir });
-  }
 
+  const hasDemoPage = await fs.existsSync('./web/src/pages/StripeDemoPage')
+    if (!hasDemoPage) {
+    await exec('yarn rw g page stripe-demo', { cwd: options.dir });
+    } else {
+      console.log('\t\tStripeDemoPage already exists. Skipped generating a new demo page. ')
+    }
+    
+  }
   await copyTemplateFiles(options);
 };
 
