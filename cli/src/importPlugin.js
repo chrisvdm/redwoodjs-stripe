@@ -2,8 +2,8 @@
 
 const fs = require('fs-extra');
 
-const importPlugin = async () => {
-    const graphQLFile = './api/src/functions/graphql.js'
+const importPlugin = async (options) => {
+    const graphQLFile = `./api/src/functions/graphql.${options.fileType}`
     const text = {
         rwImports: [
             {
