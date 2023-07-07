@@ -69,7 +69,7 @@ const addDummyProducts = async (options) => {
 
   // esbuild parses JSON files into JS objects at build time.
   // See https://esbuild.github.io/content-types/#json.
-  const superpowers = require('./superpowers.json');
+  const superpowers = require('./superpowers');
 
   for (const superpower of superpowers) {
     const { prices, ...productData } = superpower;
