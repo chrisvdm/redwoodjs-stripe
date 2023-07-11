@@ -1,6 +1,6 @@
 {
   "name": "@redwoodjs-stripe/api",
-  "version": "0.1.0-rc.19",
+  "version": "1.0.0",
   "description": "API-side code for RedwoodJS-Stripe projects",
   "keywords": [
     "stripe",
