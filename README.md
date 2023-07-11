@@ -14,16 +14,6 @@ The aim of this plugin is to make setting up a Redwoodjs commerce app as simple 
 
 There's an [example store](https://github.com/redwoodjs/example-store-stripe) that is bit more realistic in its application of the plugin if you need a slightly more complicated example. 
 
-**Limitations**
-
-<a name='limitations'></a>Majority of these will be fixed in upcoming releases.
-- Setup script will overwrite `api/src/functions/graphql.js`. This file is used to import the services and sdl from the plugin. If you have made changes to your file after creating your Redwoodjs app then you can either import the services and schemas manually and not run the setup script or rename your file temporarily then run the setup script.
-```js
-import { stripeServices, stripeSchemas } from '@redwoodjs-stripe/api'
-```
-- There's currently no Typescript support
-- There's no integration tests
-
 🚀 Built with help from the awesome people at [Redwood](https://redwoodjs.com/) and [Stripe](https://stripe.com/) 🚀
 
 ## Get Started
