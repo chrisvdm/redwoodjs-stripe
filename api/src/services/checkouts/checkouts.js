@@ -13,19 +13,17 @@ export const checkout = async (payload) => {
   }; 
 }
 
-
 export const createStripeCheckoutSession = async ({
   customer = {},
   mode,
   cart,
   successUrl = "http://localhost:8910/stripe-demo?success=true&sessionId={CHECKOUT_SESSION_ID}",
-  cancelUrl = "http://localhost:8910/stripe-demo?success=false" }) => {
-
+  cancelUrl = "http://localhost:8910/stripe-demo?success=false"
+}) => {
   const line_items = cart.map(product => ({
     price: product.id,
     quantity: product.quantity
   }))
-
 
   // Build payload
   // TODO: Custom payload
