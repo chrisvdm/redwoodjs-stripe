@@ -11,7 +11,7 @@ const prompts = require('prompts');
 const { Listr } = require('listr2');
 const Stripe = require('stripe');
 
-const { importPlugin } = require('./importPlugin');
+const { importPlugin } = require('./importPlugin')
 
 let cancelled = false;
 
