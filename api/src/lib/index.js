@@ -17,24 +17,30 @@ export const lastEntry = (array) => {
     nextDate.setUTCSeconds(next.created)
     return firstDate - nextDate
   })
-  return latest[latest.length-1]
+
+  return latest[latest.length - 1]
 }
 
-export const handleStripeWebhooks = (event, context, webhooksObj = {}, secure = true) => {
+export const handleStripeWebhooks = async (event, context, webhooksObj = {}, secure = true) => {
   if (secure) {
     const endpointSecret = process.env.STRIPE_WEBHOOK_KEY
+
+    if (!endpointSecret) {
+      throw new Error(`The Stripe webhook secret key isn't set`)
+    }
+
     try {
-      const sig = event.headers['stripe-signature']
+      const signature = event.headers['stripe-signature']
+
       const stripeEvent = stripe.webhooks.constructEvent(
         event.body,
-        sig,
+        signature,
         endpointSecret
       )
 
-      // Find event type in webhookObject
+      // Find event type in webhookObject and execute function for the event.
       if (typeof webhooksObj[stripeEvent.type] !== 'undefined') {
-        // execute function for the event
-        webhooksObj[stripeEvent.type](stripeEvent, context)
+        await webhooksObj[stripeEvent.type](stripeEvent, context)
       }
 
       return {
@@ -44,16 +50,21 @@ export const handleStripeWebhooks = (event, context, webhooksObj = {}, secure = 
     } catch (error) {
       throw error
     }
-  } else { 
+  } else {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('Stripe webhooks must be secure in production')
+    }
+
     try {
-      const unVerifiedStripeEvent = JSON.parse(event.body)
-      if (typeof webhooksObj[unVerifiedStripeEvent.type] !== 'undefined') {
-          webhooksObj[unVerifiedStripeEvent.type](unVerifiedStripeEvent, context)
+      const unverifiedStripeEvent = JSON.parse(event.body)
+
+      if (typeof webhooksObj[unverifiedStripeEvent.type] !== 'undefined') {
+        await webhooksObj[unverifiedStripeEvent.type](unverifiedStripeEvent, context)
       }
 
       return {
         statusCode: 200,
-        results: unVerifiedStripeEvent
+        results: unverifiedStripeEvent
       }
     } catch (error) {
       throw error
@@ -61,10 +72,9 @@ export const handleStripeWebhooks = (event, context, webhooksObj = {}, secure = 
   }
 }
 
-// Generates a test Stripe mock event
+// Generates a test Stripe mock event.
 export const generateStripeMockEvent = () => {
-
-const payload = JSON.stringify(
+  const payload = JSON.stringify(
     {
       id: 'evt_test_webhook',
       object: 'event',
@@ -75,9 +85,7 @@ const payload = JSON.stringify(
 
   process.env.STRIPE_WEBHOOK_SK = 'whsec_test_secret'
 
-  /**
-   * @see {@link https://github.com/stripe/stripe-node/blob/master/README.md#testing-webhook-signing}
-   */
+  // See https://github.com/stripe/stripe-node/blob/master/README.md#testing-webhook-signing.
   const header = stripe.webhooks.generateTestHeaderString({
     payload,
     secret: process.env.STRIPE_WEBHOOK_SK,
