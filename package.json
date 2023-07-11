@@ -2,60 +2,38 @@
   "name": "redwoodjs-stripe",
   "private": true,
   "description": "A Redwood/Stripe integration made easy",
-  "scripts": {
-    "release": "yarn build && lerna publish",
-    "build": "yarn tasks --task build",
-    "tasks": "./scripts/tasks.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "sync": "yarn tasks --task sync --target"
+  "keywords": [
+    "redwood",
+    "stripe"
+  ],
+  "homepage": "https://github.com/chrisvdm/redwoodjs-stripe#readme",
+  "bugs": {
+    "url": "https://github.com/chrisvdm/redwoodjs-stripe/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/chrisvdm/redwoodjs-stripe.git"
   },
-  "keywords": [
-    "redwood",
-    "stripe"
-  ],
-  "author": "Chrisvdm",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/chrisvdm/redwoodjs-stripe/issues"
-  },
-  "homepage": "https://github.com/chrisvdm/redwoodjs-stripe#readme",
-  "devDependencies": {
-    "@apollo/client": "^3.6.9",
-    "@babel/runtime-corejs3": "^7.17.9",
-    "chokidar": "^3.5.3",
-    "chokidar-cli": "^3.0.0",
-    "cli-testing-library": "^1.0.4",
-    "core-js": "^3.22.5",
-    "dir-tree": "^1.0.1",
-    "esbuild": "^0.17.18",
-    "glob": "^10.2.7",
-    "graphql-tag": "2.x",
-    "jest": "^28.1.1",
-    "lerna": "^7.0.2",
-    "sync-directory": "^6.0.4"
-  },
-  "dependencies": {
-    "@stripe/stripe-js": "1.29.0",
-    "envfile": "^6.17.0",
-    "fs-extra": "^10.1.0",
-    "prompts": "^2.4.2",
-    "stripe": "^11.9.1",
-    "tmp-promise": "^3.0.3",
-    "yargs": "^17.5.1"
-  },
-  "peerDependencies": {
-    "@apollo/client": "3.x",
-    "graphql-tag": "2.x",
-    "react": "17.0.2",
-    "react-dom": "17.0.2"
-  },
+  "author": "Chrisvdm",
   "workspaces": [
     "api",
     "web",
     "cli"
-  ]
+  ],
+  "scripts": {
+    "build": "yarn tasks --task build",
+    "release": "yarn build && lerna publish",
+    "sync": "yarn tasks --task sync --target",
+    "tasks": "./scripts/tasks.js"
+  },
+  "dependencies": {
+    "chokidar": "^3.5.3",
+    "esbuild": "^0.18.11",
+    "glob": "^10.3.3",
+    "jest": "^29.6.1",
+    "lerna": "^7.1.1",
+    "sync-directory": "^6.0.4",
+    "yargs": "^17.7.2"
+  }
 }

@@ -1,29 +1,33 @@
+const util = require('node:util');
+const exec = util.promisify(require('node:child_process').exec);
+
+const { getPaths: getRedwoodProjectPaths } = require('@redwoodjs/project-config')
+
 const { Listr } = require('listr2');
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
-
-const upgradeApi = async (options) => {
-     await exec('(cd api && yarn remove @redwoodjs-stripe/api)', { cwd: options.dir });
-    await exec('(cd api && yarn add @redwoodjs-stripe/api)', { cwd: options.dir });
-};
-
-const upgradeWeb = async (options) => {
-    await exec('(cd web && yarn remove @redwoodjs-stripe/web)', { cwd: options.dir });
-    await exec('(cd web && yarn add @redwoodjs-stripe/web)', { cwd: options.dir });
-}
 
 const upgrade = async () => {
-  const options = {
-    dir: process.cwd(),
-  };
+  let redwoodProjectPaths
+
+  try {
+    redwoodProjectPaths = getRedwoodProjectPaths()
+  } catch (e) {
+    console.log(e.message)
+    process.exitCode = 1
+    return
+  }
+
   const tasks = [
     {
-      title: 'Upgrading @redwoodjs-stripe/api package',
-      task: () => upgradeApi(options),
+      title: 'Upgrading @redwoodjs-stripe/api',
+      task: async () => {
+        await exec('yarn up @redwoodjs-stripe/api', { cwd: redwoodProjectPaths.api.base });
+      }
     },
     {
-      title: 'Upgrading @redwoodjs-stripe/web package',
-      task: () => upgradeWeb(options),
+      title: 'Upgrading @redwoodjs-stripe/web',
+      task: async () => {
+        await exec('yarn up @redwoodjs-stripe/web', { cwd: redwoodProjectPaths.web.base });
+      }
     },
   ].filter(Boolean);
 
