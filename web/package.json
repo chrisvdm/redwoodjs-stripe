@@ -1,6 +1,6 @@
 {
   "name": "@redwoodjs-stripe/web",
-  "version": "0.1.0-rc.14",
+  "version": "0.1.0-rc.19",
   "main": "./dist/index.js",
   "files": [
     "dist"
