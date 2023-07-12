@@ -1,7 +1,7 @@
 
 # RedwoodJS-Stripe
 
-<img alt="logo" src="https://github.com/chrisvdm/redwoodjs-stripe/assets/4147109/40762479-65fd-4014-a642-13e63cc7aac3"  width="33%" align="right">
+<img alt="logo" src="https://github.com/chrisvdm/redwoodjs-stripe/assets/4147109/a4575c0c-184e-4073-9ef9-b5647ca7fc03"  width="33%" align="right">
 
 _A Redwood/Stripe integration made easy!_
 
