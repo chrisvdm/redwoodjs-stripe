@@ -14,9 +14,9 @@ const main = async () => {
         const activeObjects = ["checkout.session", "subscription"]
 
         // Create new array of openapi schema objects
-        let activeObjectsOpenAPI = []
+        let activeObjectsOpenAPI = {}
         activeObjects.forEach(obj => {
-            activeObjectsOpenAPI.push(openAPISchema[obj])
+            activeObjectsOpenAPI[obj] = openAPISchema[obj]
         });
         console.log(activeObjectsOpenAPI)
 
