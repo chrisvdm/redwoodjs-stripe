@@ -19,7 +19,8 @@
   "workspaces": [
     "api",
     "web",
-    "cli"
+    "cli",
+    "schema"
   ],
   "scripts": {
     "build": "yarn tasks --task build",

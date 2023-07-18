@@ -1,0 +1,17 @@
+{
+  "name": "@redwoodjs-stripe/schema",
+  "version": "0.0.0",
+  "description": "Yoga GraphQL plugin that builds sdl from Stripe's OpenAPI",
+  "keywords": [
+    "stripe",
+    "redwoodjs",
+    "yoga-graphql",
+    "schema"
+  ],
+  "license": "MIT",
+  "author": "chrisvdm",
+  "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ]
+}
