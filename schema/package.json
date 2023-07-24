@@ -13,5 +13,8 @@
   "main": "./dist/index.js",
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "graphql": "^16.7.1"
+  }
 }
