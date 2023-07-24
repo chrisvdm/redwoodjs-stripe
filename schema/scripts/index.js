@@ -12,43 +12,30 @@ const main = async () => {
 
         // Specify active (used) Stripe Objects
         // TODO: Empty array leads to all objects being processed
-      const activeObjects = ["checkout.session", "customer"]
-      
-      const schemaQueryRootType = buildSchema(`
-        type Query {
-          _: String!
-        }
-      `)
+      const activeTypes = ["checkout.session", "customer"]
+      console.log(Object.keys(openAPISchema))
 
-      const queryType = new GraphQLObjectType({
-    name: 'Query',
-    fields: () => {
-      const result = {};
-      for (const [name, type] of context.types.entries()) {
-        // It's ok to ignore the object injection attack here because
-        // the object being edited does not contain any private data to be
-        // protected and none of the attributes will be used as functions
-        // just a map of attribute to values.
-        // eslint-disable-next-line security/detect-object-injection
-        result[name] = { type };
-      }
-      return result;
-    }
-  });
-        console.log(queryType)
-        // Create new object of openapi schema objects
-        // let graphqlTypes = {}
-        // activeObjects.forEach(obj => {
-        //   const jsonType = openAPISchema[obj]
+      // Constructing types from Query
+      // https://graphql.org/graphql-js/constructing-types/
 
-        //   graphqlTypes[graphqlTypeNameFromJsonTypeName(obj)] = buildGraphQLType(jsonType)
-        // });
+      // Reference for development
+      // `type Query {
+      //   stripeCustomer(id: $id): StripeCustomer
+      //   stripeCheckoutSession(id: $id): StripeCheckoutSession
+      // }`
+
+      // 1. Build Query GraphQL Types
+      //    1st iteration:  Build from scratch
+      //    2nd iteraction: Build from sdl
+
+      // 2. Build out types defined in QueryType
+      //      1st iteration: Build first level properties
+      //      2nd iteration: Build recursively as required for QueryType
+
+      // 3. PrintSchema
       
-        // const buildGraphQLType = (jsonType) => new GraphQLObjectType({
-        //   fields: jsonType.properties.map(graphQLObjectFieldFromJsonTypeProperty)
-        // })
-      
-        // const graphqlTypes = {}
+
+
 
 
   } catch (err) {
@@ -57,19 +44,3 @@ const main = async () => {
 }
 
 main()
-
-// const types = {}
-// types.checkoutSession = new GraphQLObjectType({
-//   fields: checkoutSessionProperties.map(prop => ({
-//     type: types.customer
-//   }))
-// })
-
-// const queryType = new GraphQLObjectType({
-//     name: 'Query',
-//     fields: {
-//       checkoutSession: {
-//         type: types.checkoutSession, 
-//       }
-//     }
-//   });
