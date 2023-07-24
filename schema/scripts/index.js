@@ -15,10 +15,10 @@ const main = async () => {
       const activeTypes = ["checkout.session", "customer"]
       console.log(Object.keys(openAPISchema))
 
-      // Constructing types from Query
+      // Constructing types from Query (excluding resolvers for first iteration)
       // https://graphql.org/graphql-js/constructing-types/
 
-      // Reference for development
+      // Reference for development:
       // `type Query {
       //   stripeCustomer(id: $id): StripeCustomer
       //   stripeCheckoutSession(id: $id): StripeCheckoutSession
@@ -28,13 +28,31 @@ const main = async () => {
       //    1st iteration:  Build from scratch
       //    2nd iteraction: Build from sdl
 
+      // Define the Query type
+      const queryType = new graphql.GraphQLObjectType({
+        name: "Query",
+        fields: {
+          stripeCustomer: {
+            type: getGraphQLObjectType('stripeCustomer'),
+            args: {
+              id: { type: graphql.GraphQLID },
+            }
+          },
+        },
+      })
+
+      const getGraphQLObjectType = (name) => {
+
+      }
+
       // 2. Build out types defined in QueryType
       //      1st iteration: Build first level properties
       //      2nd iteration: Build recursively as required for QueryType
 
-      // 3. PrintSchema
-      
+      // 3. Create new schema using Query as the root  
+      // var schema = new graphql.GraphQLSchema({ query: queryType })
 
+      // console.log(schema)
 
 
 
