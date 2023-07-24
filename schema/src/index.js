@@ -1,5 +1,2 @@
-const main = () => {
-    console.log("bruh")
-}
-
-main()
+import * as GraphQLJS from 'graphql'
+import { envelop, useEngine, useSchema } from '@envelop/core'
