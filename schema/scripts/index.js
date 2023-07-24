@@ -41,7 +41,8 @@ const main = async () => {
       //   },
       // })
 
-      const getGraphQLType = ({ type, isRequired}) => {
+      
+      const getGraphQLType = (type) => {
         switch (type) {
           case 'string':
             return graphql.GraphQLString
@@ -54,40 +55,56 @@ const main = async () => {
         }
       }
 
+      const getPropertyGraphQLType = ({props, name, isExpandable, isRequired}) => {
+          // determine whether prop is scalar
+          const isRef = Object.hasOwn(props, `\$ref`)
+          const isUnion = Object.hasOwn(props, 'AnyOf')
+          const isEnum = Object.hasOwn(props, 'enum')
+          const isHash = props.type === 'object' && !Object.hasOwn(props, 'properties') && !isExpandable
+          const isObject = !isHash && props.type === 'object'
+
+        if (!isRef && !isUnion && !isHash && !isObject && !isEnum) {
+            return getGraphQLType(props.type)
+        }
+
+        if (isRef) {
+          return
+        }
+        if (isUnion) {
+          return
+        }
+        if (isEnum) {
+          return
+        }
+        if (isHash) {
+          return
+        }
+        if (isObject) {
+          return
+        }
+
+        return undefined
+      }
+
       const getGraphQLObjectType = (name) => {
         let objectFieldsGraphQLType = {}
         // TODO sanitise name string
         // - remove 'stripe' prefix
 
         // get data from openAPISchema
-        const ugh = openAPISchema[name]
-        const { properties, required, title } = ugh
-        const expandable = ugh['x-expandableFields']
+        const schemaField = openAPISchema[name]
+        const { properties, required, title, description } = schemaField
+        const expandable = schemaField['x-expandableFields']
         
         // Goes through each property and return corresponding GraphQL Types
         Object.keys(properties).forEach(name => {
-          const prop = properties[name]
-          let propGraphQLType = ''
-
-          // determine whether prop is scalar
-          const isRef = Object.hasOwn(prop, `\$ref`)
-          const isUnion = Object.hasOwn(prop, 'AnyOf')
-          const isEnum = Object.hasOwn(prop, 'enum')
-          const isHash = prop.type === 'object' && !Object.hasOwn(prop, 'properties') && !expandable.includes(name)
-          const isObject = !isHash && prop.type === 'object'
+          const propGraphQLType = getPropertyGraphQLType({
+            name: name,
+            props: properties[name],
+            isExpandable: expandable.includes(name),
+            isRequired: required.includes(name)
+          })
           
-          const isRequired = !required.includes(name)
-
-          const propValues = {
-            objectName: name,
-            ...prop,
-            isRequired,
-          }
-
-          if (!isRef && !isUnion && !isHash && !isObject && !isEnum ) {
-             propGraphQLType = getGraphQLType(propValues)
-          }
-
           objectFieldsGraphQLType[name]= {
             type: propGraphQLType
           }
@@ -97,6 +114,7 @@ const main = async () => {
         // Construct object type
         return new graphql.GraphQLObjectType({
           name: `stripe${title}`,
+          description: description,
           fields: {...objectFieldsGraphQLType},
         })
       }
