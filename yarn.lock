@@ -420,12 +420,39 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@envelop/parser-cache@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "@envelop/parser-cache@npm:6.0.1"
+  dependencies:
+    lru-cache: ^10.0.0
+    tslib: ^2.5.0
+  peerDependencies:
+    "@envelop/core": ^4.0.0
+    graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
+  checksum: aa5bbc7f40161df045ef61fe62ba1cb187a5cb4c8456c186f81b1d465b008708276de01bde03d109e8c3ed4a9a9fabe3fb0914302e8c36f4556a9e784a012fd6
+  languageName: node
+  linkType: hard
+
 "@envelop/types@npm:4.0.0":
   version: 4.0.0
   resolution: "@envelop/types@npm:4.0.0"
   dependencies:
     tslib: ^2.5.0
   checksum: cd8bad3ef7d9ee6015e3befbd27a1fb66a560d1397111b0fe22d8a107c7509ab48f183752d514321e35e9c27e9e970e004579867d64105768fce69ccca411ac7
+  languageName: node
+  linkType: hard
+
+"@envelop/validation-cache@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "@envelop/validation-cache@npm:6.0.1"
+  dependencies:
+    hash-it: ^6.0.0
+    lru-cache: ^10.0.0
+    tslib: ^2.5.0
+  peerDependencies:
+    "@envelop/core": ^4.0.0
+    graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
+  checksum: e9c5cdb2edaa8ccf6a730d862d5eb83e0af2772673882a2deb9907f2ef7318d38630ee7ad546ae3bf87648c782bc5b4c424b6cd0a7eac45c3b18c5e0a41f7c29
   languageName: node
   linkType: hard
 
@@ -1348,6 +1375,8 @@ __metadata:
   resolution: "@redwoodjs-stripe/schema@workspace:schema"
   dependencies:
     "@envelop/core": ^4.0.0
+    "@envelop/parser-cache": ^6.0.1
+    "@envelop/validation-cache": ^6.0.1
     graphql: ^16.7.1
   languageName: unknown
   linkType: soft
@@ -3598,6 +3627,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"hash-it@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "hash-it@npm:6.0.0"
+  checksum: 10ca948ff7902a752344c3975c1a5c76ba9e4aa0363032f347a7235cce98473dce60fe4399b05979596aedf649adaf5b3f792a55b9b64ad59ae686e43300c2d1
+  languageName: node
+  linkType: hard
+
 "hosted-git-info@npm:^2.1.4":
   version: 2.8.9
   resolution: "hosted-git-info@npm:2.8.9"
@@ -4965,6 +5001,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lru-cache@npm:^10.0.0, lru-cache@npm:^9.1.1 || ^10.0.0":
+  version: 10.0.0
+  resolution: "lru-cache@npm:10.0.0"
+  checksum: 18f101675fe283bc09cda0ef1e3cc83781aeb8373b439f086f758d1d91b28730950db785999cd060d3c825a8571c03073e8c14512b6655af2188d623031baf50
+  languageName: node
+  linkType: hard
+
 "lru-cache@npm:^5.1.1":
   version: 5.1.1
   resolution: "lru-cache@npm:5.1.1"
@@ -4994,13 +5037,6 @@ __metadata:
   version: 9.1.2
   resolution: "lru-cache@npm:9.1.2"
   checksum: d3415634be3908909081fc4c56371a8d562d9081eba70543d86871b978702fffd0e9e362b83921b27a29ae2b37b90f55675aad770a54ac83bb3e4de5049d4b15
-  languageName: node
-  linkType: hard
-
-"lru-cache@npm:^9.1.1 || ^10.0.0":
-  version: 10.0.0
-  resolution: "lru-cache@npm:10.0.0"
-  checksum: 18f101675fe283bc09cda0ef1e3cc83781aeb8373b439f086f758d1d91b28730950db785999cd060d3c825a8571c03073e8c14512b6655af2188d623031baf50
   languageName: node
   linkType: hard
 

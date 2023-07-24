@@ -16,6 +16,8 @@
   ],
   "dependencies": {
     "@envelop/core": "^4.0.0",
+    "@envelop/parser-cache": "^6.0.1",
+    "@envelop/validation-cache": "^6.0.1",
     "graphql": "^16.7.1"
   }
 }
