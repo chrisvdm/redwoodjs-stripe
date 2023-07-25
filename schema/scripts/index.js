@@ -53,6 +53,12 @@ const main = async () => {
         return words[0]
       } // end toCamelCase fn
 
+      const getHashGraphQLType = () => {
+        return new graphql.GraphQLScalarType({
+          name: "Hash"
+        })
+      }
+
       const getEnumGraphQLType = (ugh) => {
         const { name, title, props } = ugh
 
@@ -100,13 +106,13 @@ const main = async () => {
           return getEnumGraphQLType(schema)
         }
         if (isHash) {
+          return getHashGraphQLType()
+        }
+        if (isUnion) {
           return
         }
         if (isRef) {
           return 
-        }
-        if (isUnion) {
-          return
         }
         if (isObject) {
           return
@@ -127,7 +133,7 @@ const main = async () => {
         // Goes through each property and return corresponding GraphQL Types
         Object.keys(properties).forEach(name => {
           const props = properties[name]
-          const isRequired = required.includes(name)
+          // const isRequired = required.includes(name)
 
           const propGraphQLType = getPropertyGraphQLType({
             name: name,
