@@ -39,6 +39,7 @@ const main = async () => {
       //     },
       //   },
       // })
+
       const toCamelCase = (str) => {
         const words = str.split(/[-_.]/g)
         if (words.length > 0) {
@@ -53,29 +54,35 @@ const main = async () => {
         return words[0]
       } // end toCamelCase fn
 
-      const getHashGraphQLType = () => {
+      const getGraphQLUnionType = (schema) => {
+        // console.log("==========UNION===========")
+        // console.log(schema)
+        // console.log(schema.props.anyOf)
+      }
+
+      const getGraphQLHashType = () => {
         return new graphql.GraphQLScalarType({
-          name: "Hash"
+          name: "stripeHash"
         })
       }
 
-      const getEnumGraphQLType = (ugh) => {
-        const { name, title, props } = ugh
+      const getGraphQLEnumType = (ugh) => {
+        const { name, properties } = ugh
 
         const enumValueObj = {}
-        props.enum.forEach(value => {
+        properties.enum.forEach(value => {
           const enumName = toCamelCase(value)
           enumValueObj[enumName] = {value: value}
         })
 
         return new graphql.GraphQLEnumType({
           name: toCamelCase(`stripe_${name}_enum`),
-          description: props.description,
+          description: properties.description,
           values: enumValueObj,
         })
       }
       
-      const getBasicGraphQLType = (type) => {
+      const getGraphQLBasicType = (type) => {
         switch (type) {
           case 'string':
             return graphql.GraphQLString
@@ -88,47 +95,51 @@ const main = async () => {
         }
       }
 
-      const getPropertyGraphQLType = (schema) => {
-        const { props, name, isExpandable } = schema
-        
+      const getPropertyGraphQLType = (field) => {
+        const { properties, isExpandable } = field
         // determine whether prop is scalar
-        const isRef = Object.hasOwn(props, `\$ref`)
-        const isUnion = Object.hasOwn(props, 'AnyOf')
-        const isEnum = Object.hasOwn(props, 'enum')
-        const isHash = props.type === 'object' && !Object.hasOwn(props, 'properties') && !isExpandable
-        const isObject = !isHash && props.type === 'object'
+        const isRef = Object.hasOwn(properties, `\$ref`)
+        const isUnion = Object.hasOwn(properties, 'anyOf')
+        const isEnum = Object.hasOwn(properties, 'enum')
+        const isHash = properties.type === 'object' && !Object.hasOwn(properties, 'properties') && !isExpandable
+        const isObject = !isHash && properties.type === 'object'
 
         if (!isRef && !isUnion && !isHash && !isObject && !isEnum) {
-            return getBasicGraphQLType(props.type)
+            return getGraphQLBasicType(properties.type)
         }
         
         if (isEnum) {
-          return getEnumGraphQLType(schema)
+          return getGraphQLEnumType(field)
         }
         if (isHash) {
-          return getHashGraphQLType()
+          return getGraphQLHashType()
         }
         if (isUnion) {
-          return
+          return getGraphQLUnionType(field)
         }
         if (isRef) {
           return 
         }
         if (isObject) {
-          return
+          console.log(properties)
+          return getGraphQLObjectType(properties)
         }
 
         return undefined
       }
 
-      const getGraphQLObjectType = (name) => {
-        let objectFieldsGraphQLType = {}
-        // TODO expand to objects
-
-        // get data from openAPISchema
-        const schemaField = openAPISchema[name]
+      const getGraphQLObjectType = (schemaField) => {
         const { properties, required, title, description } = schemaField
         const expandable = schemaField['x-expandableFields']
+
+        // Check whether object exists
+        const typeName = toCamelCase(`stripe_${title}_type`)
+        if (seen.has(typeName)) {
+          // if object type exists return 
+          return seen.get(typeName)
+        }
+
+        let objectFieldsGraphQLType = {}
         
         // Goes through each property and return corresponding GraphQL Types
         Object.keys(properties).forEach(name => {
@@ -137,8 +148,7 @@ const main = async () => {
 
           const propGraphQLType = getPropertyGraphQLType({
             name: name,
-            title: title,
-            props: props,
+            properties: props,
             isExpandable: expandable.includes(name),
           })
           
@@ -150,17 +160,22 @@ const main = async () => {
 
         });
 
-        console.log(objectFieldsGraphQLType)
-
         // Construct object type
-        return new graphql.GraphQLObjectType({
-          name: `stripe${title}`,
+        const newType = new graphql.GraphQLObjectType({
+          title: `stripe${title}`,
+          name: toCamelCase(`stripe_${title}`),
           description: description,
           fields: {...objectFieldsGraphQLType},
         })
+
+        seen.set(typeName, newType)
+        return newType
       }
 
-      console.log(getGraphQLObjectType('checkout.session'))
+      // Lookup for object types
+      const seen = new Map()
+
+      getGraphQLObjectType(openAPISchema['checkout.session'])
 
       // 2. Build out types defined in QueryType
       //      1st iteration: Build first level properties
