@@ -101,10 +101,11 @@ const main = async () => {
         const isRef = Object.hasOwn(properties, `\$ref`)
         const isUnion = Object.hasOwn(properties, 'anyOf')
         const isEnum = Object.hasOwn(properties, 'enum')
+        const isArray = properties.type === 'array'
         const isHash = properties.type === 'object' && !Object.hasOwn(properties, 'properties') && !isExpandable
         const isObject = !isHash && properties.type === 'object'
 
-        if (!isRef && !isUnion && !isHash && !isObject && !isEnum) {
+        if (!isRef && !isUnion && !isHash && !isObject && !isEnum && !isArray) {
             return getGraphQLBasicType(properties.type)
         }
         
