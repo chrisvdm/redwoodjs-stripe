@@ -40,6 +40,13 @@ const main = async () => {
       //   },
       // })
 
+      // 2. Build out types defined in QueryType
+      //      1st iteration: Build first level properties
+      //      2nd iteration: Build recursively as required for QueryType
+
+      // 3. Create new schema using Query as the root  
+      // var schema = new graphql.GraphQLSchema({ query: queryType })
+
       const toCamelCase = (str) => {
         const words = str.split(/[-_.]/g)
         if (words.length > 0) {
@@ -54,6 +61,21 @@ const main = async () => {
         return words[0]
       } // end toCamelCase fn
 
+      const capitalize = (str) => {
+        const words = str.split(/[-_.]/g)
+          let newStr = ''
+          for (let i in words) {
+              newStr += words[i].charAt(0).toUpperCase() + words[i].slice(1);
+          } 
+        return newStr
+      } // end toCamelCase fn
+
+      const getGraphQLReferenceType = ({properties}) => {
+        const ref = properties['$ref']
+        const fieldName = ref.slice(ref.lastIndexOf('/') + 1)
+        return getGraphQLObjectType(openAPISchema[fieldName])
+      }
+
       const getGraphQLUnionType = (schema) => {
         // console.log("==========UNION===========")
         // console.log(schema)
@@ -66,9 +88,7 @@ const main = async () => {
         })
       }
 
-      const getGraphQLEnumType = (ugh) => {
-        const { name, properties } = ugh
-
+      const getGraphQLEnumType = ({ name, properties }) => {
         const enumValueObj = {}
         properties.enum.forEach(value => {
           const enumName = toCamelCase(value)
@@ -76,7 +96,7 @@ const main = async () => {
         })
 
         return new graphql.GraphQLEnumType({
-          name: toCamelCase(`stripe_${name}_enum`),
+          name: capitalize(`stripe_${name}_enum`),
           description: properties.description,
           values: enumValueObj,
         })
@@ -108,9 +128,17 @@ const main = async () => {
         if (!isRef && !isUnion && !isHash && !isObject && !isEnum && !isArray) {
             return getGraphQLBasicType(properties.type)
         }
+
+        if (isRef) {
+          getGraphQLReferenceType(field)
+          return 
+        }
         
         if (isEnum) {
           return getGraphQLEnumType(field)
+        }
+        if (isArray) {
+          // TODO: complete isRef first
         }
         if (isHash) {
           return getGraphQLHashType()
@@ -118,14 +146,10 @@ const main = async () => {
         if (isUnion) {
           return getGraphQLUnionType(field)
         }
-        if (isRef) {
-          return 
-        }
+        
         if (isObject) {
-          console.log(properties)
           return getGraphQLObjectType(properties)
         }
-
         return undefined
       }
 
@@ -134,7 +158,7 @@ const main = async () => {
         const expandable = schemaField['x-expandableFields']
 
         // Check whether object exists
-        const typeName = toCamelCase(`stripe_${title}_type`)
+        const typeName = capitalize(`stripe_${title}`)
         if (seen.has(typeName)) {
           // if object type exists return 
           return seen.get(typeName)
@@ -155,7 +179,6 @@ const main = async () => {
           
           objectFieldsGraphQLType[name] = {
             type: propGraphQLType
-            // Put back once all types are defined
             // type: isRequired ? new graphql.GraphQLNonNull(propGraphQLType) : propGraphQLType
           }
 
@@ -163,8 +186,8 @@ const main = async () => {
 
         // Construct object type
         const newType = new graphql.GraphQLObjectType({
-          title: `stripe${title}`,
-          name: toCamelCase(`stripe_${title}`),
+          title: `Stripe${title}`,
+          name: capitalize(`Stripe_${title}`),
           description: description,
           fields: {...objectFieldsGraphQLType},
         })
@@ -178,12 +201,6 @@ const main = async () => {
 
       getGraphQLObjectType(openAPISchema['checkout.session'])
 
-      // 2. Build out types defined in QueryType
-      //      1st iteration: Build first level properties
-      //      2nd iteration: Build recursively as required for QueryType
-
-      // 3. Create new schema using Query as the root  
-      // var schema = new graphql.GraphQLSchema({ query: queryType })
 
       // console.log(schema)
 
