@@ -70,7 +70,7 @@ const main = async () => {
         return newStr
       } // end toCamelCase fn
 
-      const getGraphQLReferenceType = ({properties}) => {
+      const getGraphQLReferenceType = (properties) => {
         const ref = properties['$ref']
         const fieldName = ref.slice(ref.lastIndexOf('/') + 1)
         return getGraphQLObjectType(openAPISchema[fieldName])
@@ -80,6 +80,22 @@ const main = async () => {
         // console.log("==========UNION===========")
         // console.log(schema)
         // console.log(schema.props.anyOf)
+      }
+
+      const getGraphQLListType = (schema) => {
+        const { name, isExpandable, properties: {items, description}} = schema
+        const itemSchema = {
+          name,
+          description,
+          isExpandable,
+          properties: items,
+          fromList: true
+        }
+
+        itemType = getPropertyGraphQLType(itemSchema)
+        if (typeof itemType === "undefined") {
+          return
+        }
       }
 
       const getGraphQLHashType = () => {
@@ -129,26 +145,30 @@ const main = async () => {
             return getGraphQLBasicType(properties.type)
         }
 
+        if (isObject) {
+        console.log("********************************")
+        console.log(field)
+        console.log("--------------------------------")
+          return getGraphQLObjectType(properties)
+        }
+
         if (isRef) {
-          getGraphQLReferenceType(field)
-          return 
+          return getGraphQLReferenceType(properties)
         }
         
         if (isEnum) {
           return getGraphQLEnumType(field)
         }
         if (isArray) {
-          // TODO: complete isRef first
+          return getGraphQLListType(field)
         }
-        if (isHash) {
-          return getGraphQLHashType()
-        }
+        
         if (isUnion) {
           return getGraphQLUnionType(field)
         }
-        
-        if (isObject) {
-          return getGraphQLObjectType(properties)
+
+        if (isHash) {
+          return getGraphQLHashType()
         }
         return undefined
       }
@@ -165,7 +185,7 @@ const main = async () => {
         }
 
         let objectFieldsGraphQLType = {}
-        
+
         // Goes through each property and return corresponding GraphQL Types
         Object.keys(properties).forEach(name => {
           const props = properties[name]
@@ -191,7 +211,6 @@ const main = async () => {
           description: description,
           fields: {...objectFieldsGraphQLType},
         })
-
         seen.set(typeName, newType)
         return newType
       }
