@@ -82,6 +82,12 @@ const main = async () => {
         // console.log(schema.props.anyOf)
       }
 
+      const getGraphQLExpandableType = (schema) => {
+        console.log("==============EXPANDABLE=========================")
+        console.log(schema.properties)
+        console.log("--------------------------------------------//END")
+      }
+
       const getGraphQLListType = (schema) => {
         const { name, isExpandable, properties: {items, description}} = schema
         const itemSchema = {
@@ -91,6 +97,8 @@ const main = async () => {
           properties: items,
           fromList: true
         }
+
+        console.log("List Item: ", name)
 
         itemType = getPropertyGraphQLType(itemSchema)
         if (typeof itemType === "undefined") {
@@ -145,10 +153,18 @@ const main = async () => {
             return getGraphQLBasicType(properties.type)
         }
 
+        if (isExpandable) {
+          return getGraphQLExpandableType(field)
+        }
+
         if (isObject) {
-        console.log("********************************")
-        console.log(field)
-        console.log("--------------------------------")
+          if (Object.hasOwn(properties, 'additionalProperties') && !Object.hasOwn(properties, 'properties')){
+            const payload = {
+              ...properties,
+              properties: properties.additionalProperties
+            }
+            
+            return getGraphQLObjectType()}
           return getGraphQLObjectType(properties)
         }
 
@@ -160,7 +176,7 @@ const main = async () => {
           return getGraphQLEnumType(field)
         }
         if (isArray) {
-          return getGraphQLListType(field)
+          // return getGraphQLListType(field)
         }
         
         if (isUnion) {
@@ -219,9 +235,6 @@ const main = async () => {
       const seen = new Map()
 
       getGraphQLObjectType(openAPISchema['checkout.session'])
-
-
-      // console.log(schema)
 
   } catch (err) {
     console.log('fetch error', err);
