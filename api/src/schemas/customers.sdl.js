@@ -33,7 +33,7 @@ type StripeCustomer {
     next_invoice_sequence: Int
     preferred_locales: [String]
     sources: [StripePaymentSource]
-    subscriptions: [StripeCustomerSubscription] || [String]
+    subscriptions: [StripeSubscription]
     tax: StripeCustomerTax
     tax_exempt: String
     tax_ids: [StripeTaxID]
