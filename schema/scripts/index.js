@@ -77,16 +77,35 @@ const main = async () => {
       }
 
       const getGraphQLUnionType = (schema) => {
-        // console.log("==========UNION===========")
-        // console.log(schema)
-        // console.log(schema.props.anyOf)
+        const { name, properties: { anyOf } } = schema
+        console.log("==========UNION===========")
+        console.log(schema)
+       
+        const typeList = anyOf.map(t => {
+          return getPropertyGraphQLType({
+            properties: {...t}
+          })
+        })
+
+        console.log(typeList)
+        //   const typy = new GraphQLUnionType({
+        //     name: name,
+        //     types: [DogType, CatType],
+        //   })
+        // console.log(typy)
+
+         console.log('-')
+        console.log('-')
+        console.log('-')
+        console.log('-')
+        console.log('-')
+        console.log('-')
+        
       }
 
-      const getGraphQLExpandableType = (schema) => {
-        console.log("==============EXPANDABLE=========================")
-        console.log(schema.properties)
-        console.log("--------------------------------------------//END")
-      }
+      // const getGraphQLExpandableType = (schema) => {
+      //   return getPropertyGraphQLType(schema)
+      // }
 
       const getGraphQLListType = (schema) => {
         const { name, isExpandable, properties: {items, description}} = schema
@@ -153,9 +172,9 @@ const main = async () => {
             return getGraphQLBasicType(properties.type)
         }
 
-        if (isExpandable) {
-          return getGraphQLExpandableType(field)
-        }
+        // if (isExpandable) {
+        //   return getGraphQLExpandableType(field)
+        // }
 
         if (isObject) {
           if (Object.hasOwn(properties, 'additionalProperties') && !Object.hasOwn(properties, 'properties')){
