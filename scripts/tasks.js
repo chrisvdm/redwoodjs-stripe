@@ -25,6 +25,10 @@ const configs = {
     cli: {
         platform: 'node',
         format: 'cjs',
+    },
+    schema: {
+        platform: 'node',
+        format: 'cjs',
     }
 }
 

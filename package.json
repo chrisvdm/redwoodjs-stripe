@@ -19,13 +19,15 @@
   "workspaces": [
     "api",
     "web",
-    "cli"
+    "cli",
+    "schema"
   ],
   "scripts": {
     "build": "yarn tasks --task build",
     "release": "yarn build && lerna publish from-package",
     "sync": "yarn tasks --task sync --target",
-    "tasks": "./scripts/tasks.js"
+    "tasks": "./scripts/tasks.js",
+    "gs": "node ./schema/scripts/index.js"
   },
   "dependencies": {
     "chokidar": "^3.5.3",
