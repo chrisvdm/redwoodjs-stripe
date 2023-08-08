@@ -238,7 +238,7 @@ input AutomaticTaxInput {
     enabled: Boolean
 }
 
-input ListStripeSubscriptionParamsInput {
+input ListStripeSubscriptionsInput {
     customer: ID
     price: ID
     status: String
@@ -254,6 +254,6 @@ input ListStripeSubscriptionParamsInput {
 }
 
 type Query {
-    listStripeSubscriptions(listParams: ListStripeSubscriptionParamsInput): [StripeSubscription] @requireAuth
+    listStripeSubscriptions(data: ListStripeSubscriptionsInput): [StripeSubscription] @requireAuth
 }
 `
