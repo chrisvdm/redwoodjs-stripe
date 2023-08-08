@@ -21,12 +21,11 @@ const DEFAULT_CREATE_FRAGMENT = gql`
         id
       }`
 
-export const useStripeCustomer = ({
-  createFragment = DEFAULT_CREATE_FRAGMENT,
-  retrieveFragment = DEFAULT_RETREIVE_FRAGMENT
-}) => {
+export const useStripeCustomer = (fragments) => {
     const client = useApolloClient()
-    const defaultCustomerId = useContext(StripeContext)?.customer?.id
+  const defaultCustomerId = useContext(StripeContext)?.customer?.id
+  const createFragment = fragments?.createFragment || DEFAULT_CREATE_FRAGMENT
+  const retrieveFragment = fragments?.retrieveFragment || DEFAULT_RETREIVE_FRAGMENT
   
     const [createStripeCustomer] = useMutation(
       gql`

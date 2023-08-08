@@ -233,4 +233,27 @@ type StripeSubscriptionPriceCustomUnitAmount {
 type StripeSubscriptionItemBillingThresholds {
     usage_gte: Int
 }
+
+input AutomaticTaxInput {
+    enabled: Boolean
+}
+
+input ListStripeSubscriptionParamsInput {
+    customer: ID
+    price: ID
+    status: String
+    automatic_tax: AutomaticTaxInput
+    collection_method: String
+    created: String
+    current_period_end: String
+    current_period_start: String
+    ending_before: String
+    limit: Int
+    starting_after: String
+    test_clock: String
+}
+
+type Query {
+    listStripeSubscriptions(listParams: ListStripeSubscriptionParamsInput): [StripeSubscription] @requireAuth
+}
 `

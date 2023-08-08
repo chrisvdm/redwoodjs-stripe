@@ -3,7 +3,8 @@ export {
     useStripeCheckout,
     useStripeCustomerFetch,
     useStripeCustomer,
-    useStripeCustomerPortal
+    useStripeCustomerPortal,
+    useStripeSubscriptions
 } from './hooks'
 
 // export useStripeCart hook and StripeCartProvider
