@@ -238,7 +238,7 @@ input AutomaticTaxInput {
     enabled: Boolean
 }
 
-input ListStripeSubscriptionsInput {
+input ListStripeSubscriptionsParamsInput {
     customer: ID
     price: ID
     status: String
@@ -251,6 +251,11 @@ input ListStripeSubscriptionsInput {
     limit: Int
     starting_after: String
     test_clock: String
+}
+
+input ListStripeSubscriptionsInput {
+    params: ListStripeSubscriptionsParamsInput
+    addProps: StripeAdditionalPropertiesInput
 }
 
 type Query {
