@@ -12,6 +12,12 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 import { createLogger } from '@redwoodjs/api/logger'
 export const logger = createLogger({})
 
+export const logit = msg => {
+  logger.debug('**************************START******************************')
+  logger.debug(msg)
+  logger.debug('***************************END*******************************')
+}
+
 export const lastEntry = (array) => {
   const latest = array.sort((first, next) => {
     const firstDate = new Date(0)

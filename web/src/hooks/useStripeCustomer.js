@@ -43,14 +43,13 @@ export const useStripeCustomer = (fragments) => {
     ${retrieveFragment}
 
     query retrieveStripeCustomer(
-      $id: String!
+      $data: RetrieveStripeCustomerInput
     ) {
-      retrieveStripeCustomer(id: $id) {
+      retrieveStripeCustomer(data: $data) {
         ...${getFragmentName(retrieveFragment)}
       }
     }
   `
-    
   return {
     customer: useContext(StripeContext).customer,
     retrieveStripeCustomer: async (id, addProps) => {
@@ -60,8 +59,10 @@ export const useStripeCustomer = (fragments) => {
       const result = await client.query({
         query: RETRIEVE_STRIPE_CUSTOMER,
         variables: {
-          id: customerId,
-          addProps: addProps
+          data: {
+            id: customerId,
+            addProps: {...addProps}
+          }
         }
       })
 

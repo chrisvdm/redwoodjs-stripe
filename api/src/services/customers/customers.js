@@ -1,4 +1,4 @@
-import { stripe, lastEntry } from '../../lib'
+import { stripe, lastEntry, logger } from '../../lib'
 
 export const stripeCustomerSearch = async ({ query }) => {
     const customer = await stripe.customers.search({
@@ -14,8 +14,19 @@ export const searchLatestStripeCustomer = async (query) => {
   return lastEntry(customer.data)
 }
 
-export const retrieveStripeCustomer = async ({ id, addProps }) => {
-  const customer = await stripe.customers.retrieve(id, addProps)
+export const retrieveStripeCustomer = async ({data}) => {
+  const { id, addProps } = data
+
+  const customer = await stripe.customers.retrieve(id, { ...addProps })
+  
+  if (addProps?.expand) {
+    addProps.expand.forEach(x => {
+      customer[x] = customer[x].data
+    });
+  }
+
+  logger.debug({ customer }, `Retrieve Customer Response`)
+
   return customer
 }
 

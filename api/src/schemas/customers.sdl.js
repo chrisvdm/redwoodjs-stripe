@@ -314,9 +314,18 @@ input CreateStripeCustomerAddressInput {
     state: String
 }
 
+input StripeAdditionalPropertiesInput {
+    expand: [String]
+}
+
+input RetrieveStripeCustomerInput {
+    id: ID!
+    addProps: StripeAdditionalPropertiesInput
+}
+
 type Query {
     stripeCustomerSearch(query: String): StripeCustomer @requireAuth
-    retrieveStripeCustomer(id: String!): StripeCustomer @requireAuth
+    retrieveStripeCustomer(data: RetrieveStripeCustomerInput): StripeCustomer @requireAuth
 }
 
 type Mutation {
