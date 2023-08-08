@@ -30,7 +30,7 @@ export const useStripeSubscriptions = (fragments) => {
   `
     
     return {
-    listStripeSubscriptions: async (listParams, addProps) => {
+      listStripeSubscriptions: async (listParams, addProps) => {
     // create query
       const result = await client.query({
         query: LIST_STRIPE_SUBSCRIPTIONS,
