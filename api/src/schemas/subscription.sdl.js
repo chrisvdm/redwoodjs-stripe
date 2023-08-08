@@ -255,7 +255,6 @@ input ListStripeSubscriptionsParamsInput {
 
 input ListStripeSubscriptionsInput {
     params: ListStripeSubscriptionsParamsInput
-    addProps: StripeAdditionalPropertiesInput
 }
 
 type Query {

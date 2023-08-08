@@ -18,14 +18,12 @@ export const retrieveStripeCustomer = async ({data}) => {
   const { id, addProps } = data
 
   const customer = await stripe.customers.retrieve(id, { ...addProps })
-  
+
   if (addProps?.expand) {
     addProps.expand.forEach(x => {
       customer[x] = customer[x].data
     });
   }
-
-  logger.debug({ customer }, `Retrieve Customer Response`)
 
   return customer
 }

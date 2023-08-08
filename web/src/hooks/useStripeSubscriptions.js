@@ -21,22 +21,23 @@ export const useStripeSubscriptions = (fragments) => {
     ${listFragment}
 
     query listStripeSubscriptions(
-      $listParams: ListStripeSubscriptionParamsInput
+      $data: ListStripeSubscriptionsInput
     ) {
-      listStripeSubscriptions(listParams: $listParams) {
+      listStripeSubscriptions(data: $data) {
         ...${getFragmentName(listFragment)}
       }
     }
   `
     
     return {
-      listStripeSubscriptions: async (listParams, addProps) => {
+      listStripeSubscriptions: async (listParams) => {
     // create query
       const result = await client.query({
         query: LIST_STRIPE_SUBSCRIPTIONS,
         variables: {
-          listParams: listParams,
-          addProps: addProps
+          data: {
+            params: {...listParams}
+          }
         }
       })
 

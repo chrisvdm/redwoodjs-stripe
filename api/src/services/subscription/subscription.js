@@ -1,7 +1,7 @@
-import { stripe, logger } from '../../lib'
+import { stripe } from '../../lib'
 
 
-export const listStripeSubscriptions = async ({ listParams, addProps }) => {
-  const subscriptions = await stripe.subscriptions.list({...listParams}, {...addProps});
+export const listStripeSubscriptions = async ({ data: { params } }) => {
+  const subscriptions = await stripe.subscriptions.list({ ...params });
   return subscriptions.data
 }
