@@ -9,6 +9,18 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   }
 })
 
+import { createLogger } from '@redwoodjs/api/logger'
+export const logger = createLogger({})
+
+export const prettyList = (obj) => {
+  Object.keys(obj).forEach(i => {
+    if (obj[i]?.object === 'list') {
+      obj[i] = obj[i].data
+    }
+  })
+  return obj
+}
+
 export const lastEntry = (array) => {
   const latest = array.sort((first, next) => {
     const firstDate = new Date(0)

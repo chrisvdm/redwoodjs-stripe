@@ -33,7 +33,7 @@ type StripeCustomer {
     next_invoice_sequence: Int
     preferred_locales: [String]
     sources: [StripePaymentSource]
-    subscriptions: [StripeCustomerSubscription]
+    subscriptions: [StripeSubscription]
     tax: StripeCustomerTax
     tax_exempt: String
     tax_ids: [StripeTaxID]
@@ -314,9 +314,18 @@ input CreateStripeCustomerAddressInput {
     state: String
 }
 
+input StripeAdditionalPropertiesInput {
+    expand: [String]
+}
+
+input RetrieveStripeCustomerInput {
+    id: ID!
+    addProps: StripeAdditionalPropertiesInput
+}
+
 type Query {
     stripeCustomerSearch(query: String): StripeCustomer @requireAuth
-    retrieveStripeCustomer(id: String!): StripeCustomer @requireAuth
+    retrieveStripeCustomer(data: RetrieveStripeCustomerInput): StripeCustomer @requireAuth
 }
 
 type Mutation {

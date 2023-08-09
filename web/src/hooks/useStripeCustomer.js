@@ -5,41 +5,64 @@ import { useApolloClient } from '@apollo/client'
 
 import { StripeContext } from '../provider/StripeContext'
 
+const getFragmentName = (document) => {
+  return document.definitions[0].name.value
+}
 
+const DEFAULT_RETREIVE_FRAGMENT = gql`
+      fragment DefaultRetrieveFragment on StripeCustomer {
+        name
+        email
+        id
+      }
+    `
+const DEFAULT_CREATE_FRAGMENT = gql`
+      fragment DefaultCreateFragment on StripeCustomer {
+        id
+      }`
 
-export const useStripeCustomer = (returnValues = `id`) => {
+export const useStripeCustomer = (fragments) => {
+    const client = useApolloClient()
+  const defaultCustomerId = useContext(StripeContext)?.customer?.id
+  const createFragment = fragments?.createFragment || DEFAULT_CREATE_FRAGMENT
+  const retrieveFragment = fragments?.retrieveFragment || DEFAULT_RETREIVE_FRAGMENT
+  
     const [createStripeCustomer] = useMutation(
-    gql`
+      gql`
+      ${createFragment}
+
       mutation createStripeCustomer($data: CreateStripeCustomerInput ) {
         createStripeCustomer(data: $data) {
-          ${returnValues}
+          ...${getFragmentName(createFragment)}
         }
       }
     `
     )
   
   const RETRIEVE_STRIPE_CUSTOMER = gql`
+    ${retrieveFragment}
+
     query retrieveStripeCustomer(
-      $id: String!
+      $data: RetrieveStripeCustomerInput
     ) {
-      retrieveStripeCustomer(id: $id) {
-        id 
-        name
-        email
+      retrieveStripeCustomer(data: $data) {
+        ...${getFragmentName(retrieveFragment)}
       }
     }
   `
-    
   return {
     customer: useContext(StripeContext).customer,
-    retrieveStripeCustomer: async (id) => {
-      const client = useApolloClient()
+    retrieveStripeCustomer: async (id, addProps) => {
+      const customerId = id ? id : defaultCustomerId
       
       // create query
       const result = await client.query({
         query: RETRIEVE_STRIPE_CUSTOMER,
         variables: {
-          id: id
+          data: {
+            id: customerId,
+            addProps: {...addProps}
+          }
         }
       })
 
