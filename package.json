@@ -23,7 +23,7 @@
   ],
   "scripts": {
     "build": "yarn tasks --task build",
-    "release": "yarn build && lerna publish from-package",
+    "release": "yarn build && lerna publish ",
     "sync": "yarn tasks --task sync --target",
     "tasks": "./scripts/tasks.js"
   },
