@@ -4,7 +4,9 @@
   "description": "API-side code for RedwoodJS-Stripe projects",
   "keywords": [
     "stripe",
-    "redwoodjs"
+    "redwoodjs",
+    "payments",
+    "commerce"
   ],
   "license": "MIT",
   "author": "chrisvdm",

@@ -2,6 +2,12 @@
   "name": "@redwoodjs-stripe/cli",
   "version": "1.0.1",
   "bin": "./dist/cli.js",
+  "keywords": [
+    "stripe",
+    "redwoodjs",
+    "payments",
+    "commerce"
+  ],
   "files": [
     "dist",
     "templates"
