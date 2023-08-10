@@ -3,8 +3,10 @@
   "private": true,
   "description": "A Redwood/Stripe integration made easy",
   "keywords": [
-    "redwood",
-    "stripe"
+    "stripe",
+    "redwoodjs",
+    "payments",
+    "commerce"
   ],
   "homepage": "https://github.com/chrisvdm/redwoodjs-stripe#readme",
   "bugs": {
