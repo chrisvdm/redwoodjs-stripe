@@ -13,7 +13,7 @@ import { createLogger } from '@redwoodjs/api/logger'
 export const logger = createLogger({})
 
 export const prettyList = (obj) => {
-  if (obj && obj !== undefined) {
+  if (obj && obj !== undefined && obj && !Array.isArray(obj)) {
     Object.keys(obj).forEach(i => {
       if (obj[i]?.object === 'list') {
         obj[i] = obj[i].data
