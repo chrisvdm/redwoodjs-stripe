@@ -36,6 +36,13 @@ export const lastEntry = (array) => {
 }
 
 export const handleStripeWebhooks = async (event, context, webhooksObj = {}, secure = true) => {
+
+  // For Vercel deploys, events are based64 encoded
+    const parsedBody = req.isBase64Encoded
+    ? Buffer.from(req.body, 'base64').toString('utf-8')
+      : req.body;
+  
+  
   if (secure) {
     const endpointSecret = process.env.STRIPE_WEBHOOK_KEY
 
@@ -71,6 +78,7 @@ export const handleStripeWebhooks = async (event, context, webhooksObj = {}, sec
 
     try {
       const unverifiedStripeEvent = JSON.parse(event.body)
+      console.log(event.body)
 
       if (typeof webhooksObj[unverifiedStripeEvent.type] !== 'undefined') {
         await webhooksObj[unverifiedStripeEvent.type](unverifiedStripeEvent, context)
