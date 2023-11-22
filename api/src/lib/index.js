@@ -77,7 +77,6 @@ export const handleStripeWebhooks = async (event, context, webhooksObj = {}, sec
 
     try {
       const unverifiedStripeEvent = JSON.parse(event.body)
-      console.log(event.body)
 
       if (typeof webhooksObj[unverifiedStripeEvent.type] !== 'undefined') {
         await webhooksObj[unverifiedStripeEvent.type](unverifiedStripeEvent, context)
