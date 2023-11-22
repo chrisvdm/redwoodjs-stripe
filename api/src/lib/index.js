@@ -36,6 +36,7 @@ export const lastEntry = (array) => {
 }
 
 export const handleStripeWebhooks = async (event, context, webhooksObj = {}, secure = true) => {
+  
   if (secure) {
     const endpointSecret = process.env.STRIPE_WEBHOOK_KEY
 
@@ -46,8 +47,13 @@ export const handleStripeWebhooks = async (event, context, webhooksObj = {}, sec
     try {
       const signature = event.headers['stripe-signature']
 
+      // For Vercel deploys, events are based64 encoded
+      const parsedBody = event.isBase64Encoded
+      ? Buffer.from(event.body, 'base64').toString('utf-8')
+      : event.body;
+
       const stripeEvent = stripe.webhooks.constructEvent(
-        event.body,
+        parsedBody,
         signature,
         endpointSecret
       )
@@ -71,6 +77,7 @@ export const handleStripeWebhooks = async (event, context, webhooksObj = {}, sec
 
     try {
       const unverifiedStripeEvent = JSON.parse(event.body)
+      console.log(event.body)
 
       if (typeof webhooksObj[unverifiedStripeEvent.type] !== 'undefined') {
         await webhooksObj[unverifiedStripeEvent.type](unverifiedStripeEvent, context)
