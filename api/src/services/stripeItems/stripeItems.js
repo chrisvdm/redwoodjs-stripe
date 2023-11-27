@@ -25,6 +25,7 @@ export const stripeItems = async ({ params = { productParams: {}, priceParams: {
         images: product.images,
         price: price.unit_amount,
         type: price.type,
+        metadata: product.metadata
       })
     }
   }
@@ -43,5 +44,6 @@ export const stripeItem = async ({ id }) => {
         images: product.images,
         price: price.unit_amount,
         type: price.type,
+        metadata: product.metadata
       }
 }
