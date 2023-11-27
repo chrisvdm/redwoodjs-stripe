@@ -30,7 +30,7 @@ npx @redwoodjs-stripe/cli@latest setup
 ## Resources
 - [Quick Start](https://github.com/chrisvdm/redwoodjs-stripe/wiki/Quick-Start)
 - [Installation](https://github.com/chrisvdm/redwoodjs-stripe/wiki/Installation)
-- [API Reference](https://github.com/chrisvdm/redwoodjs-stripe/wik/API-Reference)
+- [API Reference](https://github.com/chrisvdm/redwoodjs-stripe/wiki/API-Reference)
 - [Example Store](https://github.com/redwoodjs/example-store-stripe)
 - [Useful Links](https://github.com/chrisvdm/redwoodjs-stripe/wiki/Useful-Links)
 
