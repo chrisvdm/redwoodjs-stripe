@@ -18,7 +18,8 @@ export const createStripeCheckoutSession = async ({
   mode,
   cart,
   successUrl = "http://localhost:8910/stripe-demo?success=true&sessionId={CHECKOUT_SESSION_ID}",
-  cancelUrl = "http://localhost:8910/stripe-demo?success=false"
+  cancelUrl = "http://localhost:8910/stripe-demo?success=false",
+  allowPromotionCodes = true
 }) => {
   const line_items = cart.map(product => ({
     price: product.id,
@@ -35,6 +36,7 @@ export const createStripeCheckoutSession = async ({
     line_items: line_items,
     mode: mode,
     payment_method_types: ['card'],
+    allow_promotion_codes: allowPromotionCodes,
     ... (Object.hasOwn(customer, "id") && { customer: customer.id })
   }
 
