@@ -19,7 +19,7 @@ export const createStripeCheckoutSession = async ({
   cart,
   successUrl = "http://localhost:8910/stripe-demo?success=true&sessionId={CHECKOUT_SESSION_ID}",
   cancelUrl = "http://localhost:8910/stripe-demo?success=false",
-  allowPromotionCodes = true
+  allowPromotionCodes = false
 }) => {
   const line_items = cart.map(product => ({
     price: product.id,
