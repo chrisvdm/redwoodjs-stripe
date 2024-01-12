@@ -15,8 +15,9 @@ export const useStripeCheckout = () => {
         $cancelUrl: String
         $customer: StripeCustomerInput
         $mode: StripeCheckoutModeEnum
+        $allowPromotionCodes: Boolean
       ) {
-        checkout(cart: $cart, successUrl: $successUrl, cancelUrl: $cancelUrl, customer: $customer, mode: $mode) {
+        checkout(cart: $cart, successUrl: $successUrl, cancelUrl: $cancelUrl, customer: $customer, mode: $mode, allowPromotionCodes: $allowPromotionCodes) {
           id
           url
         }
@@ -39,7 +40,7 @@ export const useStripeCheckout = () => {
   `
  
   return {
-    checkout: async ({ cart, customer, successUrl, cancelUrl, mode }) => {
+    checkout: async ({ cart, customer, successUrl, cancelUrl, mode, allowPromotionCodes }) => {
       // customer = !!customer ? customer : (await context.waitForCustomer())
       customer = customer || context.customer
       cart = cart || context.cart
@@ -61,6 +62,7 @@ export const useStripeCheckout = () => {
           successUrl: successUrl,
           cancelUrl: cancelUrl,
           mode: determinedMode,
+          allowPromotionCodes: allowPromotionCodes,
           ... (customer != null ? {
             customer: {
               id: customer.id,
