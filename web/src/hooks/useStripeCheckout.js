@@ -35,7 +35,7 @@ export const useStripeCheckout = () => {
   `
  
   return {
-    checkout: async ({ cart, customer, successUrl, cancelUrl, mode, allowPromotionCodes }) => {
+    checkout: async ({ cart, customer, successUrl, cancelUrl, mode, allowPromotionCodes, ...restParams }) => {
       // customer = !!customer ? customer : (await context.waitForCustomer())
       customer = customer || context.customer
       cart = cart || context.cart
@@ -53,7 +53,8 @@ export const useStripeCheckout = () => {
       // Build variable payload
       const payload = {
         variables: {
-          cart: newCart,
+          params: {
+            cart: newCart,
           successUrl: successUrl,
           cancelUrl: cancelUrl,
           mode: determinedMode,
@@ -65,7 +66,9 @@ export const useStripeCheckout = () => {
               email: customer.email
             },
             customer_email: customer.email
-          } : {})
+          } : {}),
+          ...restParams
+          } 
         }
       }
 

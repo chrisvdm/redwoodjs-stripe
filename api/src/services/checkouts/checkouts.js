@@ -1,7 +1,7 @@
 import { stripe } from '../../lib'
 
-export const checkout = async (payload) => {
-  const { url, id } = await createStripeCheckoutSession(payload)
+export const checkout = async ({params}) => {
+  const { url, id } = await createStripeCheckoutSession(params)
  
   // api side redirect to Stripe Checkout (SUGGESTED APPROACH)
   // this approach is probably best put in a serverless function
@@ -19,7 +19,8 @@ export const createStripeCheckoutSession = async ({
   cart,
   successUrl = "http://localhost:8910/stripe-demo?success=true&sessionId={CHECKOUT_SESSION_ID}",
   cancelUrl = "http://localhost:8910/stripe-demo?success=false",
-  allowPromotionCodes = false
+  allowPromotionCodes = false,
+  ...restParams
 }) => {
   const line_items = cart.map(product => ({
     price: product.id,
@@ -37,7 +38,8 @@ export const createStripeCheckoutSession = async ({
     mode: mode,
     payment_method_types: ['card'],
     allow_promotion_codes: allowPromotionCodes,
-    ... (Object.hasOwn(customer, "id") && { customer: customer.id })
+    ... (Object.hasOwn(customer, "id") && { customer: customer.id }),
+    ...restParams
   }
 
   const session = await stripe.checkout.sessions.create(payload)
