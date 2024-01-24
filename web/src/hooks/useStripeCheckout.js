@@ -10,14 +10,9 @@ export const useStripeCheckout = () => {
   const [checkout] = useMutation(
     gql`
       mutation Checkout(
-        $cart: [ProductInput!]!
-        $successUrl: String
-        $cancelUrl: String
-        $customer: StripeCustomerInput
-        $mode: StripeCheckoutModeEnum
-        $allowPromotionCodes: Boolean
+        $params: StripeCheckoutParamsInput
       ) {
-        checkout(cart: $cart, successUrl: $successUrl, cancelUrl: $cancelUrl, customer: $customer, mode: $mode, allowPromotionCodes: $allowPromotionCodes) {
+        checkout(params: $params) {
           id
           url
         }
