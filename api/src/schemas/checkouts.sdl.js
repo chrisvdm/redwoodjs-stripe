@@ -812,13 +812,140 @@ export const schema = `
     name: String
   }
 
+  type StripeCheckoutCustomFields {
+    key: String!
+    label: StripeCustomeFieldsLabel!
+    type: StripeCustomFieldsTypeEnum!
+    dropdown: StripeCustomFieldsDropdown
+    numeric: StripeCustomFieldsMinMax
+    optional: Boolean
+    text: StripeCustomFieldsMinMax
+  }
+
+  type StripeCustomFieldsMinMax {
+    maximum_length: Int
+    minimum_length: Int
+  }
+
+  type StripeCustomFieldsDropdown {
+    options: [StripeCustomFieldsDropdownOptions]!
+  }
+
+  type StripeCustomFieldsDropdownOptions {
+    label: String!
+    value: String!
+  }
+
+  enum StripeCustomFieldsTypeEnum {
+    dropdown
+    numeric
+    text
+  }
+
+  type StripeCustomFieldsLabel {
+    custom: String!
+    type: StripeCustomFieldsLabelTypeEnum
+  }
+
+  enum StripeCustomFieldsLabelTypeEnum {
+    custom
+  }
+
+  type StripeCheckoutSessionCustomerUpdate {
+    address: String
+    name: String
+    shipping: String
+  }
+
+  type StripeCheckoutSessionDiscounts {
+    coupon: String
+    promotion_code: String
+  }
+
+  type StripeCheckoutSessionPaymentIntentData {
+    application_fee_amount: Int
+    capture_method: StripePaymentIntentDataCaptureMethodEnum
+    description:String
+    metadata: Metadata
+    on_behalf_of: String
+    receipt_email: String
+    setup_future_usage: StripePaymentOptionsSetupFutureUseEnum
+    shipping: StripeCheckoutSessionFutureUseShipping
+    statement_descriptor: String
+    statement_descriptor_suffix: String
+    transfer_data: StripeCheckoutSessionPaymentIntentDataTransferData
+    transfer_group: String
+  }
+
+  type StripeCheckoutSessionPaymentIntentDataTransferData {
+    destination: String!
+    amount: Int
+  }
+
+  type StripeCheckoutSessionFutureUseShipping {
+    address: StripeCheckoutSessionCustomerDetailsAddress
+    name: String!
+    carrier: String
+    phone: String
+    tracking_number: String
+  }
+
+  enum StripePaymentIntentDataCaptureMethodEnum {
+    automatic
+    automatic_sync
+    manual
+  }
+
   input StripeCheckoutParamsInput {
     cart: [ProductInput!]!
     cancelUrl: String
     successUrl: String
+    returnUrl: String
     customer: StripeCustomerInput
     mode: StripeCheckoutModeEnum
     allowPromotionCodes: Boolean
+    clientReferenceId: String
+    currency: String
+    customerEmail: String
+    metadata: Meta
+    afterExpiration: StripeCheckoutSessionAfterExpiration
+    automaticTax: StripeCheckoutSessionAutomaticTax
+    billingAddress_location: StripeCheckoutSessionBillingAddressEnum
+    consentCollection: StripeCheckoutSessionConsentCollection
+    created: String
+    customFields: [StripeCheckoutCustomFields]
+    customText: StripeCheckoutSessionCustomText
+    customerCreation: StripeCheckoutSessionCustomerCreationEnum
+    customerUpdate: StripeCheckoutSessionCustomerUpdate
+    discounts: [StripeCheckoutSessionDiscounts]
+    expires_at: String
+    invoiceCreation: StripeCheckoutSessionInvoiceCreation
+    locale: String
+    paymentIntentData: StripeCheckoutSessionPaymentIntentData
+    paymentMethodCollection: StripeCheckoutSessionCustomerCreationEnum
+    paymentMethodConfiguration: String
+    paymentMethodOptions: StripeCheckoutSessionPaymentMethodOptions
+    paymentMethodTypes: [String]
+    phoneNumberCollection: StripeCheckoutSessionPhoneNumberCollection
+    redirectOnCompletion: String
+    setupIntentData: StripeCheckoutSessionSetupIntentData
+    shippingAddressCollection: StripeCheckoutSessionShippingAddressCollection
+    shippingOptions: [StripeCheckoutSessionShippingOption]
+    submitType: StripeCheckoutSessionSubmitTypeEnum
+    subscription: String
+    taxIdCollection: StripeCheckoutSessionTaxIDCollection
+    uiMode: StripeCheckoutSessionUIModeEnum
+  }
+
+  enum StripeCheckoutSessionUIModeEnum {
+    hosted
+    embedded
+  }
+
+  type StripeCheckoutSessionSetupIntentData {
+    description: String
+    metadata: Metadata
+    on_behalf_of: String
   }
 
   type Query {
