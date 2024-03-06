@@ -812,9 +812,9 @@ export const schema = `
     name: String
   }
 
-  type StripeCheckoutCustomFields {
+  input StripeCheckoutCustomFieldsInput {
     key: String!
-    label: StripeCustomeFieldsLabel!
+    label: StripeCustomFieldsLabel!
     type: StripeCustomFieldsTypeEnum!
     dropdown: StripeCustomFieldsDropdown
     numeric: StripeCustomFieldsMinMax
@@ -822,18 +822,23 @@ export const schema = `
     text: StripeCustomFieldsMinMax
   }
 
-  type StripeCustomFieldsMinMax {
+  input StripeCustomFieldsMinMax {
     maximum_length: Int
     minimum_length: Int
   }
 
-  type StripeCustomFieldsDropdown {
+  input StripeCustomFieldsDropdown {
     options: [StripeCustomFieldsDropdownOptions]!
   }
 
-  type StripeCustomFieldsDropdownOptions {
+  input StripeCustomFieldsDropdownOptions {
     label: String!
     value: String!
+  }
+
+  input StripeCustomFieldsLabel {
+    custom: String!
+    type: StripeCustomFieldsLabelTypeEnum
   }
 
   enum StripeCustomFieldsTypeEnum {
@@ -842,27 +847,22 @@ export const schema = `
     text
   }
 
-  type StripeCustomFieldsLabel {
-    custom: String!
-    type: StripeCustomFieldsLabelTypeEnum
-  }
-
   enum StripeCustomFieldsLabelTypeEnum {
     custom
   }
 
-  type StripeCheckoutSessionCustomerUpdate {
+  input StripeCheckoutSessionCustomerUpdate {
     address: String
     name: String
     shipping: String
   }
 
-  type StripeCheckoutSessionDiscounts {
+  input StripeCheckoutSessionDiscounts {
     coupon: String
     promotion_code: String
   }
 
-  type StripeCheckoutSessionPaymentIntentData {
+  input StripeCheckoutSessionPaymentIntentData {
     application_fee_amount: Int
     capture_method: StripePaymentIntentDataCaptureMethodEnum
     description:String
@@ -877,12 +877,12 @@ export const schema = `
     transfer_group: String
   }
 
-  type StripeCheckoutSessionPaymentIntentDataTransferData {
+  input StripeCheckoutSessionPaymentIntentDataTransferData {
     destination: String!
     amount: Int
   }
 
-  type StripeCheckoutSessionFutureUseShipping {
+  input StripeCheckoutSessionFutureUseShipping {
     address: StripeCheckoutSessionCustomerDetailsAddress
     name: String!
     carrier: String
@@ -896,6 +896,15 @@ export const schema = `
     manual
   }
 
+  input StripeCheckoutSessionAfterExpirationInput {
+    recovery: StripeCheckoutSessionAfterExpirationRecoveryInput
+  }
+
+  input StripeCheckoutSessionAfterExpirationRecoveryInput {
+    enabled: Boolean!
+    allow_promotion_codes: Boolean
+  }
+
   input StripeCheckoutParamsInput {
     cart: [ProductInput!]!
     cancelUrl: String
@@ -907,13 +916,13 @@ export const schema = `
     clientReferenceId: String
     currency: String
     customerEmail: String
-    metadata: Meta
-    afterExpiration: StripeCheckoutSessionAfterExpiration
+    metadata: Metadata
+    afterExpiration: StripeCheckoutSessionAfterExpirationInput
     automaticTax: StripeCheckoutSessionAutomaticTax
     billingAddress_location: StripeCheckoutSessionBillingAddressEnum
     consentCollection: StripeCheckoutSessionConsentCollection
     created: String
-    customFields: [StripeCheckoutCustomFields]
+    customFields: [StripeCheckoutCustomFieldsInput]
     customText: StripeCheckoutSessionCustomText
     customerCreation: StripeCheckoutSessionCustomerCreationEnum
     customerUpdate: StripeCheckoutSessionCustomerUpdate
@@ -955,6 +964,6 @@ export const schema = `
   type Mutation {
     # In GraphQL, we can't reuse types as mutation inputs
     # (otherwise we'd just type "cart" as "[Product!]!")
-    checkout(StripeCheckoutParamsInput): StripeCheckoutSession! @skipAuth
+    checkout(params: StripeCheckoutParamsInput): StripeCheckoutSession! @skipAuth
   }
 `
