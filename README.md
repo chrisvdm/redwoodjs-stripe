@@ -40,9 +40,8 @@ npx @redwoodjs-stripe/cli@latest setup
 
 <a name="contribution"></a>
 
-- Try out this release and give [feedback](https://github.com/chrisvdm/redwoodjs-stripe/discussions/60)
 - Help maintain the [Redwoodjs-stripe-example-store repo](https://github.com/redwoodjs/example-store)
-- Contribute!
+- [Contribute](https://github.com/chrisvdm/redwoodjs-stripe/wiki/Contributing)!
 - Send good vibes :)
 
 ## Thank you
