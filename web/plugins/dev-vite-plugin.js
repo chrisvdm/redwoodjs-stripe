@@ -14,6 +14,9 @@ module.exports = () => ({
         },
       },
       optimizeDeps: {
+        // rehackt seems to be commonjs only, and since @apollo/client has it as a
+        // dependency + @redwoodjs-stripe/web has @apollo/client as a peer dependency,
+        // we end up needing to include it here
         include: ['rehackt'],
         exclude: modules,
       },
