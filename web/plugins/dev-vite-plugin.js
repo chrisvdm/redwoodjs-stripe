@@ -5,7 +5,7 @@ module.exports = () => ({
     return {
       server: {
         watch: {
-          ignored: [...modules.map((m) => `!**/node_modules/${m}/**`)],
+          ignored: modules.map((m) => `!**/node_modules/${m}/**`),
         },
       },
       build: {
