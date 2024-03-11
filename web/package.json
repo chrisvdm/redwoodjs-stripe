@@ -1,8 +1,16 @@
 {
   "name": "@redwoodjs-stripe/web",
   "version": "1.0.6",
-  "main": "./dist/index.js",
+  "main": "./dist/cjs/index.js",
+  "exports": {
+    ".": {
+      "redwoodjs-stripe:development": "./dist/esm/index.js",
+      "default": "./dist/cjs/index.js"
+    },
+    "./dev-vite-plugin": "./plugins/dev-vite-plugin.js"
+  },
   "files": [
+    "plugins",
     "dist"
   ],
   "keywords": [
