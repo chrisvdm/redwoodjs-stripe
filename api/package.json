@@ -2,6 +2,12 @@
   "name": "@redwoodjs-stripe/api",
   "version": "1.0.6",
   "description": "API-side code for RedwoodJS-Stripe projects",
+  "exports": {
+    ".": {
+      "redwoodjs-stripe:development": "./dist/esm/index.js",
+      "default": "./dist/cjs/index.js"
+    }
+  },
   "keywords": [
     "stripe",
     "redwoodjs",
@@ -10,7 +16,7 @@
   ],
   "license": "MIT",
   "author": "chrisvdm",
-  "main": "./dist/index.js",
+  "main": "./dist/cjs/index.js",
   "files": [
     "dist"
   ],

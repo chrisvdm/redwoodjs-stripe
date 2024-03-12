@@ -1,7 +1,7 @@
 {
   "name": "@redwoodjs-stripe/cli",
   "version": "1.0.4",
-  "bin": "./dist/cli.js",
+  "bin": "./dist/cjs/cli.js",
   "keywords": [
     "stripe",
     "redwoodjs",

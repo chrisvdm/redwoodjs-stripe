@@ -89,7 +89,7 @@ const addDummyProducts = async (options) => {
 
 const copyTemplateFiles = async (options) => {
   await fs.copy(
-    path.join(__dirname, '..', 'templates', options.fileType),
+    path.join(__dirname, '..', '..', 'templates', options.fileType),
     options.redwoodProjectPaths.base
   );
 }

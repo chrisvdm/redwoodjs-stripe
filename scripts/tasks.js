@@ -1,126 +1,157 @@
 #!/usr/bin/env node
-const path = require('path')
+const path = require('path');
 
-const { glob } = require('glob')
-const esbuild = require('esbuild')
-const chokidar = require('chokidar')
-const fs = require('fs-extra')
-const syncDir = require('sync-directory')
+const { glob } = require('glob');
+const esbuild = require('esbuild');
+const chokidar = require('chokidar');
+const fs = require('fs-extra');
+const syncDir = require('sync-directory');
 
-const args = require('yargs')(process.argv.slice(2)).argv
+const args = require('yargs')(process.argv.slice(2)).argv;
 
-const rootDir = path.resolve(__dirname, '..')
+const rootDir = path.resolve(__dirname, '..');
+
+const webConfig = (format) => ({
+  platform: 'browser',
+  jsx: 'automatic',
+  loader: { '.js': 'jsx' },
+  format,
+});
+
+const apiConfig = (format) => ({
+  platform: 'node',
+  format,
+});
 
 const configs = {
-    web: {
-        platform: 'browser',
-        jsx: 'automatic',
-        loader: { '.js': 'jsx' },
-        format: 'cjs',
-    },
-    api: {
-        platform: 'node',
-        format: 'cjs',
-    },
-    cli: {
-        platform: 'node',
-        format: 'cjs',
-    }
-}
+  'web:cjs': webConfig('cjs'),
+  'web:esm': webConfig('esm'),
+  'api:cjs': apiConfig('cjs'),
+  'api:esm': apiConfig('esm'),
+  'cli:cjs': {
+    platform: 'node',
+    format: 'cjs',
+  },
+};
 
 const tasks = {
-    build() {
-        return Promise.all(Object.keys(configs).map(buildPkg));
-    },
-    sync() {
-        ;['web', 'api'].forEach(syncPkg)
-    }
-}
+  async build() {
+    await cleanAll();
+    return Promise.all(Object.keys(configs).map(buildDist));
+  },
+  sync() {
+    ['web:cjs', 'web:esm', 'api:cjs', 'api:esm'].forEach(syncDist);
+  },
+};
 
-const srcGlobFromPkg = (pkg, root=rootDir) => path.resolve(srcDirFromPkg(pkg, root), '**', '!(*.test).*')
-const srcDirFromPkg = (pkg, root=rootDir) => path.resolve(root, pkg, 'src')
-const destDirFromPkg = (pkg, root=rootDir) => path.resolve(root, pkg, 'dist')
+const srcGlobFromDist = (dist, root = rootDir) =>
+  path.resolve(srcDirFromDist(dist, root), '**', '!(*.test).*');
 
-const syncPkg = async (pkg) => {
-    let ready = false
-    const target = args.target
-    let ctx = null
+const srcDirFromDist = (dist, root = rootDir) => {
+  const [pkg, _distName] = dist.split(':');
+  return path.resolve(root, pkg, 'src');
+};
 
-    const pkgSrcDir = srcDirFromPkg(pkg)
-    const pkgDestDir = destDirFromPkg(pkg)
-    const targetDestDir = destDirFromPkg(pkg, path.resolve(process.cwd(), target, 'node_modules', '@redwoodjs-stripe'))
+const destDirFromDist = (dist, root = rootDir) => {
+  const [pkg, distName] = dist.split(':');
+  return path.resolve(distDirFromPkg(pkg, root), distName);
+};
 
-    const resetContext = async () => {
-        // It would seem we need to recreate the context on file adds/removes, since
-        // esbuild does not provide a glob or stream api for entry points
-        ctx = await esbuild.context({
-            ...configs[pkg],
-            entryPoints: await glob(srcGlobFromPkg(pkg)),
-        })
-    }
-    
-    const handleAll = async (event, filepath) => {
-        if (!ready) {
-            return
-        }
+const distDirFromPkg = (pkg, root = rootDir) => path.resolve(root, pkg, 'dist');
 
-        console.log(`(${pkg}) Rebuilding and syncing: ${event} for ${path.relative(rootDir, filepath)}...`)
+const syncDist = async (dist) => {
+  let ready = false;
+  const target = args.target;
+  let ctx = null;
 
-        if (event === 'unlink') {
-            // note: A file was removed, but we don't know over here what the corresponding
-            // destination file to be removed is (e.g. if the extension changed). We
-            // assume the extension is the same, but we'll have stale files if not 
-            await fs.remove(path.resolve(pkgDestDir, path.relative(pkgSrcDir, filepath)))
-            await resetContext()
-        }
-        else if (event === 'add') {
-            await resetContext()
-        }
+  const srcDir = srcDirFromDist(dist);
+  const destDir = destDirFromDist(dist);
+  const targetDir = destDirFromDist(
+    dist,
+    path.resolve(process.cwd(), target, 'node_modules', '@redwoodjs-stripe')
+  );
 
-        await ctx.rebuild()
-    }
-    
-    const handleReady = () => {
-        ready = true
-        console.log(`(${pkg}) Watching for changes...`)
+  const resetContext = async () => {
+    // It would seem we need to recreate the context on file adds/removes, since
+    // esbuild does not provide a glob or stream api for entry points
+    ctx = await esbuild.context({
+      ...configs[dist],
+      entryPoints: await glob(srcGlobFromDist(dist)),
+    });
+  };
+
+  const handleAll = async (event, filepath) => {
+    if (!ready) {
+      return;
     }
 
-    await buildPkg(pkg)
-    ctx = await esbuild.context(configs[pkg])
-    const syncWatcher = syncDir(pkgDestDir, targetDestDir, { watch: true })
-    const srcWatcher = chokidar.watch(srcGlobFromPkg(pkg)).on('ready', handleReady).on('all', handleAll)
-    
-    process.once('SIGINT', async () => {
-        await Promise.all([
-            ctx.dispose(),
-            srcWatcher.close(),
-            syncWatcher.close()
-        ])
-    })
-}
+    console.log(
+      `(${dist}) Rebuilding and syncing: ${event} for ${path.relative(
+        rootDir,
+        filepath
+      )}...`
+    );
 
-const buildPkg = async (pkg) => {
-    console.log(`(${pkg}) Cleaning...`)
-    await fs.remove(destDirFromPkg(pkg))
+    if (event === 'unlink') {
+      // note: A file was removed, but we don't know over here what the corresponding
+      // destination file to be removed is (e.g. if the extension changed). We
+      // assume the extension is the same, but we'll have stale files if not
+      await fs.remove(path.resolve(destDir, path.relative(srcDir, filepath)));
+      await resetContext();
+    } else if (event === 'add') {
+      await resetContext();
+    }
 
-    console.log(`(${pkg}) Building...`)
-    await esbuild.build(configs[pkg])
-}
+    await ctx.rebuild();
+  };
+
+  const handleReady = () => {
+    ready = true;
+    console.log(`(${dist}) Watching for changes...`);
+  };
+
+  await buildDist(dist);
+  ctx = await esbuild.context(configs[dist]);
+  const syncWatcher = syncDir(destDir, targetDir, { watch: true });
+  const srcWatcher = chokidar
+    .watch(srcGlobFromDist(dist))
+    .on('ready', handleReady)
+    .on('all', handleAll);
+
+  process.once('SIGINT', async () => {
+    await Promise.all([ctx.dispose(), srcWatcher.close(), syncWatcher.close()]);
+  });
+};
+
+const cleanAll = async () => {
+  const pkgs = new Set(Object.keys(configs).map((dist) => dist.split(':')[0]));
+
+  for (const pkg of pkgs) {
+    await fs.remove(distDirFromPkg(pkg));
+  }
+};
+
+const buildDist = async (dist) => {
+  console.log(`(${dist}) Cleaning...`);
+  await fs.remove(destDirFromDist(dist));
+
+  console.log(`(${dist}) Building...`);
+  await esbuild.build(configs[dist]);
+};
 
 const setup = async () => {
-    for (const pkg of Object.keys(configs)) {
-        configs[pkg] = {
-            ...configs[pkg],
-            entryPoints: await glob(srcGlobFromPkg(pkg)),
-            outdir: destDirFromPkg(pkg),
-        }
-    }
-}
+  for (const dist of Object.keys(configs)) {
+    configs[dist] = {
+      ...configs[dist],
+      entryPoints: await glob(srcGlobFromDist(dist)),
+      outdir: destDirFromDist(dist),
+    };
+  }
+};
 
 const main = async () => {
-    await setup()
-    await tasks[args.task]()
-}
+  await setup();
+  await tasks[args.task]();
+};
 
-
-main()
+main();
