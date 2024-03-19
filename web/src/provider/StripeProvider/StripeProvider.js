@@ -23,8 +23,10 @@ export const StripeProvider = ({
   const [stripeCustomer, setCustomer] = useState(null)
   const { id = '', search = '' } = customer
 
+  const noSpaces = (text) => text.replace(/^\s+|\s+$/gm,'')
+
   // Fetches Stripe Customer object 
-  useStripeCustomerFetch(id, search, setCustomer)
+  useStripeCustomerFetch(noSpaces(id), search, setCustomer)
   // Returns a fn that returns a promise when stripeCustomer is null
   // else returns resolved stripeCustomer value
   const whenCustomerResolved = useWatcher(stripeCustomer, isNotNull)
