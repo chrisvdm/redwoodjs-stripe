@@ -21,7 +21,7 @@
     "dist"
   ],
   "dependencies": {
-    "stripe": "^11.18.0"
+    "stripe": ">=11.18.0"
   },
   "gitHead": "dc236d24165114a18811fe36e62482ff4ae75d36"
 }
