@@ -169,4 +169,4 @@ type StripePaymentMethodBillingDetailsAddress {
     postal_code: String
     state: String
 }
-`
+`;

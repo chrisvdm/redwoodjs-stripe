@@ -1,47 +1,46 @@
-// import { Link, routes } from '@redwoodjs/router'
-import { useState } from 'react'
+import { useState } from "react";
 
-import './styles.css'
+import "./styles.css";
 
 import {
   useStripeCart,
   useStripeCheckout,
   useStripeCustomerPortal,
   StripeProvider,
-} from '@redwoodjs-stripe/web'
+} from "@redwoodjs-stripe/web";
 
-import { MetaTags } from '@redwoodjs/web'
+import { MetaTags } from "@redwoodjs/web";
 
-import StripeItemsCell from 'src/components/StripeItemsCell/StripeItemsCell'
+import StripeItemsCell from "src/components/StripeItemsCell/StripeItemsCell";
 
-import { Icon } from './Icon'
+import { Icon } from "./Icon";
 
 const StripeDemoPage = () => {
-  const [isCartVisible, setCartVisibilty] = useState(false)
+  const [isCartVisible, setCartVisibilty] = useState(false);
 
   // This is a stub, unrelated to plugin, just to demo
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const onCartButtonClick = () => {
-    setCartVisibilty(!isCartVisible)
-  }
+    setCartVisibilty(!isCartVisible);
+  };
 
   const onLoggedInCheckboxChange = () => {
-    setIsLoggedIn(!isLoggedIn)
-  }
+    setIsLoggedIn(!isLoggedIn);
+  };
 
   // Details for logged in User
   const authUser = {
-    email: 'john@domain.com',
-    name: 'John Smith',
-  }
+    email: "john@domain.com",
+    name: "John Smith",
+  };
 
   return (
     <>
       {/* search uses a query string to search for a customer on Stripe */}
       <StripeProvider
         customer={{
-          search: isLoggedIn ? `email: "${authUser.email}"` : '',
+          search: isLoggedIn ? `email: "${authUser.email}"` : "",
         }}
       >
         <MetaTags
@@ -78,14 +77,14 @@ const StripeDemoPage = () => {
             <StripeItemsCell
               params={{
                 productParams: { active: true },
-                priceParams: { type: 'one_time' },
+                priceParams: { type: "one_time" },
               }}
             />
             <h3>Subscriptions</h3>
             <StripeItemsCell
               params={{
                 productParams: { active: true },
-                priceParams: { type: 'recurring' },
+                priceParams: { type: "recurring" },
               }}
             />
           </main>
@@ -93,17 +92,17 @@ const StripeDemoPage = () => {
         </div>
       </StripeProvider>
     </>
-  )
-}
+  );
+};
 
-export default StripeDemoPage
+export default StripeDemoPage;
 
 const StripeCustomerPortalButton = ({ isLoggedIn }) => {
   const {
     redirectToStripeCustomerPortal,
     createStripeCustomerPortalConfig,
     defaultConfig,
-  } = useStripeCustomerPortal()
+  } = useStripeCustomerPortal();
 
   const onButtonClick = async () => {
     // Ideally you would have a default customer portal already set up on the Stripe Dashboard
@@ -111,54 +110,55 @@ const StripeCustomerPortalButton = ({ isLoggedIn }) => {
     if (defaultConfig) {
       await redirectToStripeCustomerPortal(
         {
-          return_url: 'http://localhost:8910/stripe-demo',
+          return_url: "http://localhost:8910/stripe-demo",
         },
-        true
-      )
+        true,
+      );
     } else {
       // Best to create a new Customer Portal configuration this via Stripe Dashboard
       const config = await createStripeCustomerPortalConfig({
         business_profile: {
-          headline: 'a Store is a demo store',
+          headline: "a Store is a demo store",
         },
         features: {
           customer_update: {
             enabled: true,
-            allowed_updates: ['shipping', 'email', 'address', 'phone'],
+            allowed_updates: ["shipping", "email", "address", "phone"],
           },
           invoice_history: {
             enabled: true,
           },
           subscription_cancel: {
             enabled: true,
-            mode: 'immediately',
+            mode: "immediately",
           },
           subscription_pause: {
             enabled: true,
           },
         },
-      })
+      });
       await redirectToStripeCustomerPortal(
         {
-          return_url: 'http://localhost:8910/stripe-demo',
+          return_url: "http://localhost:8910/stripe-demo",
           configuration: config.id,
         },
-        true
-      )
+        true,
+      );
     }
-  }
+  };
   return (
     isLoggedIn && (
-      <button className="rws-button" onClick={onButtonClick}>
+      <button type="button" className="rws-button" onClick={onButtonClick}>
         <Icon name="user" />
       </button>
     )
-  )
-}
+  );
+};
 
 const StripeCartButton = ({ isCartVisible, onCartButtonClick }) => {
   return (
     <button
+      type="button"
       className="rws-button"
       onClick={onCartButtonClick}
       data-active={isCartVisible}
@@ -166,36 +166,36 @@ const StripeCartButton = ({ isCartVisible, onCartButtonClick }) => {
       <Icon name="cart" />
       <CartCounter />
     </button>
-  )
-}
+  );
+};
 
 const CartCounter = () => {
-  const { cart } = useStripeCart()
-  const count = cart.reduce((prev, cur) => prev + cur.quantity, 0)
-  return count > 0 ? <span className="rws-cart-counter">{count}</span> : null
-}
+  const { cart } = useStripeCart();
+  const count = cart.reduce((prev, cur) => prev + cur.quantity, 0);
+  return count > 0 ? <span className="rws-cart-counter">{count}</span> : null;
+};
 
 const StripeCart = () => {
-  const { checkout } = useStripeCheckout()
-  const { cart, clearCart } = useStripeCart()
+  const { checkout } = useStripeCheckout();
+  const { cart, clearCart } = useStripeCart();
 
   const onCheckoutButtonClick = async () => {
     await checkout({
       cart: cart,
       successUrl:
-        'http://localhost:8910/stripe-demo?success=true&sessionId={CHECKOUT_SESSION_ID}',
-      cancelUrl: 'http://localhost:8910/stripe-demo?success=false',
-    })
-  }
+        "http://localhost:8910/stripe-demo?success=true&sessionId={CHECKOUT_SESSION_ID}",
+      cancelUrl: "http://localhost:8910/stripe-demo?success=false",
+    });
+  };
 
   const onClearCartButtonClick = () => {
-    clearCart()
-  }
+    clearCart();
+  };
 
   const totalPrice = cart.reduce(
     (prev, cur) => prev + cur.price * cur.quantity,
-    0
-  )
+    0,
+  );
 
   return (
     <ul className="rws-cart__list">
@@ -211,22 +211,24 @@ const StripeCart = () => {
         <>
           <li className="rws-cart__list__item--border">
             <p>
-              total:{' '}
-              {(totalPrice / 100).toLocaleString('en-US', {
-                style: 'currency',
-                currency: 'USD',
+              total:{" "}
+              {(totalPrice / 100).toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
               })}
             </p>
           </li>
 
           <li className="rws-cart__actions ">
             <button
+              type="button"
               className="rws-button--bordered"
               onClick={onCheckoutButtonClick}
             >
               Checkout
             </button>
             <button
+              type="button"
               className="rws-button--bordered"
               onClick={onClearCartButtonClick}
             >
@@ -236,47 +238,55 @@ const StripeCart = () => {
         </>
       )}
     </ul>
-  )
-}
+  );
+};
 
-const StripeCartItem = ({ name, price, quantity }) => {
+const StripeCartItem = ({
+  name,
+  price,
+  quantity,
+}: {
+  name: string;
+  price: number;
+  quantity: number;
+}) => {
   return (
     <li className="rws-cart__list__item">
       <p>{name}</p>
       <p>
-        {(price / 100).toLocaleString('en-US', {
-          style: 'currency',
-          currency: 'USD',
+        {(price / 100).toLocaleString("en-US", {
+          style: "currency",
+          currency: "USD",
         })}
       </p>
       <p>qty: {quantity}</p>
     </li>
-  )
-}
+  );
+};
 
 const PageFooter = () => {
   return (
     <footer className="rws-page__footer">
       <p className="rws-page__footer__text">
-        This demo is powered by{' '}
+        This demo is powered by{" "}
         <a
-          alt="Learn more about Redwoodjs"
+          title="Learn more about Redwoodjs"
           href="http://redwoodjs.com/"
           target="_blank"
           rel="noreferrer"
         >
           Redwoodjs
-        </a>{' '}
-        and{' '}
+        </a>{" "}
+        and{" "}
         <a
-          alt="Learn more about Stripe"
+          title="Learn more about Stripe"
           target="_blank"
           href="https://stripe.com/"
           rel="noreferrer"
         >
-          Stripe{' '}
+          Stripe{" "}
         </a>
-        | View the redwoodjs-stripe repository on{' '}
+        | View the redwoodjs-stripe repository on{" "}
         <a
           alt="View repo on Github"
           target="_blank"
@@ -287,5 +297,5 @@ const PageFooter = () => {
         </a>
       </p>
     </footer>
-  )
-}
+  );
+};

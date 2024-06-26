@@ -1,20 +1,20 @@
-import { Loading, Empty, Failure, Success } from './StripeItemsCell'
-import { standard } from './StripeItemsCell.mock'
+import { Loading, Empty, Failure, Success } from "./StripeItemsCell";
+import { standard } from "./StripeItemsCell.mock";
 
 export const loading = () => {
-  return Loading ? <Loading /> : null
-}
+  return Loading ? <Loading /> : null;
+};
 
 export const empty = () => {
-  return Empty ? <Empty /> : null
-}
+  return Empty ? <Empty /> : null;
+};
 
 export const failure = () => {
-  return Failure ? <Failure error={new Error('Oh no')} /> : null
-}
+  return Failure ? <Failure error={new Error("Oh no")} /> : null;
+};
 
 export const success = () => {
-  return Success ? <Success {...standard()} /> : null
-}
+  return Success ? <Success {...standard()} /> : null;
+};
 
-export default { title: 'Cells/StripeItemsCell' }
+export default { title: "Cells/StripeItemsCell" };

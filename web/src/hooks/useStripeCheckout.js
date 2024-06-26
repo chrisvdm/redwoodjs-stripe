@@ -1,10 +1,10 @@
-import { useContext } from 'react'
-import { useMutation } from '@redwoodjs/web'
-import { StripeContext } from '../provider/StripeContext'
-import gql from 'graphql-tag'
+import { useContext } from "react";
+import { useMutation } from "@redwoodjs/web";
+import { StripeContext } from "../provider/StripeContext";
+import gql from "graphql-tag";
 
 export const useStripeCheckout = () => {
-  const context = useContext(StripeContext)
+  const context = useContext(StripeContext);
 
   // Create Session Mutation
   const [checkout] = useMutation(
@@ -22,8 +22,8 @@ export const useStripeCheckout = () => {
           url
         }
       }
-    `
-  )
+    `,
+  );
 
   // Create Query for retrieving CheckoutSession
   const RETRIEVE_STRIPE_CHECKOUT_SESSION = gql`
@@ -37,24 +37,36 @@ export const useStripeCheckout = () => {
         line_items
       }
     }
-  `
- 
+  `;
+
   return {
-    checkout: async ({ cart, customer, successUrl, cancelUrl, mode, allowPromotionCodes }) => {
+    checkout: async ({
+      cart,
+      customer,
+      successUrl,
+      cancelUrl,
+      mode,
+      allowPromotionCodes,
+    }) => {
       // customer = !!customer ? customer : (await context.waitForCustomer())
-      customer = customer || context.customer
-      cart = cart || context.cart
-      const newCart = (cart || context.cart).map(item => ({ id: item.id, quantity: item.quantity }))
+      customer = customer || context.customer;
+      cart = cart || context.cart;
+      const newCart = (cart || context.cart).map((item) => ({
+        id: item.id,
+        quantity: item.quantity,
+      }));
       // Determines checkout mode based on whether price "type" was passed to cart item or whther a "mode" was passed to checkout hook
       const determinedMode = (() => {
         if (typeof mode === "undefined") {
-          const hasRecurring = cart.some((item) => Object.hasOwn(item, 'type') && item.type === 'recurring')
-          return hasRecurring ? "subscription" : "payment"
+          const hasRecurring = cart.some(
+            (item) => Object.hasOwn(item, "type") && item.type === "recurring",
+          );
+          return hasRecurring ? "subscription" : "payment";
         } else {
-          return mode
+          return mode;
         }
-      })()
-      
+      })();
+
       // Build variable payload
       const payload = {
         variables: {
@@ -63,45 +75,45 @@ export const useStripeCheckout = () => {
           cancelUrl: cancelUrl,
           mode: determinedMode,
           allowPromotionCodes: allowPromotionCodes,
-          ... (customer != null ? {
-            customer: {
-              id: customer.id,
-              name: customer.name,
-              email: customer.email
-            },
-            customer_email: customer.email
-          } : {})
-        }
-      }
+          ...(customer != null
+            ? {
+                customer: {
+                  id: customer.id,
+                  name: customer.name,
+                  email: customer.email,
+                },
+                customer_email: customer.email,
+              }
+            : {}),
+        },
+      };
 
       // Create checkout session and return session id
       const {
         data: {
-          checkout: {
-            url
-          }
+          checkout: { url },
         },
-      } = await checkout(payload)
-      
+      } = await checkout(payload);
+
       // Redirect to Stripe Checkout
       location.href = url;
     },
     retrieveStripeCheckoutSession: async (id) => {
-      const client = useApolloClient()
-      
+      const client = useApolloClient();
+
       // create query
       const result = await client.query({
         query: RETRIEVE_STRIPE_CHECKOUT_SESSION,
         variables: {
-          id: id
-        }
-      })
+          id: id,
+        },
+      });
 
       if (result.error) {
-        throw result.error
+        throw result.error;
       }
 
-      return result.data?.retrieveStripeCheckoutSession ?? null
-    }
-  }
-}
+      return result.data?.retrieveStripeCheckoutSession ?? null;
+    },
+  };
+};

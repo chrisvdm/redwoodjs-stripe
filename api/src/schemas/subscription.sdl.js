@@ -260,4 +260,4 @@ input ListStripeSubscriptionsInput {
 type Query {
     listStripeSubscriptions(data: ListStripeSubscriptionsInput): [StripeSubscription] @requireAuth
 }
-`
+`;

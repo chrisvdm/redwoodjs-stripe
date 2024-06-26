@@ -5,4 +5,4 @@ export const standard = () => ({
     { id: 43, images: [] },
     { id: 44, images: [] },
   ],
-})
+});

@@ -3,6 +3,6 @@
 // More info at https://redwoodjs.com/docs/project-configuration-dev-test-build
 
 module.exports = {
-  rootDir: '.',
-  projects: ['<rootDir>/{*,!(node_modules)/**/}/jest.config.js'],
-}
+  rootDir: ".",
+  projects: ["<rootDir>/{*,!(node_modules)/**/}/jest.config.js"],
+};

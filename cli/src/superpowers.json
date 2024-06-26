@@ -20,7 +20,7 @@
   {
     "name": "Fly 50m high",
     "description": "Fly up to 50m into the sky and reach a maximum speed of 180km/h.",
-    "images":["img/flight.png"],
+    "images": ["img/flight.png"],
     "prices": [
       {
         "currency": "usd",
@@ -38,7 +38,7 @@
   {
     "name": "Fold time, space and everything else",
     "description": "Fold anything in the universe, whether it be laundry or spacetime itself. Disclaimer: May cause a rip in the spacetime continuum if used improperly.",
-    "images":["img/folding.png"],
+    "images": ["img/folding.png"],
     "prices": [
       {
         "currency": "usd",

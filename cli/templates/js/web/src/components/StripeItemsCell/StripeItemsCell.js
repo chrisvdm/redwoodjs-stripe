@@ -1,7 +1,7 @@
-import { useStripeCart } from '@redwoodjs-stripe/web'
+import { useStripeCart } from "@redwoodjs-stripe/web";
 
-import { Icon } from './Icon'
-import './styles.css'
+import { Icon } from "./Icon";
+import "./styles.css";
 /*
   Fetches an array of products and their prices filtered via params.
   Available params can be found in Stripe API documentation (https://stripe.com/docs/api/products/list)
@@ -28,15 +28,15 @@ export const QUERY = gql`
       type
     }
   }
-`
+`;
 
-export const Loading = () => <div>Loading...</div>
+export const Loading = () => <div>Loading...</div>;
 
-export const Empty = () => <div>Empty</div>
+export const Empty = () => <div>Empty</div>;
 
 export const Failure = ({ error }) => (
-  <div style={{ color: 'red' }}>Error: {error.message}</div>
-)
+  <div style={{ color: "red" }}>Error: {error.message}</div>
+);
 
 export const Success = ({ stripeItems }) => {
   return (
@@ -49,18 +49,18 @@ export const Success = ({ stripeItems }) => {
           >
             <StripeItem {...item} />
           </li>
-        )
+        );
       })}
     </ul>
-  )
-}
+  );
+};
 
 const StripeItem = ({ name, price, id, images, type }) => {
-  const { addToCart } = useStripeCart()
+  const { addToCart } = useStripeCart();
 
   const onAddToCartButtonClick = (item) => {
-    addToCart(item)
-  }
+    addToCart(item);
+  };
   return (
     <>
       <div className="rws-product">
@@ -69,14 +69,15 @@ const StripeItem = ({ name, price, id, images, type }) => {
           <div className="rws-product__text-wrapper">
             <p className="rws-product__text">{name}</p>
             <p className="rws-product__text">
-              {(price / 100).toLocaleString('en-US', {
-                style: 'currency',
-                currency: 'USD',
+              {(price / 100).toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
               })}
             </p>
           </div>
 
           <button
+            type="button"
             className="rws-button"
             onClick={() => {
               onAddToCartButtonClick({
@@ -84,7 +85,7 @@ const StripeItem = ({ name, price, id, images, type }) => {
                 id: id,
                 price: price,
                 type: type,
-              })
+              });
             }}
           >
             <Icon name="plus" />
@@ -92,5 +93,5 @@ const StripeItem = ({ name, price, id, images, type }) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};

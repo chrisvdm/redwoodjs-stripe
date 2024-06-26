@@ -1,4 +1,4 @@
-import { db } from 'api/src/lib/db'
+import { db } from "api/src/lib/db";
 
 export default async () => {
   try {
@@ -16,10 +16,10 @@ export default async () => {
       // { name: 'mark', email: 'mark@example.com' },
       // { name: 'jackie', email: 'jackie@example.com' },
       // { name: 'bob', email: 'bob@example.com' },
-    ]
+    ];
     console.log(
-      "\nUsing the default './scripts/seed.js' template\nEdit the file to add seed data\n"
-    )
+      "\nUsing the default './scripts/seed.js' template\nEdit the file to add seed data\n",
+    );
 
     if ((await db.userExample.count()) === 0) {
       // Note: if using PostgreSQL, using `createMany` to insert multiple records is much faster
@@ -29,12 +29,12 @@ export default async () => {
         // Change to match your data model and seeding needs
         //
         data.map(async (data) => {
-          const record = await db.userExample.create({ data })
-          console.log(record)
-        })
-      )
+          const record = await db.userExample.create({ data });
+          console.log(record);
+        }),
+      );
     } else {
-      console.log('Users already seeded')
+      console.log("Users already seeded");
     }
 
     // If using dbAuth and seeding users, you'll need to add a `hashedPassword`
@@ -60,7 +60,7 @@ export default async () => {
     //     })
     //   }
   } catch (error) {
-    console.warn('Please define your seed data.')
-    console.error(error)
+    console.warn("Please define your seed data.");
+    console.error(error);
   }
-}
+};

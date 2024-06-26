@@ -1,9 +1,9 @@
-import MainLayout from './MainLayout'
+import MainLayout from "./MainLayout";
 
 const meta = {
   component: MainLayout,
-}
+};
 
-export default meta
+export default meta;
 
-export const Primary = {}
+export const Primary = {};

@@ -1,4 +1,4 @@
-import { handleStripeWebhooks } from '@redwoodjs-stripe/api'
+import { handleStripeWebhooks } from "@redwoodjs-stripe/api";
 
 /**
  * The handler function is your code that processes http request events.
@@ -23,27 +23,27 @@ export const handler = async (event, context) => {
     event,
     context,
     {
-      'checkout.session.completed': (e) => e.type,
-      'checkout.session.async_payment_succeeded': (e) => e.type,
-      'checkout.session.async_payment_failed': (e) => e.type,
-      'customer.updated': async (e) => {
-        console.log('customer.updated:', e)
+      "checkout.session.completed": (e) => e.type,
+      "checkout.session.async_payment_succeeded": (e) => e.type,
+      "checkout.session.async_payment_failed": (e) => e.type,
+      "customer.updated": async (e) => {
+        console.log("customer.updated:", e);
         // Add a service here that updates your user in your db to reflect changes made via Stripe.
       },
-      'payment_intent.succeeded': async (e) => {
-        console.log(e)
+      "payment_intent.succeeded": async (e) => {
+        console.log(e);
       },
     },
-    false // Toggles "secure" mode. When "true" handler uses STRIPE_WEBHOOK_KEY to verify event origin.
-  )
+    false, // Toggles "secure" mode. When "true" handler uses STRIPE_WEBHOOK_KEY to verify event origin.
+  );
 
   return {
     statusCode: 200,
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       data: results,
     }),
-  }
-}
+  };
+};

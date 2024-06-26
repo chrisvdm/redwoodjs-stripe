@@ -25,5 +25,8 @@ jobs:
       - run: yarn install
         shell: bash
 
+      - name: 🧹 Lint
+        run: yarn lint
+
       - name: 🔨 Build
         run: yarn build

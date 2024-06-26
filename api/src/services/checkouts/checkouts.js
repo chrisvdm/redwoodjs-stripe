@@ -1,17 +1,17 @@
-import { stripe } from '../../lib'
+import { stripe } from "../../lib";
 
 export const checkout = async (payload) => {
-  const { url, id } = await createStripeCheckoutSession(payload)
- 
+  const { url, id } = await createStripeCheckoutSession(payload);
+
   // api side redirect to Stripe Checkout (SUGGESTED APPROACH)
   // this approach is probably best put in a serverless function
   // await redirectToStripeCheckout(url)
 
   return {
     id,
-    url
-  }; 
-}
+    url,
+  };
+};
 
 export const createStripeCheckoutSession = async ({
   customer = {},
@@ -19,12 +19,12 @@ export const createStripeCheckoutSession = async ({
   cart,
   successUrl = "http://localhost:8910/stripe-demo?success=true&sessionId={CHECKOUT_SESSION_ID}",
   cancelUrl = "http://localhost:8910/stripe-demo?success=false",
-  allowPromotionCodes = false
+  allowPromotionCodes = false,
 }) => {
-  const line_items = cart.map(product => ({
+  const line_items = cart.map((product) => ({
     price: product.id,
-    quantity: product.quantity
-  }))
+    quantity: product.quantity,
+  }));
 
   // Build payload
   // TODO: Custom payload
@@ -35,20 +35,20 @@ export const createStripeCheckoutSession = async ({
     // eslint-disable-next-line camelcase
     line_items: line_items,
     mode: mode,
-    payment_method_types: ['card'],
+    payment_method_types: ["card"],
     allow_promotion_codes: allowPromotionCodes,
-    ... (Object.hasOwn(customer, "id") && { customer: customer.id })
-  }
+    ...(Object.hasOwn(customer, "id") && { customer: customer.id }),
+  };
 
-  const session = await stripe.checkout.sessions.create(payload)
-  return session
-}
+  const session = await stripe.checkout.sessions.create(payload);
+  return session;
+};
 
 // export const redirectToStripeCheckout = async url => {
 //   // probably best this logic lives in an serverless function
 // }
 
 export const retrieveStripeCheckoutSession = async ({ id }) => {
-  const session = await stripe.checkout.sessions.retrieve(id)
-  return session
-}
+  const session = await stripe.checkout.sessions.retrieve(id);
+  return session;
+};

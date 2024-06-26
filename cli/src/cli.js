@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const yargs = require("yargs/yargs");
-const { hideBin } = require('yargs/helpers')
+const { hideBin } = require("yargs/helpers");
 
 const { setup } = require("./setup");
 const { upgrade } = require("./upgrade");
@@ -25,6 +25,6 @@ const main = () => {
       },
     })
     .parse();
-}
+};
 
 main();

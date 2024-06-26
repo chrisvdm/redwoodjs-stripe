@@ -73,4 +73,4 @@ export const schema = `
     stripeItems(params: StripeItemsParamsInput): [StripeItem!]! @skipAuth
     stripeItem(id: ID!): StripeItem @skipAuth
   }
-`
+`;
