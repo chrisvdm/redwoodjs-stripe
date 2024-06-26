@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 const path = require("node:path");
 
-const { glob } = require("glob");
+const spawn = require("@npmcli/promise-spawn");
 const esbuild = require("esbuild");
+const { glob } = require("glob");
 const chokidar = require("chokidar");
 const fs = require("fs-extra");
 const syncDir = require("sync-directory");
@@ -23,7 +24,7 @@ const apiConfig = (format) => ({
   format,
 });
 
-const configs = {
+const esbuildConfigs = {
   "web:cjs": webConfig("cjs"),
   "web:esm": webConfig("esm"),
   "api:cjs": apiConfig("cjs"),
@@ -37,7 +38,7 @@ const configs = {
 const tasks = {
   async build() {
     await cleanAll();
-    return Promise.all(Object.keys(configs).map(buildDist));
+    return Promise.all(Object.keys(esbuildConfigs).map(buildDist));
   },
   sync() {
     ["web:cjs", "web:esm", "api:cjs", "api:esm"].forEach(syncDist);
@@ -51,6 +52,8 @@ const srcDirFromDist = (dist, root = rootDir) => {
   const [pkg, _distName] = dist.split(":");
   return path.resolve(root, pkg, "src");
 };
+
+const pkgFromDist = (dist) => dist.split(":")[0];
 
 const destDirFromDist = (dist, root = rootDir) => {
   const [pkg, distName] = dist.split(":");
@@ -75,7 +78,7 @@ const syncDist = async (dist) => {
     // It would seem we need to recreate the context on file adds/removes, since
     // esbuild does not provide a glob or stream api for entry points
     ctx = await esbuild.context({
-      ...configs[dist],
+      ...esbuildConfigs[dist],
       entryPoints: await glob(srcGlobFromDist(dist)),
     });
   };
@@ -102,7 +105,10 @@ const syncDist = async (dist) => {
       await resetContext();
     }
 
-    await ctx.rebuild();
+    await attempt(async () => {
+      await ctx.rebuild();
+      await buildDistTypes(dist);
+    });
   };
 
   const handleReady = () => {
@@ -110,8 +116,11 @@ const syncDist = async (dist) => {
     console.log(`(${dist}) Watching for changes...`);
   };
 
+  await cleanDist(dist);
   await buildDist(dist);
-  ctx = await esbuild.context(configs[dist]);
+
+  ctx = await esbuild.context(esbuildConfigs[dist]);
+
   const syncWatcher = syncDir(destDir, targetDir, { watch: true });
   const srcWatcher = chokidar
     .watch(srcGlobFromDist(dist))
@@ -123,35 +132,56 @@ const syncDist = async (dist) => {
   });
 };
 
+const buildDistTypes = async (dist) => {
+  const [pkg] = dist.split(":");
+
+  await spawn("tsc", [
+    "--incremental",
+    "--emitDeclarationOnly",
+    "--project",
+    path.join(rootDir, dist, pkg, "tsconfig.json"),
+  ]);
+};
+
 const cleanAll = async () => {
-  const pkgs = new Set(Object.keys(configs).map((dist) => dist.split(":")[0]));
+  const pkgs = new Set(Object.keys(esbuildConfigs).map(pkgFromDist));
 
   for (const pkg of pkgs) {
     await fs.remove(distDirFromPkg(pkg));
   }
 };
 
-const buildDist = async (dist) => {
+const cleanDist = async (dist) => {
   console.log(`(${dist}) Cleaning...`);
   await fs.remove(destDirFromDist(dist));
+};
 
+const buildDist = async (dist) => {
   console.log(`(${dist}) Building...`);
-  await esbuild.build(configs[dist]);
+  await esbuild.build(esbuildConfigs[dist]);
 };
 
 const setup = async () => {
-  for (const dist of Object.keys(configs)) {
-    configs[dist] = {
-      ...configs[dist],
+  for (const dist of Object.keys(esbuildConfigs)) {
+    esbuildConfigs[dist] = {
+      ...esbuildConfigs[dist],
       entryPoints: await glob(srcGlobFromDist(dist)),
       outdir: destDirFromDist(dist),
     };
   }
 };
 
+const attempt = async (fn) => {
+  try {
+    return await fn();
+  } catch (error) {
+    console.error(error.toString());
+  }
+};
+
 const main = async () => {
   await setup();
-  await tasks[args.task]();
+  await attempt(tasks[args.task]);
 };
 
 main();

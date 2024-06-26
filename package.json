@@ -2,7 +2,12 @@
   "name": "redwoodjs-stripe",
   "private": true,
   "description": "A Redwood/Stripe integration made easy",
-  "keywords": ["stripe", "redwoodjs", "payments", "commerce"],
+  "keywords": [
+    "stripe",
+    "redwoodjs",
+    "payments",
+    "commerce"
+  ],
   "homepage": "https://github.com/chrisvdm/redwoodjs-stripe#readme",
   "bugs": {
     "url": "https://github.com/chrisvdm/redwoodjs-stripe/issues"
@@ -13,7 +18,11 @@
   },
   "license": "MIT",
   "author": "Chrisvdm",
-  "workspaces": ["api", "web", "cli"],
+  "workspaces": [
+    "api",
+    "web",
+    "cli"
+  ],
   "scripts": {
     "build": "yarn tasks --task build",
     "release": "yarn build && lerna publish ",
@@ -32,6 +41,8 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.8.1"
+    "@biomejs/biome": "1.8.1",
+    "@npmcli/promise-spawn": "^7.0.2",
+    "typescript": "^5.5.2"
   }
 }

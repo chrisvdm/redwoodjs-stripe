@@ -9,8 +9,16 @@
     },
     "./dev-vite-plugin": "./plugins/dev-vite-plugin.js"
   },
-  "files": ["plugins", "dist"],
-  "keywords": ["stripe", "redwoodjs", "payments", "commerce"],
+  "files": [
+    "plugins",
+    "dist"
+  ],
+  "keywords": [
+    "stripe",
+    "redwoodjs",
+    "payments",
+    "commerce"
+  ],
   "peerDependencies": {
     "@redwoodjs/web": ">=5.4.3",
     "react": ">=18.2.0",
