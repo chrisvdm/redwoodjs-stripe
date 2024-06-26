@@ -15,8 +15,5 @@
     "stripe": "^11.9.1",
     "yargs": "^17.7.2"
   },
-  "devDependencies": {
-    "@redwoodjs-stripe/web": "workspace:*"
-  },
   "gitHead": "dc236d24165114a18811fe36e62482ff4ae75d36"
 }
