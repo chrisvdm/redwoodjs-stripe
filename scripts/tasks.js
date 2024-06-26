@@ -35,10 +35,15 @@ const esbuildConfigs = {
   },
 };
 
+const typedDistSet = new Set(["web:esm"]);
+
 const tasks = {
   async build() {
     await cleanAll();
-    return Promise.all(Object.keys(esbuildConfigs).map(buildDist));
+    return Promise.all([
+      ...Object.keys(esbuildConfigs).map(buildDistRuntime),
+      ...Object.keys(esbuildConfigs).map(buildDistTypes),
+    ]);
   },
   sync() {
     ["web:cjs", "web:esm", "api:cjs", "api:esm"].forEach(syncDist);
@@ -117,7 +122,8 @@ const syncDist = async (dist) => {
   };
 
   await cleanDist(dist);
-  await buildDist(dist);
+  await buildDistRuntime(dist);
+  await buildDistTypes(dist);
 
   ctx = await esbuild.context(esbuildConfigs[dist]);
 
@@ -132,14 +138,19 @@ const syncDist = async (dist) => {
   });
 };
 
-const buildDistTypes = async (dist) => {
-  const [pkg] = dist.split(":");
+const buildDistTypes = (dist) => {
+  const pkg = pkgFromDist(dist);
 
-  await spawn("tsc", [
+  if (!typedDistSet.has(dist)) {
+    return;
+  }
+
+  return spawn("tsc", [
     "--incremental",
+    "--declaration",
     "--emitDeclarationOnly",
     "--project",
-    path.join(rootDir, dist, pkg, "tsconfig.json"),
+    path.join(rootDir, pkg, "tsconfig.json"),
   ]);
 };
 
@@ -155,8 +166,7 @@ const cleanDist = async (dist) => {
   console.log(`(${dist}) Cleaning...`);
   await fs.remove(destDirFromDist(dist));
 };
-
-const buildDist = async (dist) => {
+const buildDistRuntime = async (dist) => {
   console.log(`(${dist}) Building...`);
   await esbuild.build(esbuildConfigs[dist]);
 };
@@ -176,6 +186,16 @@ const attempt = async (fn) => {
     return await fn();
   } catch (error) {
     console.error(error.toString());
+
+    if (error.stdout) {
+      console.log(error.stdout);
+    }
+
+    if (error.stderr) {
+      console.log(error.stderr);
+    }
+
+    process.exitCode = 1;
   }
 };
 

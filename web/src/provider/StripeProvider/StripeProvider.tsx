@@ -62,6 +62,7 @@ export const StripeProvider = ({
     () => createStripeApi(cart, setCart, stripeCustomer, waitForCustomer),
     [cart, stripeCustomer],
   );
+
   return (
     <StripeContext.Provider value={api}>{children}</StripeContext.Provider>
   );
