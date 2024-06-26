@@ -72,8 +72,7 @@ export const useStripeCustomerPortal = () => {
   );
 
   const ensureCustomer = async () => {
-    // const customer = await context.waitForCustomer()
-    const customer = context.customer();
+    const customer = await context.waitForCustomer();
 
     if (customer === null) {
       throw new Error(
@@ -92,8 +91,7 @@ export const useStripeCustomerPortal = () => {
   return {
     defaultConfig: defaultConfig,
     redirectToStripeCustomerPortal: async (args, skipAuth = false) => {
-      // const customer = args.customer || await ensureCustomer()
-      const customer = args.customer || context.customer;
+      const customer = args.customer || (await ensureCustomer());
 
       // Create Payload
       const payload = {

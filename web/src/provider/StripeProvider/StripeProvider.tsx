@@ -4,12 +4,7 @@ import { useStripeCustomerFetch } from "../../hooks";
 
 import { createStripeApi } from "../createStripeApi";
 import { StripeContext } from "../StripeContext";
-import { useOnceIsNotNull } from "./useOnceIsNotNull";
-
-export interface Customer {
-  id: string;
-  search: string;
-}
+import { useOnceDefined } from "./useOnceDefined";
 
 export const StripeProvider = ({
   children,
@@ -18,7 +13,7 @@ export const StripeProvider = ({
     search: "",
   },
 }: {
-  customer: Customer;
+  customer: CustomerDescription;
   children: ReactNode;
 }) => {
   const [cart, setCart] = useState([]);
@@ -31,13 +26,13 @@ export const StripeProvider = ({
   useStripeCustomerFetch(noSpaces(id), search, setCustomer);
   // Returns a fn that returns a promise when stripeCustomer is null
   // else returns resolved stripeCustomer value
-  const whenCustomerResolved = useOnceIsNotNull(stripeCustomer);
+  const onceCustomerResolved = useOnceDefined(stripeCustomer);
 
   const waitForCustomer = async () => {
     // Check that we have what we need to either fetch(search) for and create a Stripe Customer
     if (search !== "") {
       // Wait for stripeCustomer to have a value and return value
-      return await whenCustomerResolved();
+      return await onceCustomerResolved();
     } else {
       return null;
     }

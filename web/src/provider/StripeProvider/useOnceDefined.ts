@@ -6,8 +6,7 @@ interface Deferred<Value> {
   reject: (reason: unknown) => unknown;
 }
 
-const isNotNull = <Value>(value: Value | null): value is Value =>
-  value !== null;
+const isDefined = <Value>(value: Value): value is Value => value != null;
 
 export const createDeferred = <Value>(): Deferred<Value> => {
   const deferred: Partial<Deferred<Value>> = {};
@@ -43,5 +42,5 @@ const useWatcher = <Value>(
   }, [value, isConditionMet]);
 };
 
-export const useOnceIsNotNull = <Value>(value: Value): (() => Promise<Value>) =>
-  useWatcher(value, isNotNull);
+export const useOnceDefined = <Value>(value: Value): (() => Promise<Value>) =>
+  useWatcher(value, isDefined);

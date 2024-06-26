@@ -1,9 +1,21 @@
-// Define context shape
-export const createStripeApi = (cart, setCart, customer, waitForCustomer) => ({
+import type {
+  Customer,
+  Cart,
+  SetCart,
+  WaitForCustomer,
+  CartItem,
+} from "./types";
+
+export const createStripeApi = (
+  cart: Cart,
+  setCart: SetCart,
+  customer: Customer,
+  waitForCustomer: WaitForCustomer,
+) => ({
   waitForCustomer,
   customer: customer,
   cart,
-  addToCart: (item) => {
+  addToCart: (item: CartItem) => {
     const prevCart = [...cart];
     const itemIndex = findItemIndexByID(item.id, prevCart);
     let newCart = [];
@@ -26,7 +38,7 @@ export const createStripeApi = (cart, setCart, customer, waitForCustomer) => ({
 
     setCart(newCart);
   },
-  removeFromCart: (item) => {
+  removeFromCart: (item: CartItem) => {
     const prevCart = [...cart];
     const itemIndex = findItemIndexByID(item, prevCart);
     let newCart = [];
@@ -39,7 +51,7 @@ export const createStripeApi = (cart, setCart, customer, waitForCustomer) => ({
 
     setCart(newCart);
   },
-  editCartItem: (item, payload) => {
+  editCartItem: (item: CartItem, payload: Partial<CartItem>) => {
     const itemIndex = findItemIndexByID(item, cart);
 
     // payload shape: {quantity: 1}
@@ -56,7 +68,7 @@ export const createStripeApi = (cart, setCart, customer, waitForCustomer) => ({
   },
 });
 
-const findItemIndexByID = (key, inputArray) => {
+const findItemIndexByID = (key: string, inputArray: { id: string }[]) => {
   for (let i = 0; i < inputArray.length; i++) {
     if (inputArray[i].id === key) {
       return i;
