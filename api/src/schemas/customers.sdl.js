@@ -331,4 +331,4 @@ type Query {
 type Mutation {
     createStripeCustomer(data: CreateStripeCustomerInput): StripeCustomer @skipAuth
 }
-`
+`;

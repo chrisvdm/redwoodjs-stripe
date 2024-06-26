@@ -215,4 +215,4 @@ type Mutation {
     createStripeCustomerPortalSessionSkipAuth(data: StripeCustomerPortalInput): StripeCustomerPortal @skipAuth
     createStripeCustomerPortalSession(data: StripeCustomerPortalInput): StripeCustomerPortal @requireAuth
 }
-`
+`;

@@ -1,7 +1,7 @@
-import { useApolloClient } from '@apollo/client'
-import gql from 'graphql-tag'
+import { useApolloClient } from "@apollo/client";
+import gql from "graphql-tag";
 
-import { useEffect } from 'react'
+import { useEffect } from "react";
 
 const STRIPE_CUSTOMER_SEARCH = gql`
     query stripeCustomerSearch(
@@ -13,7 +13,7 @@ const STRIPE_CUSTOMER_SEARCH = gql`
         email
       }
     }
-  `
+  `;
 const RETRIEVE_STRIPE_CUSTOMER = gql`
     query retrieveStripeCustomer(
       $data: RetrieveStripeCustomerInput
@@ -24,75 +24,72 @@ const RETRIEVE_STRIPE_CUSTOMER = gql`
         email
       }
     }
-  `
+  `;
 
 const searchCustomer = async ({ client, searchString }) => {
   const result = await client.query({
     query: STRIPE_CUSTOMER_SEARCH,
     variables: {
-      query: searchString
-    }
-  })
+      query: searchString,
+    },
+  });
 
   if (result.error) {
-    throw result.error
+    throw result.error;
   }
 
-  return result.data?.stripeCustomerSearch ?? null
-}
+  return result.data?.stripeCustomerSearch ?? null;
+};
 
 const retrieveCustomer = async ({ id, client }) => {
   const result = await client.query({
     query: RETRIEVE_STRIPE_CUSTOMER,
     variables: {
       data: {
-       id: id
-      }
-    }
-  })
+        id: id,
+      },
+    },
+  });
 
   if (result.error) {
-    throw result.error
+    throw result.error;
   }
 
-  return result.data?.retrieveStripeCustomer ?? null
-}
+  return result.data?.retrieveStripeCustomer ?? null;
+};
 
 const fetchCustomer = async (context) => {
-  const {
-    id,
-    searchString
-  } = context
-  const hasSearchString = searchString !== '' && !!searchString
-  const hasID = id !== '' && !!id
+  const { id, searchString } = context;
+  const hasSearchString = searchString !== "" && !!searchString;
+  const hasID = id !== "" && !!id;
 
   if (!hasSearchString && !hasID) {
-    return null
+    return null;
   }
 
-  let foundCustomer = null
+  let foundCustomer = null;
 
   if (hasID) {
-    foundCustomer = await retrieveCustomer(context)
+    foundCustomer = await retrieveCustomer(context);
   } else if (hasSearchString && foundCustomer === null) {
-    foundCustomer = await searchCustomer(context)
+    foundCustomer = await searchCustomer(context);
   }
-  return foundCustomer
-}
+  return foundCustomer;
+};
 
 export const useStripeCustomerFetch = (id, searchString, setCustomer) => {
- const client = useApolloClient()
+  const client = useApolloClient();
   useEffect(() => {
     const doFetch = async () => {
       const context = {
         id,
         client,
         searchString,
-      }
-      const stripeCustomer = await fetchCustomer(context)
-      setCustomer(stripeCustomer)
-    }
+      };
+      const stripeCustomer = await fetchCustomer(context);
+      setCustomer(stripeCustomer);
+    };
 
-    doFetch()
-  }, [searchString, id])
-}
+    doFetch();
+  }, [searchString, id]);
+};

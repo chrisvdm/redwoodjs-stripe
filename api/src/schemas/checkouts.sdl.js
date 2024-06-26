@@ -821,4 +821,4 @@ export const schema = `
     # (otherwise we'd just type "cart" as "[Product!]!")
     checkout(cart: [ProductInput!]!, cancelUrl: String, successUrl: String, customer: StripeCustomerInput, mode: StripeCheckoutModeEnum, allowPromotionCodes: Boolean): StripeCheckoutSession! @skipAuth
   }
-`
+`;

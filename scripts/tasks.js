@@ -1,36 +1,36 @@
 #!/usr/bin/env node
-const path = require('path');
+const path = require("path");
 
-const { glob } = require('glob');
-const esbuild = require('esbuild');
-const chokidar = require('chokidar');
-const fs = require('fs-extra');
-const syncDir = require('sync-directory');
+const { glob } = require("glob");
+const esbuild = require("esbuild");
+const chokidar = require("chokidar");
+const fs = require("fs-extra");
+const syncDir = require("sync-directory");
 
-const args = require('yargs')(process.argv.slice(2)).argv;
+const args = require("yargs")(process.argv.slice(2)).argv;
 
-const rootDir = path.resolve(__dirname, '..');
+const rootDir = path.resolve(__dirname, "..");
 
 const webConfig = (format) => ({
-  platform: 'browser',
-  jsx: 'automatic',
-  loader: { '.js': 'jsx' },
+  platform: "browser",
+  jsx: "automatic",
+  loader: { ".js": "jsx" },
   format,
 });
 
 const apiConfig = (format) => ({
-  platform: 'node',
+  platform: "node",
   format,
 });
 
 const configs = {
-  'web:cjs': webConfig('cjs'),
-  'web:esm': webConfig('esm'),
-  'api:cjs': apiConfig('cjs'),
-  'api:esm': apiConfig('esm'),
-  'cli:cjs': {
-    platform: 'node',
-    format: 'cjs',
+  "web:cjs": webConfig("cjs"),
+  "web:esm": webConfig("esm"),
+  "api:cjs": apiConfig("cjs"),
+  "api:esm": apiConfig("esm"),
+  "cli:cjs": {
+    platform: "node",
+    format: "cjs",
   },
 };
 
@@ -40,24 +40,24 @@ const tasks = {
     return Promise.all(Object.keys(configs).map(buildDist));
   },
   sync() {
-    ['web:cjs', 'web:esm', 'api:cjs', 'api:esm'].forEach(syncDist);
+    ["web:cjs", "web:esm", "api:cjs", "api:esm"].forEach(syncDist);
   },
 };
 
 const srcGlobFromDist = (dist, root = rootDir) =>
-  path.resolve(srcDirFromDist(dist, root), '**', '!(*.test).*');
+  path.resolve(srcDirFromDist(dist, root), "**", "!(*.test).*");
 
 const srcDirFromDist = (dist, root = rootDir) => {
-  const [pkg, _distName] = dist.split(':');
-  return path.resolve(root, pkg, 'src');
+  const [pkg, _distName] = dist.split(":");
+  return path.resolve(root, pkg, "src");
 };
 
 const destDirFromDist = (dist, root = rootDir) => {
-  const [pkg, distName] = dist.split(':');
+  const [pkg, distName] = dist.split(":");
   return path.resolve(distDirFromPkg(pkg, root), distName);
 };
 
-const distDirFromPkg = (pkg, root = rootDir) => path.resolve(root, pkg, 'dist');
+const distDirFromPkg = (pkg, root = rootDir) => path.resolve(root, pkg, "dist");
 
 const syncDist = async (dist) => {
   let ready = false;
@@ -68,7 +68,7 @@ const syncDist = async (dist) => {
   const destDir = destDirFromDist(dist);
   const targetDir = destDirFromDist(
     dist,
-    path.resolve(process.cwd(), target, 'node_modules', '@redwoodjs-stripe')
+    path.resolve(process.cwd(), target, "node_modules", "@redwoodjs-stripe"),
   );
 
   const resetContext = async () => {
@@ -88,17 +88,17 @@ const syncDist = async (dist) => {
     console.log(
       `(${dist}) Rebuilding and syncing: ${event} for ${path.relative(
         rootDir,
-        filepath
-      )}...`
+        filepath,
+      )}...`,
     );
 
-    if (event === 'unlink') {
+    if (event === "unlink") {
       // note: A file was removed, but we don't know over here what the corresponding
       // destination file to be removed is (e.g. if the extension changed). We
       // assume the extension is the same, but we'll have stale files if not
       await fs.remove(path.resolve(destDir, path.relative(srcDir, filepath)));
       await resetContext();
-    } else if (event === 'add') {
+    } else if (event === "add") {
       await resetContext();
     }
 
@@ -115,16 +115,16 @@ const syncDist = async (dist) => {
   const syncWatcher = syncDir(destDir, targetDir, { watch: true });
   const srcWatcher = chokidar
     .watch(srcGlobFromDist(dist))
-    .on('ready', handleReady)
-    .on('all', handleAll);
+    .on("ready", handleReady)
+    .on("all", handleAll);
 
-  process.once('SIGINT', async () => {
+  process.once("SIGINT", async () => {
     await Promise.all([ctx.dispose(), srcWatcher.close(), syncWatcher.close()]);
   });
 };
 
 const cleanAll = async () => {
-  const pkgs = new Set(Object.keys(configs).map((dist) => dist.split(':')[0]));
+  const pkgs = new Set(Object.keys(configs).map((dist) => dist.split(":")[0]));
 
   for (const pkg of pkgs) {
     await fs.remove(distDirFromPkg(pkg));

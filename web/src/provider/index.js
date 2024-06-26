@@ -1,3 +1,3 @@
-export { StripeProvider } from './StripeProvider/StripeProvider'
+export { StripeProvider } from "./StripeProvider/StripeProvider";
 
-export { useStripeCart } from './useStripeCart.js'
+export { useStripeCart } from "./useStripeCart.js";

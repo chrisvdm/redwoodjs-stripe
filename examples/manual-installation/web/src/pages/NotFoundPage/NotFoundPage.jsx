@@ -42,4 +42,4 @@ export default () => (
       </h1>
     </section>
   </main>
-)
+);

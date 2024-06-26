@@ -8,18 +8,11 @@
       "default": "./dist/cjs/index.js"
     }
   },
-  "keywords": [
-    "stripe",
-    "redwoodjs",
-    "payments",
-    "commerce"
-  ],
+  "keywords": ["stripe", "redwoodjs", "payments", "commerce"],
   "license": "MIT",
   "author": "chrisvdm",
   "main": "./dist/cjs/index.js",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "dependencies": {
     "stripe": ">=11.18.0"
   },

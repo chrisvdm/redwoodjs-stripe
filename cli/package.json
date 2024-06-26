@@ -2,16 +2,8 @@
   "name": "@redwoodjs-stripe/cli",
   "version": "1.0.7",
   "bin": "./dist/cjs/cli.js",
-  "keywords": [
-    "stripe",
-    "redwoodjs",
-    "payments",
-    "commerce"
-  ],
-  "files": [
-    "dist",
-    "templates"
-  ],
+  "keywords": ["stripe", "redwoodjs", "payments", "commerce"],
+  "files": ["dist", "templates"],
   "publishConfig": {
     "access": "public"
   },

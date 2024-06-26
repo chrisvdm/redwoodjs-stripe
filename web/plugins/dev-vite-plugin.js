@@ -1,7 +1,7 @@
 module.exports = () => ({
-  name: '@redwoodjs-stripe/dev-vite-plugin',
+  name: "@redwoodjs-stripe/dev-vite-plugin",
   config() {
-    const modules = ['@redwoodjs-stripe/api', '@redwoodjs-stripe/web'];
+    const modules = ["@redwoodjs-stripe/api", "@redwoodjs-stripe/web"];
     return {
       server: {
         watch: {
@@ -17,11 +17,11 @@ module.exports = () => ({
         // rehackt seems to be commonjs only, and since @apollo/client has it as a
         // dependency + @redwoodjs-stripe/web has @apollo/client as a peer dependency,
         // we end up needing to include it here
-        include: ['rehackt'],
+        include: ["rehackt"],
         exclude: modules,
       },
       resolve: {
-        conditions: ['redwoodjs-stripe:development'],
+        conditions: ["redwoodjs-stripe:development"],
       },
     };
   },

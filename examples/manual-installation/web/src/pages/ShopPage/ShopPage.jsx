@@ -1,15 +1,15 @@
-import { useStripeCart } from '@redwoodjs-stripe/web'
+import { useStripeCart } from "@redwoodjs-stripe/web";
 
-import { Metadata } from '@redwoodjs/web'
+import { Metadata } from "@redwoodjs/web";
 
 const ShopPage = () => {
-  const { cart, addToCart } = useStripeCart()
-  console.log('uber cart:', cart)
+  const { cart, addToCart } = useStripeCart();
+  console.log("uber cart:", cart);
 
   const buttonClicked = async () => {
-    await addToCart({ id: 'price34235' })
-    console.log(cart)
-  }
+    await addToCart({ id: "price34235" });
+    console.log(cart);
+  };
 
   return (
     <>
@@ -20,7 +20,7 @@ const ShopPage = () => {
         <button onClick={buttonClicked}>Add to Cart</button>
       </article>
     </>
-  )
-}
+  );
+};
 
-export default ShopPage
+export default ShopPage;

@@ -14,4 +14,4 @@ export const schema = `
         invoice_item: String
         promotion_code: String
     }
-`
+`;

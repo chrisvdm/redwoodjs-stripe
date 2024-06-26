@@ -1,7 +1,7 @@
-import StripeDemoPage from './StripeDemoPage'
+import StripeDemoPage from "./StripeDemoPage";
 
 export const generated = () => {
-  return <StripeDemoPage />
-}
+  return <StripeDemoPage />;
+};
 
-export default { title: 'Pages/StripeDemoPage' }
+export default { title: "Pages/StripeDemoPage" };

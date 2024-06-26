@@ -31,4 +31,4 @@ export const schema = `
     type StripeAppliesTo {
         products: [String]
     }
-`
+`;
