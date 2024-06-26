@@ -1,9 +1,15 @@
-import { useEffect, useState, useMemo, useRef, useCallback } from "react";
+import { type ReactNode, useEffect, useState, useMemo } from "react";
 
 import { useStripeCustomerFetch } from "../../hooks";
 
 import { createStripeApi } from "../createStripeApi";
 import { StripeContext } from "../StripeContext";
+import { useOnceIsNotNull } from "./useOnceIsNotNull";
+
+export interface Customer {
+  id: string;
+  search: string;
+}
 
 export const StripeProvider = ({
   children,
@@ -11,22 +17,25 @@ export const StripeProvider = ({
     id: "",
     search: "",
   },
+}: {
+  customer: Customer;
+  children: ReactNode;
 }) => {
   const [cart, setCart] = useState([]);
   const [stripeCustomer, setCustomer] = useState(null);
   const { id = "", search = "" } = customer;
 
-  const noSpaces = (text) => text.replace(/^\s+|\s+$/gm, "");
+  const noSpaces = (text: string) => text.replace(/^\s+|\s+$/gm, "");
 
   // Fetches Stripe Customer object
   useStripeCustomerFetch(noSpaces(id), search, setCustomer);
   // Returns a fn that returns a promise when stripeCustomer is null
   // else returns resolved stripeCustomer value
-  const whenCustomerResolved = useWatcher(stripeCustomer, isNotNull);
+  const whenCustomerResolved = useOnceIsNotNull(stripeCustomer);
 
   const waitForCustomer = async () => {
     // Check that we have what we need to either fetch(search) for and create a Stripe Customer
-    if (search !== "" && Object.keys(create).length > 0) {
+    if (search !== "") {
       // Wait for stripeCustomer to have a value and return value
       return await whenCustomerResolved();
     } else {
@@ -66,37 +75,4 @@ export const StripeProvider = ({
   return (
     <StripeContext.Provider value={api}>{children}</StripeContext.Provider>
   );
-};
-
-const isNotNull = (value) => value !== null;
-
-const useWatcher = (value, predicateFn) => {
-  const isConditionMet = predicateFn(value);
-  const deferredRef = useRef(createDeferred());
-
-  useEffect(() => {
-    if (isConditionMet) {
-      deferredRef.current.resolve(value);
-      deferredRef.current = createDeferred();
-    }
-  }, [value, isConditionMet]);
-
-  return useCallback(async () => {
-    if (isConditionMet) {
-      return value;
-    } else {
-      return await deferredRef.current.promise;
-    }
-  }, [value, isConditionMet]);
-};
-
-const createDeferred = () => {
-  const deferred = {};
-
-  deferred.promise = new Promise((resolve, reject) => {
-    deferred.resolve = resolve;
-    deferred.reject = reject;
-  });
-
-  return deferred;
 };
