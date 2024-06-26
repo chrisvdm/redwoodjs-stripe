@@ -17,7 +17,9 @@ const ShopPage = () => {
 
       <h1>ShopPage</h1>
       <article>
-        <button onClick={buttonClicked}>Add to Cart</button>
+        <button type="button" onClick={buttonClicked}>
+          Add to Cart
+        </button>
       </article>
     </>
   );

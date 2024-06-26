@@ -1,6 +1,7 @@
 export default () => (
   <main>
     <style
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
       dangerouslySetInnerHTML={{
         __html: `
               html, body {

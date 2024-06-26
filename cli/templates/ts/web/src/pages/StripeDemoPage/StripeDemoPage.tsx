@@ -1,4 +1,3 @@
-// import { Link, routes } from '@redwoodjs/router'
 import { useState } from "react";
 
 import "./styles.css";
@@ -149,7 +148,7 @@ const StripeCustomerPortalButton = ({ isLoggedIn }) => {
   };
   return (
     isLoggedIn && (
-      <button className="rws-button" onClick={onButtonClick}>
+      <button type="button" className="rws-button" onClick={onButtonClick}>
         <Icon name="user" />
       </button>
     )
@@ -159,6 +158,7 @@ const StripeCustomerPortalButton = ({ isLoggedIn }) => {
 const StripeCartButton = ({ isCartVisible, onCartButtonClick }) => {
   return (
     <button
+      type="button"
       className="rws-button"
       onClick={onCartButtonClick}
       data-active={isCartVisible}
@@ -221,12 +221,14 @@ const StripeCart = () => {
 
           <li className="rws-cart__actions ">
             <button
+              type="button"
               className="rws-button--bordered"
               onClick={onCheckoutButtonClick}
             >
               Checkout
             </button>
             <button
+              type="button"
               className="rws-button--bordered"
               onClick={onClearCartButtonClick}
             >
@@ -239,7 +241,15 @@ const StripeCart = () => {
   );
 };
 
-const StripeCartItem = ({ name, price, quantity }) => {
+const StripeCartItem = ({
+  name,
+  price,
+  quantity,
+}: {
+  name: string;
+  price: number;
+  quantity: number;
+}) => {
   return (
     <li className="rws-cart__list__item">
       <p>{name}</p>
@@ -260,7 +270,7 @@ const PageFooter = () => {
       <p className="rws-page__footer__text">
         This demo is powered by{" "}
         <a
-          alt="Learn more about Redwoodjs"
+          title="Learn more about Redwoodjs"
           href="http://redwoodjs.com/"
           target="_blank"
           rel="noreferrer"
@@ -269,7 +279,7 @@ const PageFooter = () => {
         </a>{" "}
         and{" "}
         <a
-          alt="Learn more about Stripe"
+          title="Learn more about Stripe"
           target="_blank"
           href="https://stripe.com/"
           rel="noreferrer"

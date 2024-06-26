@@ -149,7 +149,7 @@ const StripeCustomerPortalButton = ({ isLoggedIn }) => {
   };
   return (
     isLoggedIn && (
-      <button className="rws-button" onClick={onButtonClick}>
+      <button type="button" className="rws-button" onClick={onButtonClick}>
         <Icon name="user" />
       </button>
     )
@@ -159,6 +159,7 @@ const StripeCustomerPortalButton = ({ isLoggedIn }) => {
 const StripeCartButton = ({ isCartVisible, onCartButtonClick }) => {
   return (
     <button
+      type="button"
       className="rws-button"
       onClick={onCartButtonClick}
       data-active={isCartVisible}
@@ -221,12 +222,14 @@ const StripeCart = () => {
 
           <li className="rws-cart__actions ">
             <button
+              type="button"
               className="rws-button--bordered"
               onClick={onCheckoutButtonClick}
             >
               Checkout
             </button>
             <button
+              type="button"
               className="rws-button--bordered"
               onClick={onClearCartButtonClick}
             >

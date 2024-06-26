@@ -14,11 +14,11 @@ export const logger = createLogger({});
 
 export const prettyList = (obj) => {
   if (obj && obj !== undefined && obj && !Array.isArray(obj)) {
-    Object.keys(obj).forEach((i) => {
-      if (obj[i]?.object === "list") {
-        obj[i] = obj[i].data;
+    for (const key of Object.keys(obj)) {
+      if (obj[key]?.object === "list") {
+        obj[key] = obj[key].data;
       }
-    });
+    }
   }
   return obj;
 };
@@ -48,54 +48,46 @@ export const handleStripeWebhooks = async (
       throw new Error(`The Stripe webhook secret key isn't set`);
     }
 
-    try {
-      const signature = event.headers["stripe-signature"];
+    const signature = event.headers["stripe-signature"];
 
-      // For Vercel deploys, events are based64 encoded
-      const parsedBody = event.isBase64Encoded
-        ? Buffer.from(event.body, "base64").toString("utf-8")
-        : event.body;
+    // For Vercel deploys, events are based64 encoded
+    const parsedBody = event.isBase64Encoded
+      ? Buffer.from(event.body, "base64").toString("utf-8")
+      : event.body;
 
-      const stripeEvent = stripe.webhooks.constructEvent(
-        parsedBody,
-        signature,
-        endpointSecret,
-      );
+    const stripeEvent = stripe.webhooks.constructEvent(
+      parsedBody,
+      signature,
+      endpointSecret,
+    );
 
-      // Find event type in webhookObject and execute function for the event.
-      if (typeof webhooksObj[stripeEvent.type] !== "undefined") {
-        await webhooksObj[stripeEvent.type](stripeEvent, context);
-      }
-
-      return {
-        statusCode: 200,
-        results: stripeEvent,
-      };
-    } catch (error) {
-      throw error;
+    // Find event type in webhookObject and execute function for the event.
+    if (typeof webhooksObj[stripeEvent.type] !== "undefined") {
+      await webhooksObj[stripeEvent.type](stripeEvent, context);
     }
+
+    return {
+      statusCode: 200,
+      results: stripeEvent,
+    };
   } else {
     if (process.env.NODE_ENV === "production") {
       throw new Error("Stripe webhooks must be secure in production");
     }
 
-    try {
-      const unverifiedStripeEvent = JSON.parse(event.body);
+    const unverifiedStripeEvent = JSON.parse(event.body);
 
-      if (typeof webhooksObj[unverifiedStripeEvent.type] !== "undefined") {
-        await webhooksObj[unverifiedStripeEvent.type](
-          unverifiedStripeEvent,
-          context,
-        );
-      }
-
-      return {
-        statusCode: 200,
-        results: unverifiedStripeEvent,
-      };
-    } catch (error) {
-      throw error;
+    if (typeof webhooksObj[unverifiedStripeEvent.type] !== "undefined") {
+      await webhooksObj[unverifiedStripeEvent.type](
+        unverifiedStripeEvent,
+        context,
+      );
     }
+
+    return {
+      statusCode: 200,
+      results: unverifiedStripeEvent,
+    };
   }
 };
 

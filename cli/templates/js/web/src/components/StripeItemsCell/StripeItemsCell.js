@@ -77,6 +77,7 @@ const StripeItem = ({ name, price, id, images, type }) => {
           </div>
 
           <button
+            type="button"
             className="rws-button"
             onClick={() => {
               onAddToCartButtonClick({

@@ -1404,6 +1404,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redwoodjs-stripe/cli@workspace:cli"
   dependencies:
+    "@redwoodjs-stripe/web": "workspace:*"
     "@redwoodjs/project-config": "npm:^5.4.3"
     fs-extra: "npm:^11.1.1"
     listr2: "npm:^6.6.0"
@@ -1415,10 +1416,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@redwoodjs-stripe/web@workspace:web":
+"@redwoodjs-stripe/web@workspace:*, @redwoodjs-stripe/web@workspace:web":
   version: 0.0.0-use.local
   resolution: "@redwoodjs-stripe/web@workspace:web"
   dependencies:
+    "@types/react": "npm:^18.3.3"
     react: "npm:^18.2.0"
   peerDependencies:
     "@redwoodjs/web": ">=5.4.3"
@@ -1620,6 +1622,23 @@ __metadata:
   version: 2.7.3
   resolution: "@types/prettier@npm:2.7.3"
   checksum: 10/cda84c19acc3bf327545b1ce71114a7d08efbd67b5030b9e8277b347fa57b05178045f70debe1d363ff7efdae62f237260713aafc2d7217e06fc99b048a88497
+  languageName: node
+  linkType: hard
+
+"@types/prop-types@npm:*":
+  version: 15.7.12
+  resolution: "@types/prop-types@npm:15.7.12"
+  checksum: 10/ac16cc3d0a84431ffa5cfdf89579ad1e2269549f32ce0c769321fdd078f84db4fbe1b461ed5a1a496caf09e637c0e367d600c541435716a55b1d9713f5035dfe
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^18.3.3":
+  version: 18.3.3
+  resolution: "@types/react@npm:18.3.3"
+  dependencies:
+    "@types/prop-types": "npm:*"
+    csstype: "npm:^3.0.2"
+  checksum: 10/68e203b7f1f91d6cf21f33fc7af9d6d228035a26c83f514981e54aa3da695d0ec6af10c277c6336de1dd76c4adbe9563f3a21f80c4462000f41e5f370b46e96c
   languageName: node
   linkType: hard
 
@@ -2632,6 +2651,13 @@ __metadata:
     shebang-command: "npm:^2.0.0"
     which: "npm:^2.0.1"
   checksum: 10/e1a13869d2f57d974de0d9ef7acbf69dc6937db20b918525a01dacb5032129bd552d290d886d981e99f1b624cb03657084cc87bd40f115c07ecf376821c729ce
+  languageName: node
+  linkType: hard
+
+"csstype@npm:^3.0.2":
+  version: 3.1.3
+  resolution: "csstype@npm:3.1.3"
+  checksum: 10/f593cce41ff5ade23f44e77521e3a1bcc2c64107041e1bf6c3c32adc5187d0d60983292fda326154d20b01079e24931aa5b08e4467cc488b60bb1e7f6d478ade
   languageName: node
   linkType: hard
 

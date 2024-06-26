@@ -17,6 +17,7 @@
     "react-dom": ">=18.2.0"
   },
   "devDependencies": {
+    "@types/react": "^18.3.3",
     "react": "^18.2.0"
   },
   "gitHead": "dc236d24165114a18811fe36e62482ff4ae75d36"
