@@ -5,6 +5,7 @@ import { useStripeCustomerFetch } from "../../hooks";
 import { createStripeApi } from "../createStripeApi";
 import { StripeContext } from "../StripeContext";
 import { useOnceDefined } from "./useOnceDefined";
+import type { Cart, CustomerDescription } from "../types";
 
 export const StripeProvider = ({
   children,
@@ -16,7 +17,7 @@ export const StripeProvider = ({
   customer: CustomerDescription;
   children: ReactNode;
 }) => {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState<Cart>([]);
   const [stripeCustomer, setCustomer] = useState(null);
   const { id = "", search = "" } = customer;
 

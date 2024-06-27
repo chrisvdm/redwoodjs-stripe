@@ -1,9 +1,20 @@
 import { useContext } from "react";
-import { useMutation, useQuery } from "@redwoodjs/web";
+import { useMutation, useQuery } from "@apollo/client";
 
-import { StripeContext } from "../provider/StripeContext";
+import { StripeContext } from "../provider/StripeContext.js";
 
-import gql from "graphql-tag";
+import { gql } from "graphql-tag";
+import type { Customer } from "../provider/types.js";
+import type {
+  StripeCustomerPortalConfigInput,
+  StripeCustomerPortalInput,
+} from "./types.js";
+
+type RedirectToStripeCustomerPortalArgs = {
+  customer: Customer;
+} & Omit<StripeCustomerPortalInput, "customer">;
+
+type CreateStripeCustomerPortalConfigArgs = StripeCustomerPortalConfigInput;
 
 export const useStripeCustomerPortal = () => {
   const context = useContext(StripeContext);
@@ -90,7 +101,10 @@ export const useStripeCustomerPortal = () => {
   // Returns object with Customer Portal functions
   return {
     defaultConfig: defaultConfig,
-    redirectToStripeCustomerPortal: async (args, skipAuth = false) => {
+    redirectToStripeCustomerPortal: async (
+      args: RedirectToStripeCustomerPortalArgs,
+      skipAuth = false,
+    ) => {
       const customer = args.customer || (await ensureCustomer());
 
       // Create Payload
@@ -122,7 +136,9 @@ export const useStripeCustomerPortal = () => {
         location.href = url;
       }
     },
-    createStripeCustomerPortalConfig: async (args) => {
+    createStripeCustomerPortalConfig: async (
+      args: CreateStripeCustomerPortalConfigArgs,
+    ) => {
       const payload = {
         variables: {
           data: args,
