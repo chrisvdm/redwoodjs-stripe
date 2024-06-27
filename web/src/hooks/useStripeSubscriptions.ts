@@ -1,7 +1,10 @@
 import { gql } from "graphql-tag";
 
 import { useApolloClient } from "@apollo/client";
-import type { Fragments, ListStripeSubscriptionsParamsInput } from "./types.js";
+import type {
+  Fragments,
+  ListStripeSubscriptionsParamsInput,
+} from "../types.js";
 import { getFragmentName } from "../lib/getFragmentName.js";
 
 const DEFAULT_LIST_FRAGMENT = gql`

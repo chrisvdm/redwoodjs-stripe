@@ -1,4 +1,11 @@
 import { createContext } from "react";
-import { createStripeApi } from "./createStripeApi";
+import { createStripeApi } from "./createStripeApi.js";
 
-export const StripeContext = createContext(createStripeApi([], () => null));
+export const StripeContext = createContext(
+  createStripeApi(
+    [],
+    () => null,
+    null,
+    () => null,
+  ),
+);

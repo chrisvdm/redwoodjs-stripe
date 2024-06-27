@@ -45,6 +45,9 @@ const tasks = {
       ...Object.keys(esbuildConfigs).map(buildDistTypes),
     ]);
   },
+  typecheck() {
+    return Promise.all(Object.keys(esbuildConfigs).map(buildDistTypes));
+  },
   sync() {
     ["web:cjs", "web:esm", "api:cjs", "api:esm"].forEach(syncDist);
   },

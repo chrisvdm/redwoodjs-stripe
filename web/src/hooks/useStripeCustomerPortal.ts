@@ -3,14 +3,14 @@ import { useMutation, useQuery } from "@apollo/client";
 import { gql } from "graphql-tag";
 
 import { StripeContext } from "../provider/StripeContext.js";
-import type { Customer } from "../provider/types.js";
+import type { StripeCustomer } from "../types.js";
 import type {
   StripeCustomerPortalConfigInput,
   StripeCustomerPortalInput,
-} from "./types.js";
+} from "../types.js";
 
 type RedirectToStripeCustomerPortalArgs = {
-  customer: Customer;
+  customer: StripeCustomer;
 } & Omit<StripeCustomerPortalInput, "customer">;
 
 type CreateStripeCustomerPortalConfigArgs = StripeCustomerPortalConfigInput;

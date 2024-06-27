@@ -8,7 +8,7 @@ import type {
   CreateStripeCustomerInput,
   Fragments,
   StripeAdditionalPropertiesInput,
-} from "./types.js";
+} from "../types.js";
 import { getFragmentName } from "../lib/getFragmentName.js";
 
 const DEFAULT_RETREIVE_FRAGMENT = gql`

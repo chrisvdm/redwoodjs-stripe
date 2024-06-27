@@ -2,7 +2,7 @@ import type { ApolloClient } from "@apollo/client";
 import { useApolloClient } from "@apollo/client";
 import { gql } from "graphql-tag";
 import { useEffect } from "react";
-import type { Customer } from "../provider/types.js";
+import type { StripeCustomer } from "../types.js";
 
 const STRIPE_CUSTOMER_SEARCH = gql`
     query stripeCustomerSearch(
@@ -90,7 +90,7 @@ const fetchCustomer = async (context: FetchCustomerContext) => {
 export const useStripeCustomerFetch = (
   id: string | null | undefined,
   searchString: string | null | undefined,
-  setCustomer: (customer: Customer) => unknown,
+  setCustomer: (customer: StripeCustomer) => unknown,
 ) => {
   const client = useApolloClient();
   useEffect(() => {

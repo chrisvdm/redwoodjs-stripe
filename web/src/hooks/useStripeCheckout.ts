@@ -1,7 +1,17 @@
 import { useContext } from "react";
-import { useMutation } from "@redwoodjs/web";
-import { StripeContext } from "../provider/StripeContext";
-import gql from "graphql-tag";
+import { useApolloClient, useMutation } from "@apollo/client";
+import { StripeContext } from "../provider/StripeContext.js";
+import { gql } from "graphql-tag";
+import type { StripeCheckoutModeEnum, Cart, StripeCustomer } from "../types.js";
+
+interface CheckoutProps {
+  cart?: Cart;
+  customer?: StripeCustomer;
+  successUrl?: string | null;
+  cancelUrl?: string | null;
+  mode?: StripeCheckoutModeEnum | null;
+  allowPromotionCodes?: boolean | null;
+}
 
 export const useStripeCheckout = () => {
   const context = useContext(StripeContext);
@@ -42,16 +52,15 @@ export const useStripeCheckout = () => {
   return {
     checkout: async ({
       cart,
-      customer,
+      customer: givenCustomer,
       successUrl,
       cancelUrl,
       mode,
       allowPromotionCodes,
-    }) => {
-      // customer = !!customer ? customer : (await context.waitForCustomer())
-      customer = customer || context.customer;
-      cart = cart || context.cart;
-      const newCart = (cart || context.cart).map((item) => ({
+    }: CheckoutProps) => {
+      const customer = givenCustomer ?? (await context.waitForCustomer());
+      cart = cart ?? context.cart;
+      const newCart = cart.map((item) => ({
         id: item.id,
         quantity: item.quantity,
       }));
@@ -98,14 +107,14 @@ export const useStripeCheckout = () => {
       // Redirect to Stripe Checkout
       location.href = url;
     },
-    retrieveStripeCheckoutSession: async (id) => {
+    retrieveStripeCheckoutSession: async (id: string) => {
       const client = useApolloClient();
 
       // create query
       const result = await client.query({
         query: RETRIEVE_STRIPE_CHECKOUT_SESSION,
         variables: {
-          id: id,
+          id,
         },
       });
 

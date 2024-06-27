@@ -1,19 +1,19 @@
 import type {
-  Customer,
+  StripeCustomer,
   Cart,
   SetCart,
   WaitForCustomer,
   CartItem,
-} from "./types.js";
+} from "../types.js";
 
 export const createStripeApi = (
   cart: Cart,
   setCart: SetCart,
-  customer: Customer,
+  customer: StripeCustomer | null,
   waitForCustomer: WaitForCustomer,
 ) => ({
   waitForCustomer,
-  customer: customer,
+  customer,
   cart,
   addToCart: (item: CartItem) => {
     const prevCart = [...cart];
