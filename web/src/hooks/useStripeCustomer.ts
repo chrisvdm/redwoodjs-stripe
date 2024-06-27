@@ -1,13 +1,15 @@
-import { useMutation } from "@redwoodjs/web";
+import { useMutation } from "@apollo/client";
 import { useContext } from "react";
-import gql from "graphql-tag";
+import { gql } from "graphql-tag";
 import { useApolloClient } from "@apollo/client";
 
-import { StripeContext } from "../provider/StripeContext";
-
-const getFragmentName = (document) => {
-  return document.definitions[0].name.value;
-};
+import { StripeContext } from "../provider/StripeContext.js";
+import type {
+  CreateStripeCustomerInput,
+  Fragments,
+  StripeAdditionalPropertiesInput,
+} from "./types.js";
+import { getFragmentName } from "../lib/getFragmentName.js";
 
 const DEFAULT_RETREIVE_FRAGMENT = gql`
       fragment DefaultRetrieveFragment on StripeCustomer {
@@ -16,12 +18,13 @@ const DEFAULT_RETREIVE_FRAGMENT = gql`
         id
       }
     `;
+
 const DEFAULT_CREATE_FRAGMENT = gql`
       fragment DefaultCreateFragment on StripeCustomer {
         id
       }`;
 
-export const useStripeCustomer = (fragments) => {
+export const useStripeCustomer = (fragments: Fragments) => {
   const client = useApolloClient();
   const defaultCustomerId = useContext(StripeContext)?.customer?.id;
   const createFragment = fragments?.createFragment || DEFAULT_CREATE_FRAGMENT;
@@ -53,7 +56,10 @@ export const useStripeCustomer = (fragments) => {
   `;
   return {
     customer: useContext(StripeContext).customer,
-    retrieveStripeCustomer: async (id, addProps) => {
+    retrieveStripeCustomer: async (
+      id: string | null | undefined,
+      addProps: StripeAdditionalPropertiesInput,
+    ) => {
       const customerId = id ? id : defaultCustomerId;
 
       // create query
@@ -62,7 +68,7 @@ export const useStripeCustomer = (fragments) => {
         variables: {
           data: {
             id: customerId,
-            addProps: { ...addProps },
+            addProps,
           },
         },
       });
@@ -73,7 +79,7 @@ export const useStripeCustomer = (fragments) => {
 
       return result.data?.retrieveStripeCustomer ?? null;
     },
-    createStripeCustomer: async (args) => {
+    createStripeCustomer: async (args: CreateStripeCustomerInput) => {
       // Create Payload
       const payload = {
         variables: {

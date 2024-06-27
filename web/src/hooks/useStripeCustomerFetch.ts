@@ -1,7 +1,8 @@
+import type { ApolloClient } from "@apollo/client";
 import { useApolloClient } from "@apollo/client";
-import gql from "graphql-tag";
-
+import { gql } from "graphql-tag";
 import { useEffect } from "react";
+import type { Customer } from "../provider/types.js";
 
 const STRIPE_CUSTOMER_SEARCH = gql`
     query stripeCustomerSearch(
@@ -26,7 +27,16 @@ const RETRIEVE_STRIPE_CUSTOMER = gql`
     }
   `;
 
-const searchCustomer = async ({ client, searchString }) => {
+export interface FetchCustomerContext {
+  client: ApolloClient<unknown>;
+  id?: string | null | undefined;
+  searchString: string | null | undefined;
+}
+
+const searchCustomer = async ({
+  client,
+  searchString,
+}: FetchCustomerContext) => {
   const result = await client.query({
     query: STRIPE_CUSTOMER_SEARCH,
     variables: {
@@ -41,7 +51,7 @@ const searchCustomer = async ({ client, searchString }) => {
   return result.data?.stripeCustomerSearch ?? null;
 };
 
-const retrieveCustomer = async ({ id, client }) => {
+const retrieveCustomer = async ({ id, client }: FetchCustomerContext) => {
   const result = await client.query({
     query: RETRIEVE_STRIPE_CUSTOMER,
     variables: {
@@ -58,7 +68,7 @@ const retrieveCustomer = async ({ id, client }) => {
   return result.data?.retrieveStripeCustomer ?? null;
 };
 
-const fetchCustomer = async (context) => {
+const fetchCustomer = async (context: FetchCustomerContext) => {
   const { id, searchString } = context;
   const hasSearchString = searchString !== "" && !!searchString;
   const hasID = id !== "" && !!id;
@@ -77,7 +87,11 @@ const fetchCustomer = async (context) => {
   return foundCustomer;
 };
 
-export const useStripeCustomerFetch = (id, searchString, setCustomer) => {
+export const useStripeCustomerFetch = (
+  id: string | null | undefined,
+  searchString: string | null | undefined,
+  setCustomer: (customer: Customer) => unknown,
+) => {
   const client = useApolloClient();
   useEffect(() => {
     const doFetch = async () => {

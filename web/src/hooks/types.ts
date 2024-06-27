@@ -8,6 +8,9 @@ export type FragmentNames =
 export type Fragments = Partial<Record<FragmentNames, DocumentNode>>;
 
 // todo(justinvdm, 27 June 2024): Use codegen-ed types
-export type ListStripeSubscriptionsParamsInput = Record<string, unknown>;
-export type StripeCustomerPortalInput = Record<string, unknown>;
-export type StripeCustomerPortalConfigInput = Record<string, unknown>;
+type UnknownByString = Record<string, unknown>;
+export type ListStripeSubscriptionsParamsInput = UnknownByString;
+export type StripeCustomerPortalInput = UnknownByString;
+export type StripeCustomerPortalConfigInput = UnknownByString;
+export type StripeAdditionalPropertiesInput = UnknownByString;
+export type CreateStripeCustomerInput = UnknownByString;

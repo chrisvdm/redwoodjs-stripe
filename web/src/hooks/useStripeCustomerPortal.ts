@@ -1,9 +1,8 @@
 import { useContext } from "react";
 import { useMutation, useQuery } from "@apollo/client";
+import { gql } from "graphql-tag";
 
 import { StripeContext } from "../provider/StripeContext.js";
-
-import { gql } from "graphql-tag";
 import type { Customer } from "../provider/types.js";
 import type {
   StripeCustomerPortalConfigInput,
