@@ -5,7 +5,7 @@ export {
   useStripeCustomer,
   useStripeCustomerPortal,
   useStripeSubscriptions,
-} from "./hooks";
+} from "./hooks/index.js";
 
 // export useStripeCart hook and StripeCartProvider
-export * from "./provider";
+export * from "./provider/index.js";
