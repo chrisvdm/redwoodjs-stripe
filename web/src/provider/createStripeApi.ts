@@ -19,7 +19,8 @@ export const createStripeApi = (
     const prevCart = [...cart];
     const itemIndex = findItemIndexByID(item.id, prevCart);
     let newCart = [];
-    if (itemIndex >= 0) {
+
+    if (itemIndex !== null && itemIndex >= 0) {
       // replace obj with new object
       newCart = [...prevCart];
       newCart.splice(itemIndex, 1, {
@@ -40,9 +41,9 @@ export const createStripeApi = (
   },
   removeFromCart: (item: CartItem) => {
     const prevCart = [...cart];
-    const itemIndex = findItemIndexByID(item, prevCart);
+    const itemIndex = findItemIndexByID(item.id, prevCart);
     let newCart = [];
-    if (itemIndex >= 0) {
+    if (itemIndex !== null && itemIndex >= 0) {
       newCart = [...prevCart];
       newCart.splice(itemIndex, 1);
     } else {
@@ -52,15 +53,28 @@ export const createStripeApi = (
     setCart(newCart);
   },
   editCartItem: (item: CartItem, payload: Partial<CartItem>) => {
-    const itemIndex = findItemIndexByID(item, cart);
+    const itemIndex = findItemIndexByID(item.id, cart);
+    let editedCart;
 
-    // payload shape: {quantity: 1}
-    const editedItem = {
-      ...cart[itemIndex],
-      ...payload,
-    };
-    const editedCart = [...cart];
-    editedCart.splice(itemIndex, 1, editedItem);
+    if (itemIndex !== null) {
+      // payload shape: {quantity: 1}
+      const editedItem = {
+        ...cart[itemIndex],
+        ...payload,
+      };
+
+      editedCart = [...cart];
+      editedCart.splice(itemIndex, 1, editedItem);
+    } else {
+      editedCart = [
+        ...cart,
+        {
+          ...item,
+          ...payload,
+        },
+      ];
+    }
+
     setCart(editedCart);
   },
   clearCart: () => {
@@ -74,4 +88,6 @@ const findItemIndexByID = (key: string, inputArray: { id: string }[]) => {
       return i;
     }
   }
+
+  return null;
 };
