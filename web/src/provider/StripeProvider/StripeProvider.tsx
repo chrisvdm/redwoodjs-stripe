@@ -1,11 +1,11 @@
 import { type ReactNode, useEffect, useState, useMemo } from "react";
 
-import { useStripeCustomerFetch } from "../../hooks";
+import { useStripeCustomerFetch } from "../../hooks/useStripeCustomerFetch.js";
 
-import { createStripeApi } from "../createStripeApi";
-import { StripeContext } from "../StripeContext";
-import { useOnceDefined } from "./useOnceDefined";
-import type { Cart, CustomerDescription } from "../types";
+import { createStripeApi } from "../createStripeApi.js";
+import { StripeContext } from "../StripeContext.js";
+import { useOnceDefined } from "./useOnceDefined.js";
+import type { Cart, Customer, CustomerDescription } from "../types.js";
 
 export const StripeProvider = ({
   children,
@@ -18,7 +18,7 @@ export const StripeProvider = ({
   children: ReactNode;
 }) => {
   const [cart, setCart] = useState<Cart>([]);
-  const [stripeCustomer, setCustomer] = useState(null);
+  const [stripeCustomer, setCustomer] = useState<Customer | null>(null);
   const { id = "", search = "" } = customer;
 
   const noSpaces = (text: string) => text.replace(/^\s+|\s+$/gm, "");

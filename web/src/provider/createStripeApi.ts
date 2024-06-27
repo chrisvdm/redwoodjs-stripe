@@ -4,7 +4,7 @@ import type {
   SetCart,
   WaitForCustomer,
   CartItem,
-} from "./types";
+} from "./types.js";
 
 export const createStripeApi = (
   cart: Cart,
@@ -54,7 +54,7 @@ export const createStripeApi = (
   },
   editCartItem: (item: CartItem, payload: Partial<CartItem>) => {
     const itemIndex = findItemIndexByID(item.id, cart);
-    let editedCart;
+    let editedCart: Cart;
 
     if (itemIndex !== null) {
       // payload shape: {quantity: 1}
