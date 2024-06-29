@@ -23,8 +23,8 @@
     "ignore": [
       "**/node_modules/**/*",
       ".*/**/*",
-      "**/dist/**",
-      "**/src/generated/**"
+      "**/dist/**/*",
+      "**/src/generated/**/*"
     ]
   }
 }
