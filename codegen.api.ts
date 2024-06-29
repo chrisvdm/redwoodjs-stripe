@@ -5,8 +5,8 @@ const config: CodegenConfig = {
   schema: "./api/src/schemas/*.sdl.ts",
   emitLegacyCommonJSImports: false,
   generates: {
-    "./api/src/generated/": {
-      preset: "graphql-modules",
+    "./api/src/generated/graphql.ts": {
+      plugins: ["typescript"],
     },
   },
 };
