@@ -1,4 +1,5 @@
 import type { DocumentNode } from "graphql";
+import type { StripeItemTypeEnum } from "./generated/graphql.js";
 
 export type FragmentNames =
   | "createFragment"
@@ -27,10 +28,6 @@ export type SetCart = (cart: Cart) => unknown;
 export type MaybePromise<V> = V | Promise<V>;
 
 export type WaitForCustomer = () => MaybePromise<StripeCustomer | null>;
-
-// todo(justinvdm, 27 June 2024): Use codegen-ed types
-export type StripeCheckoutModeEnum = "payment" | "subscription" | "setup";
-export type StripeItemTypeEnum = "once_off" | "recurring";
 
 export interface StripeCustomer {
   id: string;

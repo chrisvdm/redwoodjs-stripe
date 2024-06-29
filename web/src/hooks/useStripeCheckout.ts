@@ -2,10 +2,16 @@ import { useContext } from "react";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { StripeContext } from "../provider/StripeContext.js";
 import { gql } from "graphql-tag";
-import type { StripeCheckoutModeEnum, Cart, StripeCustomer } from "../types.js";
+import type { Cart, StripeCustomer } from "../types.js";
 import type {
   RetrieveStripeCheckoutSessionQuery,
   RetrieveStripeCheckoutSessionQueryVariables,
+  StripeCheckoutModeEnum,
+} from "../generated/graphql.js";
+import { nonNilAssertionError } from "../lib/nonNilAssertionError.js";
+import type {
+  CheckoutMutation,
+  CheckoutMutationVariables,
 } from "../generated/graphql.js";
 
 interface CheckoutProps {
@@ -21,7 +27,7 @@ export const useStripeCheckout = () => {
   const context = useContext(StripeContext);
 
   // Create Session Mutation
-  const [checkout] = useMutation(
+  const [checkout] = useMutation<CheckoutMutation, CheckoutMutationVariables>(
     gql`
       mutation Checkout(
         $cart: [ProductInput!]!
@@ -83,32 +89,35 @@ export const useStripeCheckout = () => {
       })();
 
       // Build variable payload
-      const payload = {
-        variables: {
-          cart: newCart,
-          successUrl: successUrl,
-          cancelUrl: cancelUrl,
-          mode: determinedMode,
-          allowPromotionCodes: allowPromotionCodes,
-          ...(customer != null
-            ? {
-                customer: {
-                  id: customer.id,
-                  name: customer.name,
-                  email: customer.email,
-                },
-                customer_email: customer.email,
-              }
-            : {}),
-        },
+      const variables: CheckoutMutationVariables = {
+        cart: newCart,
+        successUrl: successUrl ?? null,
+        cancelUrl: cancelUrl ?? null,
+        mode: determinedMode,
+        allowPromotionCodes: allowPromotionCodes ?? null,
+        ...(customer != null
+          ? {
+              customer: {
+                id: customer.id,
+                name: customer.name,
+                email: customer.email,
+              },
+              customer_email: customer.email,
+            }
+          : {
+              customer: null,
+            }),
       };
 
+      const payload = { variables };
+
       // Create checkout session and return session id
-      const {
-        data: {
-          checkout: { url },
-        },
-      } = await checkout(payload);
+      const result = await checkout(payload);
+      const url = result?.data?.checkout?.url;
+
+      if (url == null) {
+        throw nonNilAssertionError("Checkout mutation response", result.data);
+      }
 
       // Redirect to Stripe Checkout
       location.href = url;
