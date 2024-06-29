@@ -39,18 +39,29 @@ const typedDistSet = new Set(["web:esm"]);
 
 const tasks = {
   async build() {
+    await tasks.codegen();
     await cleanAll();
     return Promise.all([
       ...Object.keys(esbuildConfigs).map(buildDistRuntime),
       ...Object.keys(esbuildConfigs).map(buildDistTypes),
     ]);
   },
-  typecheck() {
+  async typecheck() {
+    await tasks.codegen();
     return Promise.all(Object.keys(esbuildConfigs).map(buildDistTypes));
+  },
+  async codegen() {
+    await Promise.all(["web", "api"].map(codegenPackage));
   },
   sync() {
     ["web:cjs", "web:esm", "api:cjs", "api:esm"].forEach(syncDist);
   },
+};
+
+const codegenPackage = async (pkg) => {
+  console.log(`(${pkg}) Generating...`);
+  await fs.remove(path.resolve(rootDir, pkg, "src", "generated"));
+  await spawn("graphql-codegen", ["--config", `./codegen.${pkg}.ts`]);
 };
 
 const srcGlobFromDist = (dist, root = rootDir) =>
@@ -71,6 +82,7 @@ const destDirFromDist = (dist, root = rootDir) => {
 const distDirFromPkg = (pkg, root = rootDir) => path.resolve(root, pkg, "dist");
 
 const syncDist = async (dist) => {
+  const pkg = pkgFromDist(dist);
   let ready = false;
   const target = args.target;
   let ctx = null;
@@ -124,6 +136,7 @@ const syncDist = async (dist) => {
     console.log(`(${dist}) Watching for changes...`);
   };
 
+  await codegenPackage(pkg);
   await cleanDist(dist);
   await buildDistRuntime(dist);
   await buildDistTypes(dist);
@@ -148,12 +161,16 @@ const buildDistTypes = (dist) => {
     return;
   }
 
+  console.log(`(${dist}) Building types...`);
+
   return spawn("tsc", [
     "--incremental",
     "--declaration",
     "--emitDeclarationOnly",
     "--project",
     path.join(rootDir, pkg, "tsconfig.json"),
+    "--outDir",
+    destDirFromDist(dist),
   ]);
 };
 
@@ -169,6 +186,7 @@ const cleanDist = async (dist) => {
   console.log(`(${dist}) Cleaning...`);
   await fs.remove(destDirFromDist(dist));
 };
+
 const buildDistRuntime = async (dist) => {
   console.log(`(${dist}) Building...`);
   await esbuild.build(esbuildConfigs[dist]);

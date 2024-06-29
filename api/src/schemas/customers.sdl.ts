@@ -1,7 +1,7 @@
 // StripePaymentSourceData type incomplete
 // StripePaymentSourceOwner type incomplete
 
-export const schema = `
+export const schema = /* GraphQL */ `
 scalar Metadata
 
 scalar Timestamp

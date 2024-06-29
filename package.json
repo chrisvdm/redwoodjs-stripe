@@ -18,6 +18,7 @@
     "build": "yarn tasks --task build",
     "release": "yarn build && lerna publish ",
     "sync": "yarn tasks --task sync --target",
+    "codegen": "yarn tasks --task codegen",
     "tasks": "./scripts/tasks.js",
     "lint": "npx @biomejs/biome lint",
     "format": "npx @biomejs/biome format --write",
@@ -34,6 +35,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.1",
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/client-preset": "^4.3.1",
     "@npmcli/promise-spawn": "^7.0.2",
     "typescript": "^5.5.2"
   }

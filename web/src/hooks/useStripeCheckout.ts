@@ -37,14 +37,16 @@ export const useStripeCheckout = () => {
 
   // Create Query for retrieving CheckoutSession
   const RETRIEVE_STRIPE_CHECKOUT_SESSION = gql`
-    query retrieveStripeCustomer(
-      $id: String!
+    query retrieveStripeCheckoutSession(
+      $id: ID!
     ) {
       retrieveStripeCheckoutSession(id: $id) {
         id
         customer
         customer_email
-        line_items
+        line_items {
+          object
+        }
       }
     }
   `;

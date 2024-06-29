@@ -1,4 +1,11 @@
 import type { DocumentNode } from "graphql";
+import type {
+  ListStripeSubscriptionsParamsInput,
+  StripeCustomerPortalInput,
+  StripeCustomerPortalConfigInput,
+  StripeAdditionalPropertiesInput,
+  CreateStripeCustomerInput,
+} from "./generated/graphql.js";
 
 export type FragmentNames =
   | "createFragment"
@@ -32,12 +39,6 @@ export type WaitForCustomer = () => MaybePromise<StripeCustomer | null>;
 export type StripeCheckoutModeEnum = "payment" | "subscription" | "setup";
 export type StripeItemTypeEnum = "once_off" | "recurring";
 
-export type ListStripeSubscriptionsParamsInput = UnknownByString;
-export type StripeCustomerPortalInput = UnknownByString;
-export type StripeCustomerPortalConfigInput = UnknownByString;
-export type StripeAdditionalPropertiesInput = UnknownByString;
-export type CreateStripeCustomerInput = UnknownByString;
-
 export interface StripeCustomer {
   id: string;
   name: string;
@@ -48,3 +49,11 @@ export interface ProductInput {
   id: string;
   quantity: number;
 }
+
+export type {
+  ListStripeSubscriptionsParamsInput,
+  StripeCustomerPortalInput,
+  StripeCustomerPortalConfigInput,
+  StripeAdditionalPropertiesInput,
+  CreateStripeCustomerInput,
+};
