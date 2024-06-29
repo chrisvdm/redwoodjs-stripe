@@ -1,11 +1,4 @@
 import type { DocumentNode } from "graphql";
-import type {
-  ListStripeSubscriptionsParamsInput,
-  StripeCustomerPortalInput,
-  StripeCustomerPortalConfigInput,
-  StripeAdditionalPropertiesInput,
-  CreateStripeCustomerInput,
-} from "./generated/graphql.js";
 
 export type FragmentNames =
   | "createFragment"
@@ -49,11 +42,3 @@ export interface ProductInput {
   id: string;
   quantity: number;
 }
-
-export type {
-  ListStripeSubscriptionsParamsInput,
-  StripeCustomerPortalInput,
-  StripeCustomerPortalConfigInput,
-  StripeAdditionalPropertiesInput,
-  CreateStripeCustomerInput,
-};

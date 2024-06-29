@@ -1,11 +1,9 @@
 import { gql } from "graphql-tag";
 
 import { useApolloClient } from "@apollo/client";
-import type {
-  Fragments,
-  ListStripeSubscriptionsParamsInput,
-} from "../types.js";
+import type { Fragments } from "../types.js";
 import { getFragmentName } from "../lib/getFragmentName.js";
+import type { ListStripeSubscriptionsParamsInput } from "../generated/graphql.js";
 
 const DEFAULT_LIST_FRAGMENT = gql`
       fragment DefaultListFragment on StripeSubscription {

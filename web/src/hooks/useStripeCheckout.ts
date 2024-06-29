@@ -3,6 +3,10 @@ import { useApolloClient, useMutation } from "@apollo/client";
 import { StripeContext } from "../provider/StripeContext.js";
 import { gql } from "graphql-tag";
 import type { StripeCheckoutModeEnum, Cart, StripeCustomer } from "../types.js";
+import type {
+  RetrieveStripeCheckoutSessionQuery,
+  RetrieveStripeCheckoutSessionQueryVariables,
+} from "../generated/graphql.js";
 
 interface CheckoutProps {
   cart?: Cart;
@@ -113,7 +117,10 @@ export const useStripeCheckout = () => {
       const client = useApolloClient();
 
       // create query
-      const result = await client.query({
+      const result = await client.query<
+        RetrieveStripeCheckoutSessionQuery,
+        RetrieveStripeCheckoutSessionQueryVariables
+      >({
         query: RETRIEVE_STRIPE_CHECKOUT_SESSION,
         variables: {
           id,

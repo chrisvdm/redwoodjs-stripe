@@ -7,7 +7,7 @@ import type { StripeCustomer } from "../types.js";
 import type {
   StripeCustomerPortalConfigInput,
   StripeCustomerPortalInput,
-} from "../types.js";
+} from "../generated/graphql.js";
 
 type RedirectToStripeCustomerPortalArgs = {
   customer: StripeCustomer;

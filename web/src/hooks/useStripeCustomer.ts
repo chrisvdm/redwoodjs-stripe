@@ -4,12 +4,12 @@ import { gql } from "graphql-tag";
 import { useApolloClient } from "@apollo/client";
 
 import { StripeContext } from "../provider/StripeContext.js";
+import type { Fragments } from "../types.js";
+import { getFragmentName } from "../lib/getFragmentName.js";
 import type {
   CreateStripeCustomerInput,
-  Fragments,
   StripeAdditionalPropertiesInput,
-} from "../types.js";
-import { getFragmentName } from "../lib/getFragmentName.js";
+} from "../generated/graphql.js";
 
 const DEFAULT_RETREIVE_FRAGMENT = gql`
       fragment DefaultRetrieveFragment on StripeCustomer {
