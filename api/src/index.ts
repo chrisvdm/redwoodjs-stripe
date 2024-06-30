@@ -1,7 +1,7 @@
 export {
   handleStripeWebhooks,
   stripe,
-} from "./lib/index.js";
+} from "./lib/logger.js";
 
 // export schemas sdl
 export * from "./schemas/index.js";

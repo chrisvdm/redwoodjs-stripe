@@ -1,38 +1,3 @@
-import Stripe from "stripe";
-
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  appInfo: {
-    name: "redwoodjs-stripe",
-    url: "https://github.com/chrisvdm/redwoodjs-stripe",
-  },
-});
-
-import { createLogger } from "@redwoodjs/api/logger";
-export const logger = createLogger({});
-
-export const prettyList = (obj) => {
-  if (obj && obj !== undefined && obj && !Array.isArray(obj)) {
-    for (const key of Object.keys(obj)) {
-      if (obj[key]?.object === "list") {
-        obj[key] = obj[key].data;
-      }
-    }
-  }
-  return obj;
-};
-
-export const lastEntry = (array) => {
-  const latest = array.sort((first, next) => {
-    const firstDate = new Date(0);
-    firstDate.setUTCSeconds(first.created);
-    const nextDate = new Date(0);
-    nextDate.setUTCSeconds(next.created);
-    return firstDate - nextDate;
-  });
-
-  return latest[latest.length - 1];
-};
-
 export const handleStripeWebhooks = async (
   event,
   context,
