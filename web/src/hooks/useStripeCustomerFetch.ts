@@ -16,7 +16,7 @@ const STRIPE_CUSTOMER_SEARCH = gql`
     }
   `;
 const RETRIEVE_STRIPE_CUSTOMER = gql`
-    query retrieveStripeCustomer(
+    query fetchRetrieveStripeCustomer(
       $data: RetrieveStripeCustomerInput
     ) {
       retrieveStripeCustomer(data: $data) {

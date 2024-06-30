@@ -5,24 +5,29 @@ import { useApolloClient } from "@apollo/client";
 
 import { StripeContext } from "../provider/StripeContext.js";
 import type { Fragments } from "../types.js";
-import { getFragmentName } from "../lib/getFragmentName.js";
 import type {
+  RetrieveStripeCustomerQuery,
+  RetrieveStripeCustomerQueryVariables,
   CreateStripeCustomerInput,
   StripeAdditionalPropertiesInput,
+  CreateStripeCustomerMutation,
+  CreateStripeCustomerMutationVariables,
 } from "../generated/graphql.js";
+import { nonNilAssertionError } from "../lib/nonNilAssertionError.js";
 
 const DEFAULT_RETREIVE_FRAGMENT = gql`
-      fragment DefaultRetrieveFragment on StripeCustomer {
-        name
-        email
-        id
-      }
-    `;
+  fragment RetrieveFragment on StripeCustomer {
+    name
+    email
+    id
+  }
+`;
 
 const DEFAULT_CREATE_FRAGMENT = gql`
-      fragment DefaultCreateFragment on StripeCustomer {
-        id
-      }`;
+  fragment CreateFragment on StripeCustomer {
+    id
+  }
+`;
 
 export const useStripeCustomer = (fragments: Fragments) => {
   const client = useApolloClient();
@@ -31,28 +36,31 @@ export const useStripeCustomer = (fragments: Fragments) => {
   const retrieveFragment =
     fragments?.retrieveFragment || DEFAULT_RETREIVE_FRAGMENT;
 
-  const [createStripeCustomer] = useMutation(
-    gql`
-      ${createFragment}
-
-      mutation createStripeCustomer($data: CreateStripeCustomerInput ) {
+  const CREATE_STRIPE_CUSTOMER = gql`
+      mutation createStripeCustomer($data: CreateStripeCustomerInput) {
         createStripeCustomer(data: $data) {
-          ...${getFragmentName(createFragment)}
+          ...CreateFragment
         }
+        
+        ${createFragment}
       }
-    `,
-  );
+  `;
+
+  const [createStripeCustomer] = useMutation<
+    CreateStripeCustomerMutation,
+    CreateStripeCustomerMutationVariables
+  >(CREATE_STRIPE_CUSTOMER);
 
   const RETRIEVE_STRIPE_CUSTOMER = gql`
-    ${retrieveFragment}
-
     query retrieveStripeCustomer(
       $data: RetrieveStripeCustomerInput
     ) {
       retrieveStripeCustomer(data: $data) {
-        ...${getFragmentName(retrieveFragment)}
+        ...RetrieveFragment
       }
     }
+
+    ${retrieveFragment}
   `;
   return {
     customer: useContext(StripeContext).customer,
@@ -62,8 +70,18 @@ export const useStripeCustomer = (fragments: Fragments) => {
     ) => {
       const customerId = id ? id : defaultCustomerId;
 
+      if (customerId == null) {
+        throw nonNilAssertionError("retrieveStripeCustomer:customerId", {
+          id,
+          defaultCustomerId,
+        });
+      }
+
       // create query
-      const result = await client.query({
+      const result = await client.query<
+        RetrieveStripeCustomerQuery,
+        RetrieveStripeCustomerQueryVariables
+      >({
         query: RETRIEVE_STRIPE_CUSTOMER,
         variables: {
           data: {
@@ -89,7 +107,7 @@ export const useStripeCustomer = (fragments: Fragments) => {
 
       // Create Customer
       const { data } = await createStripeCustomer(payload);
-      return data.createStripeCustomer;
+      return data?.createStripeCustomer;
     },
   };
 };

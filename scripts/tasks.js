@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const path = require("node:path");
 
-const spawn = require("@npmcli/promise-spawn");
+const baseSpawn = require("@npmcli/promise-spawn");
 const esbuild = require("esbuild");
 const { glob } = require("glob");
 const chokidar = require("chokidar");
@@ -36,6 +36,11 @@ const esbuildConfigs = {
 };
 
 const typedDistSet = new Set(["web:esm"]);
+
+const spawn = (...args) =>
+  baseSpawn(...args, {
+    ...(process.env.DEBUG ? { stdio: "inherit" } : {}),
+  });
 
 const tasks = {
   async build() {
