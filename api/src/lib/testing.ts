@@ -1,5 +1,5 @@
 import { mockHttpEvent } from "@redwoodjs/testing/api";
-import { stripe } from "./logger";
+import { stripe } from "./stripe";
 
 // Generates a test Stripe mock event.
 export const generateStripeMockEvent = () => {
