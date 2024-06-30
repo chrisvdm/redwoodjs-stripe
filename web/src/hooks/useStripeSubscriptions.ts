@@ -2,11 +2,14 @@ import { gql } from "graphql-tag";
 
 import { useApolloClient } from "@apollo/client";
 import type { Fragments } from "../types.js";
-import { getFragmentName } from "../lib/getFragmentName.js";
-import type { ListStripeSubscriptionsParamsInput } from "../generated/graphql.js";
+import type {
+  ListStripeSubscriptionsQuery,
+  ListStripeSubscriptionsQueryVariables,
+  ListStripeSubscriptionsParamsInput,
+} from "../generated/graphql.js";
 
 const DEFAULT_LIST_FRAGMENT = gql`
-      fragment DefaultListFragment on StripeSubscription {
+      fragment ListFragment on StripeSubscription {
        id
        customer
        status
@@ -18,15 +21,15 @@ export const useStripeSubscriptions = (fragments: Fragments) => {
   const client = useApolloClient();
 
   const LIST_STRIPE_SUBSCRIPTIONS = gql`
-    ${listFragment}
-
     query listStripeSubscriptions(
       $data: ListStripeSubscriptionsInput
     ) {
       listStripeSubscriptions(data: $data) {
-        ...${getFragmentName(listFragment)}
+        ...ListFragment
       }
     }
+
+    ${listFragment}
   `;
 
   return {
@@ -34,7 +37,10 @@ export const useStripeSubscriptions = (fragments: Fragments) => {
       listParams: ListStripeSubscriptionsParamsInput,
     ) => {
       // create query
-      const result = await client.query({
+      const result = await client.query<
+        ListStripeSubscriptionsQuery,
+        ListStripeSubscriptionsQueryVariables
+      >({
         query: LIST_STRIPE_SUBSCRIPTIONS,
         variables: {
           data: {
