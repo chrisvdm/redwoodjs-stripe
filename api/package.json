@@ -4,10 +4,12 @@
   "description": "API-side code for RedwoodJS-Stripe projects",
   "exports": {
     ".": {
+      "types": "./dist/esm/index.d.ts",
       "redwoodjs-stripe:development": "./dist/esm/index.js",
       "default": "./dist/cjs/index.js"
     },
     "./testing": {
+      "types": "./dist/esm/lib/testing.d.ts",
       "redwoodjs-stripe:development": "./dist/esm/lib/testing.js",
       "default": "./dist/cjs/lib/testing.js"
     }

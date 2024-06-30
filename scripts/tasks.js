@@ -35,7 +35,7 @@ const esbuildConfigs = {
   },
 };
 
-const typedDistSet = new Set(["web:esm"]);
+const typedDistSet = new Set(["api:esm", "web:esm"]);
 
 const spawn = (...args) =>
   baseSpawn(...args, {
