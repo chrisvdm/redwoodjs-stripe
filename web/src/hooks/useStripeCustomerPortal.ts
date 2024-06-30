@@ -3,14 +3,23 @@ import { useMutation, useQuery } from "@apollo/client";
 import { gql } from "graphql-tag";
 
 import { StripeContext } from "../provider/StripeContext.js";
-import type { StripeCustomer } from "../types.js";
+import type { StripeCustomerBase } from "../types.js";
 import type {
+  CreateStripeCustomerPortalConfigMutation,
+  CreateStripeCustomerPortalConfigMutationVariables,
+  CreateStripeCustomerPortalSessionMutation,
+  CreateStripeCustomerPortalSessionMutationVariables,
+  CreateStripeCustomerPortalSessionSkipAuthMutation,
+  CreateStripeCustomerPortalSessionSkipAuthMutationVariables,
+  ListStripeCustomerPortalConfigQuery,
+  ListStripeCustomerPortalConfigQueryVariables,
   StripeCustomerPortalConfigInput,
   StripeCustomerPortalInput,
 } from "../generated/graphql.js";
+import { nonNilAssertionError } from "../lib/nonNilAssertionError.js";
 
 type RedirectToStripeCustomerPortalArgs = {
-  customer: StripeCustomer;
+  customer: StripeCustomerBase;
 } & Omit<StripeCustomerPortalInput, "customer">;
 
 type CreateStripeCustomerPortalConfigArgs = StripeCustomerPortalConfigInput;
@@ -34,21 +43,30 @@ export const useStripeCustomerPortal = () => {
   }
 `;
 
-  const defaultListApolloResults = useQuery(STRIPE_DEFAULT_CUSTOMER_PORTAL, {
+  const defaultListApolloResults = useQuery<
+    ListStripeCustomerPortalConfigQuery,
+    ListStripeCustomerPortalConfigQueryVariables
+  >(STRIPE_DEFAULT_CUSTOMER_PORTAL, {
     variables: {
       params: {
         is_default: true,
         active: true,
+        ending_before: null,
+        limit: null,
+        starting_after: null,
       },
     },
   });
 
   const defaultConfig = defaultListApolloResults.data
-    ? defaultListApolloResults.data.listStripeCustomerPortalConfig.data[0]
+    ? defaultListApolloResults.data.listStripeCustomerPortalConfig?.data?.[0]
     : null;
 
   // Create Stripe Customer Portal Configuration Mutation
-  const [createStripeCustomerPortalConfig] = useMutation(
+  const [createStripeCustomerPortalConfig] = useMutation<
+    CreateStripeCustomerPortalConfigMutation,
+    CreateStripeCustomerPortalConfigMutationVariables
+  >(
     gql`
       mutation createStripeCustomerPortalConfig($data: StripeCustomerPortalConfigInput ) {
         createStripeCustomerPortalConfig(data: $data) {
@@ -59,7 +77,10 @@ export const useStripeCustomerPortal = () => {
   );
 
   // Create Stripe Customer Portal Session Mutation
-  const [createStripeCustomerPortalSession] = useMutation(
+  const [createStripeCustomerPortalSession] = useMutation<
+    CreateStripeCustomerPortalSessionMutation,
+    CreateStripeCustomerPortalSessionMutationVariables
+  >(
     gql`
     mutation createStripeCustomerPortalSession($data: StripeCustomerPortalInput ) {
       createStripeCustomerPortalSession(data: $data) {
@@ -70,7 +91,10 @@ export const useStripeCustomerPortal = () => {
   `,
   );
 
-  const [createStripeCustomerPortalSessionSkipAuth] = useMutation(
+  const [createStripeCustomerPortalSessionSkipAuth] = useMutation<
+    CreateStripeCustomerPortalSessionSkipAuthMutation,
+    CreateStripeCustomerPortalSessionSkipAuthMutationVariables
+  >(
     gql`
     mutation createStripeCustomerPortalSessionSkipAuth($data: StripeCustomerPortalInput ) {
       createStripeCustomerPortalSessionSkipAuth(data: $data) {
@@ -106,46 +130,69 @@ export const useStripeCustomerPortal = () => {
     ) => {
       const customer = args.customer || (await ensureCustomer());
 
-      // Create Payload
-      const payload = {
-        variables: {
-          data: {
-            ...args,
-            customer: customer.id,
+      if (customer.id == null) {
+        throw nonNilAssertionError(
+          "useStripeCustomerPortal:redirectToStripeCustomerPortal",
+          {
+            customer,
           },
+        );
+      }
+
+      const variables = {
+        data: {
+          ...args,
+          customer: customer.id,
         },
       };
 
       // Check to skipAuth
       if (skipAuth) {
         // Create Customer Portal Session using Test mutation that skips auth
-        const {
-          data: {
-            createStripeCustomerPortalSessionSkipAuth: { url },
-          },
-        } = await createStripeCustomerPortalSessionSkipAuth(payload);
+        const result = await createStripeCustomerPortalSessionSkipAuth({
+          variables,
+        });
+
+        const url = result.data?.createStripeCustomerPortalSessionSkipAuth?.url;
+
+        if (url == null) {
+          throw nonNilAssertionError(
+            "useStripeCustomerPortal:redirectToStripeCustomerPortal:createStripeCustomerPortalSessionSkipAuth",
+            {
+              variables,
+              result,
+            },
+          );
+        }
+
         location.href = url;
       } else {
         // Create Customer Portal Session
-        const {
-          data: {
-            createStripeCustomerPortalSession: { url },
-          },
-        } = await createStripeCustomerPortalSession(payload);
+        const result = await createStripeCustomerPortalSession({ variables });
+        const url = result.data?.createStripeCustomerPortalSession?.url;
+
+        if (url == null) {
+          throw nonNilAssertionError(
+            "useStripeCustomerPortal:redirectToStripeCustomerPortal:createStripeCustomerPortalSession",
+            {
+              variables,
+              result,
+            },
+          );
+        }
+
         location.href = url;
       }
     },
     createStripeCustomerPortalConfig: async (
       args: CreateStripeCustomerPortalConfigArgs,
     ) => {
-      const payload = {
-        variables: {
-          data: args,
-        },
+      const variables = {
+        data: args,
       };
 
-      const { data } = await createStripeCustomerPortalConfig(payload);
-      return data.createStripeCustomerPortalConfig;
+      const result = await createStripeCustomerPortalConfig({ variables });
+      return result?.data?.createStripeCustomerPortalConfig;
     },
   };
 };
