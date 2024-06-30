@@ -2,11 +2,12 @@ import { useContext } from "react";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { StripeContext } from "../provider/StripeContext.js";
 import { gql } from "graphql-tag";
-import type { Cart, StripeCustomer } from "../types.js";
+import type { Cart } from "../types.js";
 import type {
   RetrieveStripeCheckoutSessionQuery,
   RetrieveStripeCheckoutSessionQueryVariables,
   StripeCheckoutModeEnum,
+  StripeCustomer,
 } from "../generated/graphql.js";
 import { nonNilAssertionError } from "../lib/nonNilAssertionError.js";
 import type {
@@ -95,7 +96,7 @@ export const useStripeCheckout = () => {
         cancelUrl: cancelUrl ?? null,
         mode: determinedMode,
         allowPromotionCodes: allowPromotionCodes ?? null,
-        ...(customer != null
+        ...(customer != null && customer.id != null
           ? {
               customer: {
                 id: customer.id,

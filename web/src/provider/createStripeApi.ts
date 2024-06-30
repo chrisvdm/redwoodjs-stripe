@@ -1,5 +1,5 @@
 import type {
-  StripeCustomer,
+  StripeCustomerBase,
   Cart,
   SetCart,
   WaitForCustomer,
@@ -9,7 +9,7 @@ import type {
 export const createStripeApi = (
   cart: Cart,
   setCart: SetCart,
-  customer: StripeCustomer | null,
+  customer: StripeCustomerBase | null,
   waitForCustomer: WaitForCustomer,
 ) => ({
   waitForCustomer,

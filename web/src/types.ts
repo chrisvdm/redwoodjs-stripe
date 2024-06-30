@@ -1,5 +1,8 @@
 import type { DocumentNode } from "graphql";
-import type { StripeItemTypeEnum } from "./generated/graphql.js";
+import type {
+  StripeCustomer,
+  StripeItemTypeEnum,
+} from "./generated/graphql.js";
 
 export type FragmentNames =
   | "createFragment"
@@ -27,15 +30,6 @@ export type SetCart = (cart: Cart) => unknown;
 
 export type MaybePromise<V> = V | Promise<V>;
 
-export type WaitForCustomer = () => MaybePromise<StripeCustomer | null>;
+export type WaitForCustomer = () => MaybePromise<StripeCustomerBase | null>;
 
-export interface StripeCustomer {
-  id: string;
-  name: string;
-  email: string;
-}
-
-export interface ProductInput {
-  id: string;
-  quantity: number;
-}
+export type StripeCustomerBase = Pick<StripeCustomer, "id" | "email" | "name">;

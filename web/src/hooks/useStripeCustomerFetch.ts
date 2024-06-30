@@ -2,7 +2,14 @@ import type { ApolloClient } from "@apollo/client";
 import { useApolloClient } from "@apollo/client";
 import { gql } from "graphql-tag";
 import { useEffect } from "react";
-import type { StripeCustomer } from "../types.js";
+import type {
+  FetchRetrieveStripeCustomerQuery,
+  FetchRetrieveStripeCustomerQueryVariables,
+  StripeCustomerSearchQuery,
+  StripeCustomerSearchQueryVariables,
+} from "../generated/graphql.js";
+import { nonNilAssertionError } from "../lib/nonNilAssertionError.js";
+import type { StripeCustomerBase } from "../types.js";
 
 const STRIPE_CUSTOMER_SEARCH = gql`
     query stripeCustomerSearch(
@@ -37,10 +44,13 @@ const searchCustomer = async ({
   client,
   searchString,
 }: FetchCustomerContext) => {
-  const result = await client.query({
+  const result = await client.query<
+    StripeCustomerSearchQuery,
+    StripeCustomerSearchQueryVariables
+  >({
     query: STRIPE_CUSTOMER_SEARCH,
     variables: {
-      query: searchString,
+      query: searchString ?? null,
     },
   });
 
@@ -51,12 +61,25 @@ const searchCustomer = async ({
   return result.data?.stripeCustomerSearch ?? null;
 };
 
-const retrieveCustomer = async ({ id, client }: FetchCustomerContext) => {
-  const result = await client.query({
+const retrieveCustomer = async (context: FetchCustomerContext) => {
+  const { id, client } = context;
+
+  if (id == null) {
+    throw nonNilAssertionError(
+      "useStripeCustomerFetch:retrieveCustomer:id",
+      context,
+    );
+  }
+
+  const result = await client.query<
+    FetchRetrieveStripeCustomerQuery,
+    FetchRetrieveStripeCustomerQueryVariables
+  >({
     query: RETRIEVE_STRIPE_CUSTOMER,
     variables: {
       data: {
         id: id,
+        addProps: null,
       },
     },
   });
@@ -90,7 +113,7 @@ const fetchCustomer = async (context: FetchCustomerContext) => {
 export const useStripeCustomerFetch = (
   id: string | null | undefined,
   searchString: string | null | undefined,
-  setCustomer: (customer: StripeCustomer) => unknown,
+  setCustomer: (customer: StripeCustomerBase) => unknown,
 ) => {
   const client = useApolloClient();
   useEffect(() => {
@@ -101,6 +124,14 @@ export const useStripeCustomerFetch = (
         searchString,
       };
       const stripeCustomer = await fetchCustomer(context);
+
+      if (stripeCustomer == null) {
+        throw nonNilAssertionError("useStripeCustomerFetch:response", {
+          context,
+          response: stripeCustomer,
+        });
+      }
+
       setCustomer(stripeCustomer);
     };
 
