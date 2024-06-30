@@ -1,4 +1,4 @@
-import { stripe, lastEntry, prettyList } from "../../lib";
+import { stripe, lastEntry, prettyList } from "../../lib.js";
 
 export const stripeCustomerSearch = async ({ query }) => {
   const customer = await stripe.customers.search({

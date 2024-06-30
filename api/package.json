@@ -6,22 +6,26 @@
     ".": {
       "redwoodjs-stripe:development": "./dist/esm/index.js",
       "default": "./dist/cjs/index.js"
+    },
+    "./testing": {
+      "redwoodjs-stripe:development": "./dist/esm/lib/testing.js",
+      "default": "./dist/cjs/lib/testing.js"
     }
   },
-  "keywords": [
-    "stripe",
-    "redwoodjs",
-    "payments",
-    "commerce"
-  ],
+  "keywords": ["stripe", "redwoodjs", "payments", "commerce"],
   "license": "MIT",
   "author": "chrisvdm",
   "main": "./dist/cjs/index.js",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "dependencies": {
+    "@redwoodjs/testing": "^7.7.2",
     "stripe": ">=11.18.0"
   },
-  "gitHead": "dc236d24165114a18811fe36e62482ff4ae75d36"
+  "gitHead": "dc236d24165114a18811fe36e62482ff4ae75d36",
+  "peerDependencies": {
+    "@redwoodjs/api": ">=7.7.2"
+  },
+  "devDependencies": {
+    "@redwoodjs/api": "^7.7.2"
+  }
 }

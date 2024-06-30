@@ -1,4 +1,4 @@
-import { stripe } from "../../lib";
+import { stripe } from "../../lib.js";
 
 export const checkout = async (payload) => {
   const { url, id } = await createStripeCheckoutSession(payload);

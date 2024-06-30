@@ -2,16 +2,16 @@ import {
   checkout,
   createStripeCheckoutSession,
   retrieveStripeCheckoutSession,
-} from "./checkouts/checkouts";
-import * as stripeItems from "./stripeItems/stripeItems";
+} from "./checkouts/checkouts.js";
+import * as stripeItems from "./stripeItems/stripeItems.js";
 import {
   stripeCustomerSearch,
   retrieveStripeCustomer,
   createStripeCustomer,
   searchLatestStripeCustomer,
-} from "./customers/customers";
-import * as customerPortal from "./customerPortal/customerPortal";
-import { listStripeSubscriptions } from "./subscription/subscription";
+} from "./customers/customers.js";
+import * as customerPortal from "./customerPortal/customerPortal.js";
+import { listStripeSubscriptions } from "./subscription/subscription.js";
 
 // shape services object
 export const stripeServices = {
@@ -31,21 +31,21 @@ export const stripeServices = {
   stripeItems_stripeItems: stripeItems,
 };
 
-export { listStripeSubscriptions } from "./subscription/subscription";
+export { listStripeSubscriptions } from "./subscription/subscription.js";
 export {
   checkout,
   retrieveStripeCheckoutSession,
   createStripeCheckoutSession,
-} from "./checkouts/checkouts";
-export { stripeItem, stripeItems } from "./stripeItems/stripeItems";
+} from "./checkouts/checkouts.js";
+export { stripeItem, stripeItems } from "./stripeItems/stripeItems.js";
 export {
   stripeCustomerSearch,
   retrieveStripeCustomer,
   createStripeCustomer,
   searchLatestStripeCustomer,
-} from "./customers/customers";
+} from "./customers/customers.js";
 export {
   createStripeCustomerPortalSession,
   createStripeCustomerPortalConfig,
   listStripeCustomerPortalConfig,
-} from "./customerPortal/customerPortal";
+} from "./customerPortal/customerPortal.js";

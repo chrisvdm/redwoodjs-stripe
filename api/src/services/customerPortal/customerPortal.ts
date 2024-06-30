@@ -1,4 +1,4 @@
-import { stripe } from "../../lib";
+import { stripe } from "../../lib.js";
 
 export const createStripeCustomerPortalSession = async ({ data }) => {
   const session = await stripe.billingPortal.sessions.create(data);
