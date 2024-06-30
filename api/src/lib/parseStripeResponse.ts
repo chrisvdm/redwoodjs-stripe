@@ -49,9 +49,7 @@ export const parseStripeResponse = <Input extends StripeResponseValue>(
   if (input == null || typeof input !== "object") {
     result = input;
   } else if ("object" in input && input.object === "list") {
-    result = Array.isArray(input.data)
-      ? input.data.map(parseStripeResponse)
-      : parseStripeResponse(input.data);
+    result = input.data.map(parseStripeResponse);
   } else {
     result = mapValues(input as StripeResponseObject, parseStripeResponse);
   }
