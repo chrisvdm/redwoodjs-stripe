@@ -84,6 +84,12 @@ enum StripeCustomerTaxLocationSourceEnum {
     shipping_destination
 }
 
+enum StripeReconciliationModeEnum {
+    automatic
+    manual
+    merchant_default
+}
+
 enum StripeAutomaticTaxEnum {
     supported
     not_collecting
@@ -233,7 +239,7 @@ type StripeCustomerCashBalance {
 }
 
 type StripeCashBalanceSettings {
-    reconciliation_mode: String
+    reconciliation_mode: StripeReconciliationModeEnum
 }
 
 input CreateStripeCustomerInput {
@@ -296,7 +302,7 @@ input CreateStripeCustomerCashBalanceInput {
 }
 
 input CreateStripeCustomerCashBalanceSettingsInput {
-    reconciliation_mode: String
+    reconciliation_mode: StripeReconciliationModeEnum
 }
 
 input CreateStripeCustomerShippingInput {

@@ -38,7 +38,7 @@ export type CreateStripeCustomerCashBalanceInput = {
 };
 
 export type CreateStripeCustomerCashBalanceSettingsInput = {
-  reconciliation_mode?: InputMaybe<Scalars['String']['input']>;
+  reconciliation_mode?: InputMaybe<StripeReconciliationModeEnum>;
 };
 
 export type CreateStripeCustomerInput = {
@@ -281,7 +281,7 @@ export enum StripeCancellationReasonModeEnum {
 
 export type StripeCashBalanceSettings = {
   __typename?: 'StripeCashBalanceSettings';
-  reconciliation_mode?: Maybe<Scalars['String']['output']>;
+  reconciliation_mode?: Maybe<StripeReconciliationModeEnum>;
 };
 
 export type StripeCheckoutFinancialConnections = {
@@ -1724,6 +1724,12 @@ export type StripeProductParamsInput = {
   starting_after?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
 };
+
+export enum StripeReconciliationModeEnum {
+  Automatic = 'automatic',
+  Manual = 'manual',
+  MerchantDefault = 'merchant_default'
+}
 
 export type StripeRecurringPriceInput = {
   interval?: InputMaybe<StripeRecurringPriceInterval>;

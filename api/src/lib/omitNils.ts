@@ -1,14 +1,26 @@
-export const omitNils = <K extends string | number | symbol, V>(
-  inputs: Record<K, V | null | undefined>,
-): Record<K, V> => {
-  const results: Partial<Record<K, V>> = {};
+export type OmitNils<Inputs> = Partial<{
+  [K in keyof Inputs]?: NonNil<Inputs[K]>;
+}>;
 
-  for (const key of Object.keys(inputs) as K[]) {
+export type NonNil<Value> = Value extends null
+  ? never
+  : Value extends undefined
+    ? undefined
+    : Value;
+
+export const omitNils = <Inputs extends object>(
+  inputs: Inputs,
+): OmitNils<Inputs> => {
+  const results: Partial<OmitNils<Inputs>> = {};
+  const keys = Object.keys(inputs) as (keyof Inputs)[];
+
+  for (const key of keys) {
     const value = inputs[key];
+
     if (value != null) {
-      results[key] = value;
+      results[key] = value as NonNil<Inputs[keyof Inputs]>;
     }
   }
 
-  return results as Record<K, V>;
+  return results as OmitNils<Inputs>;
 };
