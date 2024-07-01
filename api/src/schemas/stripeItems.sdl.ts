@@ -12,10 +12,10 @@ export const schema = /* GraphQL */ `
   }
 
   input StripeCreatedInput {
-    gt: String
-    gte: String
-    lt: String
-    lte: String
+    gt: Int
+    gte: Int
+    lt: Int
+    lte: Int
   }
 
   input StripeRecurringPriceInput {
@@ -53,7 +53,7 @@ export const schema = /* GraphQL */ `
     created: StripeCreatedInput
     ending_before: String
     limit: Int
-    lookup_keys: String
+    lookup_keys: String[]
     recurring: StripeRecurringPriceInput
     starting_after: String
     type: StripeItemTypeEnum

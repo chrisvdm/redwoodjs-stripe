@@ -19,7 +19,6 @@ export type Scalars = {
   StripeInvoiceCreditBalance: { input: any; output: any; }
   StripeLineItemPriceCurrencyOptions: { input: any; output: any; }
   Timestamp: { input: any; output: any; }
-  URL: { input: any; output: any; }
 };
 
 export type AutomaticTaxInput = {
@@ -173,8 +172,6 @@ export type Query = {
   retrieveStripeCheckoutSession: StripeCheckoutSession;
   retrieveStripeCustomer: Maybe<StripeCustomer>;
   stripeCustomerSearch: Maybe<StripeCustomer>;
-  stripeItem: Maybe<StripeItem>;
-  stripeItems: Array<StripeItem>;
 };
 
 
@@ -200,16 +197,6 @@ export type QueryRetrieveStripeCustomerArgs = {
 
 export type QueryStripeCustomerSearchArgs = {
   query: InputMaybe<Scalars['String']['input']>;
-};
-
-
-export type QueryStripeItemArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type QueryStripeItemsArgs = {
-  params: InputMaybe<StripeItemsParamsInput>;
 };
 
 export type RetrieveStripeCustomerInput = {
@@ -880,13 +867,6 @@ export type StripeCoupon = {
   valid: Maybe<Scalars['Boolean']['output']>;
 };
 
-export type StripeCreatedInput = {
-  gt: InputMaybe<Scalars['String']['input']>;
-  gte: InputMaybe<Scalars['String']['input']>;
-  lt: InputMaybe<Scalars['String']['input']>;
-  lte: InputMaybe<Scalars['String']['input']>;
-};
-
 export type StripeCustomFields = {
   __typename?: 'StripeCustomFields';
   name: Maybe<Scalars['String']['output']>;
@@ -1187,26 +1167,6 @@ export type StripeInvoiceSettings = {
   default_payment_method: Maybe<Scalars['String']['output']>;
   footer: Maybe<Scalars['String']['output']>;
   rendering_options: Maybe<StripeRenderingOptions>;
-};
-
-export type StripeItem = {
-  __typename?: 'StripeItem';
-  description: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  images: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-  name: Maybe<Scalars['String']['output']>;
-  price: Maybe<Scalars['Int']['output']>;
-  quantity: Maybe<Scalars['Int']['output']>;
-  type: Maybe<StripeItemTypeEnum>;
-};
-
-export type StripeItemTypeEnum =
-  | 'one_time'
-  | 'recurring';
-
-export type StripeItemsParamsInput = {
-  priceParams: InputMaybe<StripePriceParamsInput>;
-  productParams: InputMaybe<StripeProductParamsInput>;
 };
 
 export type StripeLineItem = {
@@ -1674,49 +1634,10 @@ export type StripePaymentsOptionsPix = {
   expires_after_seconds: Maybe<Scalars['Int']['output']>;
 };
 
-export type StripePriceParamsInput = {
-  active: InputMaybe<Scalars['Boolean']['input']>;
-  created: InputMaybe<StripeCreatedInput>;
-  currency: InputMaybe<Scalars['String']['input']>;
-  ending_before: InputMaybe<Scalars['String']['input']>;
-  limit: InputMaybe<Scalars['Int']['input']>;
-  lookup_keys: InputMaybe<Scalars['String']['input']>;
-  product: InputMaybe<Scalars['ID']['input']>;
-  recurring: InputMaybe<StripeRecurringPriceInput>;
-  starting_after: InputMaybe<Scalars['String']['input']>;
-  type: InputMaybe<StripeItemTypeEnum>;
-};
-
-export type StripeProductParamsInput = {
-  active: InputMaybe<Scalars['Boolean']['input']>;
-  created: InputMaybe<StripeCreatedInput>;
-  ending_before: InputMaybe<Scalars['String']['input']>;
-  ids: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  limit: InputMaybe<Scalars['Int']['input']>;
-  shippable: InputMaybe<Scalars['Boolean']['input']>;
-  starting_after: InputMaybe<Scalars['String']['input']>;
-  url: InputMaybe<Scalars['String']['input']>;
-};
-
 export type StripeReconciliationModeEnum =
   | 'automatic'
   | 'manual'
   | 'merchant_default';
-
-export type StripeRecurringPriceInput = {
-  interval: InputMaybe<StripeRecurringPriceInterval>;
-  usage_type: InputMaybe<StripeRecurringPriceUsageType>;
-};
-
-export type StripeRecurringPriceInterval =
-  | 'day'
-  | 'month'
-  | 'week'
-  | 'year';
-
-export type StripeRecurringPriceUsageType =
-  | 'licensed'
-  | 'metered';
 
 export type StripeRenderingOptions = {
   __typename?: 'StripeRenderingOptions';
