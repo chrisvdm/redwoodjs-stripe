@@ -53,7 +53,7 @@ export const schema = /* GraphQL */ `
     created: StripeCreatedInput
     ending_before: String
     limit: Int
-    lookup_keys: String[]
+    lookup_keys: [String]
     recurring: StripeRecurringPriceInput
     starting_after: String
     type: StripeItemTypeEnum

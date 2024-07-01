@@ -1,10 +1,10 @@
-import type { QueryStripeItemsArgs } from "../../generated/graphql.js";
+import { QueryStripeItemArgs } from "../../generated/graphql.js";
 import { deepOmitNils } from "../../lib/deepOmitNils.js";
 import { stripe } from "../../lib/stripe.js";
 
 export const stripeItems = async ({
   params = { productParams: {}, priceParams: {} },
-}: QueryStripeItemsArgs) => {
+}) => {
   const { productParams = {}, priceParams = {} } = deepOmitNils(params) ?? {};
 
   const products = await stripe.products.list(productParams);
@@ -35,7 +35,7 @@ export const stripeItems = async ({
   return itemList;
 };
 
-export const stripeItem = async ({ id }) => {
+export const stripeItem = async ({ id }: QueryStripeItemArgs) => {
   const price = await stripe.prices.retrieve(id.toString());
 
   const product = await stripe.products.retrieve(price.product);
