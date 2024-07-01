@@ -6,9 +6,7 @@ import type {
 import { deepOmitNils } from "../../lib/deepOmitNils.js";
 import { lastStripeObject } from "../../lib/lastStripeObject.js";
 import { nonNilAssertionError } from "../../lib/nonNilAssertionError.js";
-import { omitNils } from "../../lib/omitNils.js";
 import { parseStripeResponse } from "../../lib/parseStripeResponse.js";
-import { rejectNils } from "../../lib/rejectNils.js";
 import { stripe } from "../../lib/stripe.js";
 
 export const stripeCustomerSearch = async ({
