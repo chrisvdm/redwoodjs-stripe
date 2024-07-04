@@ -44,9 +44,9 @@ const omitNilsObj = <Inputs extends object>(
 
 export const deepOmitNils = <Input>(
   input: Input,
-): null | DeepOmitNils<Input> => {
+): undefined | DeepOmitNils<Input> => {
   if (input == null) {
-    return null;
+    return undefined;
   }
 
   if (Array.isArray(input)) {
@@ -54,8 +54,8 @@ export const deepOmitNils = <Input>(
   }
 
   if (typeof input === "object") {
-    return omitNilsObj(input) as null | DeepOmitNils<Input>;
+    return omitNilsObj(input) as undefined | DeepOmitNils<Input>;
   }
 
-  return input as null | DeepOmitNils<Input>;
+  return input as undefined | DeepOmitNils<Input>;
 };

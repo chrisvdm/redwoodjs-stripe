@@ -1,6 +1,46 @@
 export const schema = /* GraphQL */ `
   scalar Metadata
 
+  enum StripeCheckoutPaymentMethodTypeEnum {
+    acss_debit
+    affirm
+    afterpay_clearpay
+    alipay
+    amazon_pay
+    au_becs_debit
+    bacs_debi
+    bancontact
+    blik
+    boleto
+    card
+    cashapp
+    customer_balance
+    eps
+    fpx
+    giropay
+    grabpay
+    ideal
+    klarna
+    konbini
+    link
+    mobilepay
+    multibanco
+    oxxo
+    p24
+    paynow
+    paypal
+    pix
+    promptpay
+    revolut_pay
+    sepa_debit
+    sofort
+    swish
+    twint
+    us_bank_account
+    wechat_pay
+    zip
+  }
+
   type StripeCheckoutSession {
     id: ID!
     sessionUrl: String
@@ -13,7 +53,7 @@ export const schema = /* GraphQL */ `
     metadata: Metadata
     mode: StripeCheckoutModeEnum
     payment_intent: String
-    payment_method_types: [String]
+    payment_method_types: [StripeCheckoutPaymentMethodTypeEnum]
     payment_status: StripeCheckoutSessionPaymentStatusEnum
     status: StripeCheckoutSessionStatusEnum
     success_url: String

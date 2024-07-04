@@ -303,6 +303,45 @@ export type StripeCheckoutModeEnum =
   | 'setup'
   | 'subscription';
 
+export type StripeCheckoutPaymentMethodTypeEnum =
+  | 'acss_debit'
+  | 'affirm'
+  | 'afterpay_clearpay'
+  | 'alipay'
+  | 'amazon_pay'
+  | 'au_becs_debit'
+  | 'bacs_debi'
+  | 'bancontact'
+  | 'blik'
+  | 'boleto'
+  | 'card'
+  | 'cashapp'
+  | 'customer_balance'
+  | 'eps'
+  | 'fpx'
+  | 'giropay'
+  | 'grabpay'
+  | 'ideal'
+  | 'klarna'
+  | 'konbini'
+  | 'link'
+  | 'mobilepay'
+  | 'multibanco'
+  | 'oxxo'
+  | 'p24'
+  | 'paynow'
+  | 'paypal'
+  | 'pix'
+  | 'promptpay'
+  | 'revolut_pay'
+  | 'sepa_debit'
+  | 'sofort'
+  | 'swish'
+  | 'twint'
+  | 'us_bank_account'
+  | 'wechat_pay'
+  | 'zip';
+
 export type StripeCheckoutSession = {
   __typename?: 'StripeCheckoutSession';
   after_expiration: Maybe<StripeCheckoutSessionAfterExpiration>;
@@ -336,7 +375,7 @@ export type StripeCheckoutSession = {
   payment_link: Maybe<Scalars['String']['output']>;
   payment_method_collection: Maybe<StripeCheckoutSessionCustomerCreationEnum>;
   payment_method_options: Maybe<StripeCheckoutSessionPaymentMethodOptions>;
-  payment_method_types: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  payment_method_types: Maybe<Array<Maybe<StripeCheckoutPaymentMethodTypeEnum>>>;
   payment_status: Maybe<StripeCheckoutSessionPaymentStatusEnum>;
   phone_number_collection: Maybe<StripeCheckoutSessionPhoneNumberCollection>;
   recovered_from: Maybe<Scalars['String']['output']>;
