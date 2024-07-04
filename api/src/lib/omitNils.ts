@@ -1,11 +1,17 @@
-export type OmitNils<Inputs> = Partial<{
-  [K in keyof Inputs]?: NonNil<Inputs[K]>;
-}>;
+export type OmitNils<Inputs> = {
+  [K in keyof Inputs]: NonNilProp<Inputs[K]>;
+};
+
+type NonNilProp<Value> = Value extends null
+  ? undefined
+  : Value extends undefined
+    ? undefined
+    : Value;
 
 export type NonNil<Value> = Value extends null
   ? never
   : Value extends undefined
-    ? undefined
+    ? never
     : Value;
 
 export const omitNils = <Inputs extends object>(

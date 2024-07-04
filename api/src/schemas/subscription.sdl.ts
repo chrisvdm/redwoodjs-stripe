@@ -1,13 +1,11 @@
 export const schema = /* GraphQL */ `
-scalar Timestamp
-
 scalar Metadata
 
 type StripeSubscription {
     id: ID!
     cancel_at_period_end: Boolean
-    current_period_end: Timestamp
-    current_period_start: Timestamp
+    current_period_end: Int
+    current_period_start: Int
     customer: String
     default_payment_method: StripePaymentMethod
     description: String
@@ -21,28 +19,28 @@ type StripeSubscription {
     application: String
     application_fee_percent: Float
     automatic_tax: StripeSubscriptionAutomaticTax
-    billing_cycle_anchor: Timestamp
+    billing_cycle_anchor: Int
     billing_thresholds: StripeSubscriptionBillingThreshold
-    cancel_at: Timestamp
-    canceled_at: Timestamp
-    collection_method: String
-    created: Timestamp
+    cancel_at: Int
+    canceled_at: Int
+    collection_method: StripeSubscriptionCollectionMethodEnum
+    created: Int
     days_until_due: Int
     default_source: String
     default_tax_rates: [StripeSubscriptionTaxRates]
     discount: StripeDiscount
-    ended_at: Timestamp
+    ended_at: Int
     livemode: Boolean
-    next_pending_invoice_item_invoice: Timestamp
+    next_pending_invoice_item_invoice: Int
     pause_collection: StripeSubscriptionPauseCollection
     payment_settings: StripeSubscriptionPaymentSettings
     pending_invoice_item_interval: StripeSubscriptionInvoiceInterval
     schedule: String
-    start_date: Timestamp
+    start_date: Int
     test_clock: String
     transfer_data: StripeSubscriptionTransferData
-    trial_end: Timestamp
-    trial_start: Timestamp
+    trial_end: Int
+    trial_start: Int
 }
 
 type StripeSubscriptionTransferData {
@@ -98,7 +96,7 @@ type StripeSubscriptionPaymentMethodOptions {
 
 type StripeSubscriptionPauseCollection {
     behaviour: String
-    resumes_at: Timestamp
+    resumes_at: Int
 }
 
 type StripeSubscriptionBillingThreshold {
@@ -107,7 +105,7 @@ type StripeSubscriptionBillingThreshold {
 }
 
 type StripeSubscriptionAutomaticTax {
-    enabled: Boolean
+    enabled: Boolean!
 }
 
 enum StripeSubscriptionStatusEnum {
@@ -121,10 +119,10 @@ enum StripeSubscriptionStatusEnum {
 }
 
 type StripeSubscriptionPendingUpdate {
-    billing_cycle_anchor: Timestamp
-    expires_at: Timestamp
+    billing_cycle_anchor: Int
+    expires_at: Int
     subscription_items: [StripeSubscriptionItem]
-    trial_end: Timestamp
+    trial_end: Int
     trial_from_plan: Boolean
 }
 
@@ -152,7 +150,7 @@ type StripeSubscriptionTaxRates {
     object: String
     active: Boolean
     country: String
-    created: Timestamp
+    created: Int
     description: String
     display_name: String
     inclusive: Boolean
@@ -169,7 +167,7 @@ type StripeSubscriptionPrice {
     object: String
     active: Boolean
     billing_scheme: String
-    created: Timestamp
+    created: Int
     currency: String
     custom_unit_amount: StripeSubscriptionPriceCustomUnitAmount 
     livemode: Boolean
@@ -224,6 +222,11 @@ enum StripeSubscriptionPriceRecurringIntervalEnum {
     day
 }
 
+enum StripeSubscriptionCollectionMethodEnum {
+    charge_automatically
+    send_invoice
+}
+
 type StripeSubscriptionPriceCustomUnitAmount {
     maximum: Int
     minimum: Int
@@ -235,18 +238,18 @@ type StripeSubscriptionItemBillingThresholds {
 }
 
 input AutomaticTaxInput {
-    enabled: Boolean
+    enabled: Boolean!
 }
 
 input ListStripeSubscriptionsParamsInput {
     customer: ID
     price: ID
-    status: String
+    status: StripeSubscriptionStatusEnum
     automatic_tax: AutomaticTaxInput
-    collection_method: String
-    created: String
-    current_period_end: String
-    current_period_start: String
+    collection_method: StripeSubscriptionCollectionMethodEnum
+    created: Int
+    current_period_end: Int
+    current_period_start: Int
     ending_before: String
     limit: Int
     starting_after: String

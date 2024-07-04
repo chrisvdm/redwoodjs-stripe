@@ -21,7 +21,7 @@ export type Scalars = {
 };
 
 export type AutomaticTaxInput = {
-  enabled?: InputMaybe<Scalars['Boolean']['input']>;
+  enabled: Scalars['Boolean']['input'];
 };
 
 export type CreateStripeCustomerAddressInput = {
@@ -108,16 +108,16 @@ export type ListStripeSubscriptionsInput = {
 
 export type ListStripeSubscriptionsParamsInput = {
   automatic_tax?: InputMaybe<AutomaticTaxInput>;
-  collection_method?: InputMaybe<Scalars['String']['input']>;
-  created?: InputMaybe<Scalars['String']['input']>;
-  current_period_end?: InputMaybe<Scalars['String']['input']>;
-  current_period_start?: InputMaybe<Scalars['String']['input']>;
+  collection_method?: InputMaybe<StripeSubscriptionCollectionMethodEnum>;
+  created?: InputMaybe<Scalars['Int']['input']>;
+  current_period_end?: InputMaybe<Scalars['Int']['input']>;
+  current_period_start?: InputMaybe<Scalars['Int']['input']>;
   customer?: InputMaybe<Scalars['ID']['input']>;
   ending_before?: InputMaybe<Scalars['String']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   price?: InputMaybe<Scalars['ID']['input']>;
   starting_after?: InputMaybe<Scalars['String']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<StripeSubscriptionStatusEnum>;
   test_clock?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -1763,15 +1763,15 @@ export type StripeSubscription = {
   application?: Maybe<Scalars['String']['output']>;
   application_fee_percent?: Maybe<Scalars['Float']['output']>;
   automatic_tax?: Maybe<StripeSubscriptionAutomaticTax>;
-  billing_cycle_anchor?: Maybe<Scalars['Timestamp']['output']>;
+  billing_cycle_anchor?: Maybe<Scalars['Int']['output']>;
   billing_thresholds?: Maybe<StripeSubscriptionBillingThreshold>;
-  cancel_at?: Maybe<Scalars['Timestamp']['output']>;
+  cancel_at?: Maybe<Scalars['Int']['output']>;
   cancel_at_period_end?: Maybe<Scalars['Boolean']['output']>;
-  canceled_at?: Maybe<Scalars['Timestamp']['output']>;
-  collection_method?: Maybe<Scalars['String']['output']>;
-  created?: Maybe<Scalars['Timestamp']['output']>;
-  current_period_end?: Maybe<Scalars['Timestamp']['output']>;
-  current_period_start?: Maybe<Scalars['Timestamp']['output']>;
+  canceled_at?: Maybe<Scalars['Int']['output']>;
+  collection_method?: Maybe<StripeSubscriptionCollectionMethodEnum>;
+  created?: Maybe<Scalars['Int']['output']>;
+  current_period_end?: Maybe<Scalars['Int']['output']>;
+  current_period_start?: Maybe<Scalars['Int']['output']>;
   customer?: Maybe<Scalars['String']['output']>;
   days_until_due?: Maybe<Scalars['Int']['output']>;
   default_payment_method?: Maybe<StripePaymentMethod>;
@@ -1779,13 +1779,13 @@ export type StripeSubscription = {
   default_tax_rates?: Maybe<Array<Maybe<StripeSubscriptionTaxRates>>>;
   description?: Maybe<Scalars['String']['output']>;
   discount?: Maybe<StripeDiscount>;
-  ended_at?: Maybe<Scalars['Timestamp']['output']>;
+  ended_at?: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
   items?: Maybe<Array<Maybe<StripeSubscriptionItem>>>;
   latest_invoice?: Maybe<Scalars['String']['output']>;
   livemode?: Maybe<Scalars['Boolean']['output']>;
   metadata?: Maybe<Scalars['Metadata']['output']>;
-  next_pending_invoice_item_invoice?: Maybe<Scalars['Timestamp']['output']>;
+  next_pending_invoice_item_invoice?: Maybe<Scalars['Int']['output']>;
   object?: Maybe<Scalars['String']['output']>;
   pause_collection?: Maybe<StripeSubscriptionPauseCollection>;
   payment_settings?: Maybe<StripeSubscriptionPaymentSettings>;
@@ -1793,17 +1793,17 @@ export type StripeSubscription = {
   pending_setup_intent?: Maybe<Scalars['String']['output']>;
   pending_update?: Maybe<StripeSubscriptionPendingUpdate>;
   schedule?: Maybe<Scalars['String']['output']>;
-  start_date?: Maybe<Scalars['Timestamp']['output']>;
+  start_date?: Maybe<Scalars['Int']['output']>;
   status?: Maybe<StripeSubscriptionStatusEnum>;
   test_clock?: Maybe<Scalars['String']['output']>;
   transfer_data?: Maybe<StripeSubscriptionTransferData>;
-  trial_end?: Maybe<Scalars['Timestamp']['output']>;
-  trial_start?: Maybe<Scalars['Timestamp']['output']>;
+  trial_end?: Maybe<Scalars['Int']['output']>;
+  trial_start?: Maybe<Scalars['Int']['output']>;
 };
 
 export type StripeSubscriptionAutomaticTax = {
   __typename?: 'StripeSubscriptionAutomaticTax';
-  enabled?: Maybe<Scalars['Boolean']['output']>;
+  enabled: Scalars['Boolean']['output'];
 };
 
 export type StripeSubscriptionBillingThreshold = {
@@ -1832,6 +1832,11 @@ export enum StripeSubscriptionCancellationReasonOptionsEnum {
   TooComplex = 'too_complex',
   TooExpensive = 'too_expensive',
   Unused = 'unused'
+}
+
+export enum StripeSubscriptionCollectionMethodEnum {
+  ChargeAutomatically = 'charge_automatically',
+  SendInvoice = 'send_invoice'
 }
 
 export enum StripeSubscriptionDefaultPaymentMethodEnum {
@@ -1874,7 +1879,7 @@ export type StripeSubscriptionItemData = {
 export type StripeSubscriptionPauseCollection = {
   __typename?: 'StripeSubscriptionPauseCollection';
   behaviour?: Maybe<Scalars['String']['output']>;
-  resumes_at?: Maybe<Scalars['Timestamp']['output']>;
+  resumes_at?: Maybe<Scalars['Int']['output']>;
 };
 
 export type StripeSubscriptionPaymentMethodOptions = {
@@ -1917,10 +1922,10 @@ export type StripeSubscriptionPaymentSettings = {
 
 export type StripeSubscriptionPendingUpdate = {
   __typename?: 'StripeSubscriptionPendingUpdate';
-  billing_cycle_anchor?: Maybe<Scalars['Timestamp']['output']>;
-  expires_at?: Maybe<Scalars['Timestamp']['output']>;
+  billing_cycle_anchor?: Maybe<Scalars['Int']['output']>;
+  expires_at?: Maybe<Scalars['Int']['output']>;
   subscription_items?: Maybe<Array<Maybe<StripeSubscriptionItem>>>;
-  trial_end?: Maybe<Scalars['Timestamp']['output']>;
+  trial_end?: Maybe<Scalars['Int']['output']>;
   trial_from_plan?: Maybe<Scalars['Boolean']['output']>;
 };
 
@@ -1928,7 +1933,7 @@ export type StripeSubscriptionPrice = {
   __typename?: 'StripeSubscriptionPrice';
   active?: Maybe<Scalars['Boolean']['output']>;
   billing_scheme?: Maybe<Scalars['String']['output']>;
-  created?: Maybe<Scalars['Timestamp']['output']>;
+  created?: Maybe<Scalars['Int']['output']>;
   currency?: Maybe<Scalars['String']['output']>;
   custom_unit_amount?: Maybe<StripeSubscriptionPriceCustomUnitAmount>;
   id?: Maybe<Scalars['String']['output']>;
@@ -2004,7 +2009,7 @@ export type StripeSubscriptionTaxRates = {
   __typename?: 'StripeSubscriptionTaxRates';
   active?: Maybe<Scalars['Boolean']['output']>;
   country?: Maybe<Scalars['String']['output']>;
-  created?: Maybe<Scalars['Timestamp']['output']>;
+  created?: Maybe<Scalars['Int']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   display_name?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['String']['output']>;

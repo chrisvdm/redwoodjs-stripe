@@ -2,8 +2,14 @@ import type { NonNil } from "./omitNils";
 import { rejectNils } from "./rejectNils";
 
 export type DeepOmitNilsObj<Inputs> = {
-  [K in keyof Inputs]: DeepOmitNils<Inputs[K]>;
+  [K in keyof Inputs]: DeepNonNilProp<Inputs[K]>;
 };
+
+type DeepNonNilProp<Value> = Value extends null
+  ? undefined
+  : Value extends undefined
+    ? undefined
+    : DeepOmitNils<Value>;
 
 export type DeepOmitNils<Input> = Input extends Array<infer Item>
   ? Array<NonNil<DeepOmitNils<Item>>>
