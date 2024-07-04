@@ -2,10 +2,10 @@ import type { NonNil } from "./omitNils";
 import { rejectNils } from "./rejectNils";
 
 export type DeepOmitNilsObj<Inputs> = {
-  [K in keyof Inputs]: DeepNonNilProp<Inputs[K]>;
+  [K in keyof Inputs]: DeepOmitNilsProp<Inputs[K]>;
 };
 
-type DeepNonNilProp<Value> = Value extends null
+type DeepOmitNilsProp<Value> = Value extends null
   ? undefined
   : Value extends undefined
     ? undefined
@@ -28,10 +28,10 @@ const omitNilsObj = <Inputs extends object>(
     const value = inputs[key];
 
     if (value != null) {
-      const result = deepOmitNils(value) as DeepOmitNils<Inputs[keyof Inputs]>;
+      const result = deepOmitNils(value);
 
       if (result != null) {
-        results[key] = result;
+        results[key] = result as DeepOmitNilsProp<Inputs[keyof Inputs]>;
         isEmpty = false;
       }
     }
