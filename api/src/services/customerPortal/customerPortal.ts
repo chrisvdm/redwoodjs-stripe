@@ -12,11 +12,11 @@ import { stripe } from "../../lib/stripe.js";
 export const createStripeCustomerPortalSession = async ({
   data: inputData,
 }: MutationCreateStripeCustomerPortalSessionArgs) => {
-  const data = deepOmitNils(inputData)
+  const data = deepOmitNils(inputData);
 
   if (data?.customer == null) {
     throw nonNilAssertionError(
-      "createStripeCustomerPortalSession:data",
+      "createStripeCustomerPortalSession:customer",
       data,
     );
   }
@@ -24,7 +24,7 @@ export const createStripeCustomerPortalSession = async ({
   const params = {
     ...data,
     locale: data.locale as Stripe.BillingPortal.SessionCreateParams.Locale,
-  }
+  };
 
   const session = await stripe.billingPortal.sessions.create(params);
 
@@ -39,8 +39,17 @@ export const createStripeCustomerPortalSessionSkipAuth = async (
 };
 
 export const createStripeCustomerPortalConfig = async ({
-  data,
+  data: inputData,
 }: MutationCreateStripeCustomerPortalConfigArgs) => {
+  const data = deepOmitNils(inputData);
+
+  if (data == null) {
+    throw nonNilAssertionError(
+      "createStripeCustomerPortalConfig:data",
+      data,
+    );
+  }
+
   const config = await stripe.billingPortal.configurations.create(data);
   return config;
 };
@@ -48,6 +57,8 @@ export const createStripeCustomerPortalConfig = async ({
 export const listStripeCustomerPortalConfig = async ({
   params,
 }: QueryListStripeCustomerPortalConfigArgs) => {
-  const configArray = await stripe.billingPortal.configurations.list(params);
+  const configArray = await stripe.billingPortal.configurations.list(
+    deepOmitNils(params),
+  );
   return configArray;
 };

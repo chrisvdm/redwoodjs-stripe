@@ -84,14 +84,14 @@ type StripeSubscriptionCancellationReason {
 }
 
 enum StripeSubscriptionCancellationReasonOptionsEnum {
-    too_expensive
-    missing_features
-    switched_services
-    unused
     customer_service
-    too_complex
     low_quality
+    missing_features
     other
+    switched_service
+    too_complex
+    too_expensive
+    unused
 }
 
 type StripeCustomerPortalFeaturesPaymentMethodUpdate {
@@ -126,9 +126,9 @@ input StripeCustomerPortalConfigInput {
     object: String
     active: Boolean
     application: String
-    business_profile: StripeBusinessProfileInput
+    business_profile: StripeBusinessProfileInput!
     created: Timestamp
-    features: StripeCustomerPortalFeaturesInput
+    features: StripeCustomerPortalFeaturesInput!
     is_default: Boolean
     livemode: Boolean
     metadata: Metadata
@@ -152,36 +152,36 @@ input StripeCustomerPortalFeaturesInput {
 
 input StripeCustomerPortalFeaturesCustomerUpdateInput {
     allowed_updates: [StripeCustomerAllowedUpdatesEnum]
-    enabled: Boolean
+    enabled: Boolean!
 }
 
 input StripeCustomerPortalFeaturesInvoiceHistoryInput {
-    enabled: Boolean
+    enabled: Boolean!
 }
 
 input StripeCustomerPortalFeaturesPaymentMethodUpdateInput {
-    enabled: Boolean
+    enabled: Boolean!
 }
 
 input StripeCustomerPortalFeaturesSubscriptionCancelInput {
-    cancellation_reason: StripeSubscriptionCancellationReasonInput
-    enabled: Boolean
+    cancellation_reason: StripeSubscriptionCancellationReasonInput!
+    enabled: Boolean!
     mode: StripeCancellationReasonModeEnum
     proration_behavior: String
 }
 
 input StripeSubscriptionCancellationReasonInput {
-    enabled: Boolean
-    options: [StripeSubscriptionCancellationReasonOptionsEnum]
+    enabled: Boolean!
+    options: [StripeSubscriptionCancellationReasonOptionsEnum!]!
 }
 
 input StripeCustomerPortalFeaturesSubscriptionPauseInput {
-    enabled: Boolean
+    enabled: Boolean!
 }
 
 input StripeCustomerPortalFeatureSubscriptionUpdateInput {
     default_allowed_updates: [StripeCustomerPortalSubscriptionAllowedUpdatesEnum]
-    enabled: Boolean
+    enabled: Boolean!
     products: [StripeCustomerPortalSubscriptionProductsInput]
 }
 

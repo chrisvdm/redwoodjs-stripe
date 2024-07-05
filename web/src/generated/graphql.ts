@@ -1029,9 +1029,9 @@ export type StripeCustomerPortalConfig = {
 export type StripeCustomerPortalConfigInput = {
   active: InputMaybe<Scalars['Boolean']['input']>;
   application: InputMaybe<Scalars['String']['input']>;
-  business_profile: InputMaybe<StripeBusinessProfileInput>;
+  business_profile: StripeBusinessProfileInput;
   created: InputMaybe<Scalars['Timestamp']['input']>;
-  features: InputMaybe<StripeCustomerPortalFeaturesInput>;
+  features: StripeCustomerPortalFeaturesInput;
   id: InputMaybe<Scalars['ID']['input']>;
   is_default: InputMaybe<Scalars['Boolean']['input']>;
   livemode: InputMaybe<Scalars['Boolean']['input']>;
@@ -1065,7 +1065,7 @@ export type StripeCustomerPortalFeatureSubscriptionUpdate = {
 
 export type StripeCustomerPortalFeatureSubscriptionUpdateInput = {
   default_allowed_updates: InputMaybe<Array<InputMaybe<StripeCustomerPortalSubscriptionAllowedUpdatesEnum>>>;
-  enabled: InputMaybe<Scalars['Boolean']['input']>;
+  enabled: Scalars['Boolean']['input'];
   products: InputMaybe<Array<InputMaybe<StripeCustomerPortalSubscriptionProductsInput>>>;
 };
 
@@ -1087,7 +1087,7 @@ export type StripeCustomerPortalFeaturesCustomerUpdate = {
 
 export type StripeCustomerPortalFeaturesCustomerUpdateInput = {
   allowed_updates: InputMaybe<Array<InputMaybe<StripeCustomerAllowedUpdatesEnum>>>;
-  enabled: InputMaybe<Scalars['Boolean']['input']>;
+  enabled: Scalars['Boolean']['input'];
 };
 
 export type StripeCustomerPortalFeaturesInput = {
@@ -1105,7 +1105,7 @@ export type StripeCustomerPortalFeaturesInvoiceHistory = {
 };
 
 export type StripeCustomerPortalFeaturesInvoiceHistoryInput = {
-  enabled: InputMaybe<Scalars['Boolean']['input']>;
+  enabled: Scalars['Boolean']['input'];
 };
 
 export type StripeCustomerPortalFeaturesPaymentMethodUpdate = {
@@ -1114,7 +1114,7 @@ export type StripeCustomerPortalFeaturesPaymentMethodUpdate = {
 };
 
 export type StripeCustomerPortalFeaturesPaymentMethodUpdateInput = {
-  enabled: InputMaybe<Scalars['Boolean']['input']>;
+  enabled: Scalars['Boolean']['input'];
 };
 
 export type StripeCustomerPortalFeaturesSubscriptionCancel = {
@@ -1126,8 +1126,8 @@ export type StripeCustomerPortalFeaturesSubscriptionCancel = {
 };
 
 export type StripeCustomerPortalFeaturesSubscriptionCancelInput = {
-  cancellation_reason: InputMaybe<StripeSubscriptionCancellationReasonInput>;
-  enabled: InputMaybe<Scalars['Boolean']['input']>;
+  cancellation_reason: StripeSubscriptionCancellationReasonInput;
+  enabled: Scalars['Boolean']['input'];
   mode: InputMaybe<StripeCancellationReasonModeEnum>;
   proration_behavior: InputMaybe<Scalars['String']['input']>;
 };
@@ -1138,7 +1138,7 @@ export type StripeCustomerPortalFeaturesSubscriptionPause = {
 };
 
 export type StripeCustomerPortalFeaturesSubscriptionPauseInput = {
-  enabled: InputMaybe<Scalars['Boolean']['input']>;
+  enabled: Scalars['Boolean']['input'];
 };
 
 export type StripeCustomerPortalInput = {
@@ -1823,8 +1823,8 @@ export type StripeSubscriptionCancellationReason = {
 };
 
 export type StripeSubscriptionCancellationReasonInput = {
-  enabled: InputMaybe<Scalars['Boolean']['input']>;
-  options: InputMaybe<Array<InputMaybe<StripeSubscriptionCancellationReasonOptionsEnum>>>;
+  enabled: Scalars['Boolean']['input'];
+  options: Array<StripeSubscriptionCancellationReasonOptionsEnum>;
 };
 
 export type StripeSubscriptionCancellationReasonOptionsEnum =
@@ -1832,7 +1832,7 @@ export type StripeSubscriptionCancellationReasonOptionsEnum =
   | 'low_quality'
   | 'missing_features'
   | 'other'
-  | 'switched_services'
+  | 'switched_service'
   | 'too_complex'
   | 'too_expensive'
   | 'unused';
