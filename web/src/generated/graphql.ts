@@ -1064,9 +1064,9 @@ export type StripeCustomerPortalFeatureSubscriptionUpdate = {
 };
 
 export type StripeCustomerPortalFeatureSubscriptionUpdateInput = {
-  default_allowed_updates: InputMaybe<Array<InputMaybe<StripeCustomerPortalSubscriptionAllowedUpdatesEnum>>>;
+  default_allowed_updates: Array<InputMaybe<StripeCustomerPortalSubscriptionAllowedUpdatesEnum>>;
   enabled: Scalars['Boolean']['input'];
-  products: InputMaybe<Array<InputMaybe<StripeCustomerPortalSubscriptionProductsInput>>>;
+  products: Array<InputMaybe<StripeCustomerPortalSubscriptionProductsInput>>;
 };
 
 export type StripeCustomerPortalFeatures = {
@@ -1129,7 +1129,7 @@ export type StripeCustomerPortalFeaturesSubscriptionCancelInput = {
   cancellation_reason: StripeSubscriptionCancellationReasonInput;
   enabled: Scalars['Boolean']['input'];
   mode: InputMaybe<StripeCancellationReasonModeEnum>;
-  proration_behavior: InputMaybe<Scalars['String']['input']>;
+  proration_behavior: InputMaybe<StripeCustomerPortalProrationBehaviorEnum>;
 };
 
 export type StripeCustomerPortalFeaturesSubscriptionPause = {
@@ -1149,6 +1149,11 @@ export type StripeCustomerPortalInput = {
   return_url: InputMaybe<Scalars['String']['input']>;
 };
 
+export type StripeCustomerPortalProrationBehaviorEnum =
+  | 'always_invoice'
+  | 'create_prorations'
+  | 'none';
+
 export type StripeCustomerPortalSubscriptionAllowedUpdatesEnum =
   | 'price'
   | 'promotion_code'
@@ -1161,8 +1166,8 @@ export type StripeCustomerPortalSubscriptionProducts = {
 };
 
 export type StripeCustomerPortalSubscriptionProductsInput = {
-  prices: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  product: InputMaybe<Scalars['String']['input']>;
+  prices: Array<InputMaybe<Scalars['String']['input']>>;
+  product: Scalars['String']['input'];
 };
 
 export type StripeCustomerShipping = {

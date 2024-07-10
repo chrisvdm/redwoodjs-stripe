@@ -163,11 +163,17 @@ input StripeCustomerPortalFeaturesPaymentMethodUpdateInput {
     enabled: Boolean!
 }
 
+enum StripeCustomerPortalProrationBehaviorEnum {
+    always_invoice
+    create_prorations
+    none
+}
+
 input StripeCustomerPortalFeaturesSubscriptionCancelInput {
     cancellation_reason: StripeSubscriptionCancellationReasonInput!
     enabled: Boolean!
     mode: StripeCancellationReasonModeEnum
-    proration_behavior: String
+    proration_behavior: StripeCustomerPortalProrationBehaviorEnum
 }
 
 input StripeSubscriptionCancellationReasonInput {
@@ -180,14 +186,14 @@ input StripeCustomerPortalFeaturesSubscriptionPauseInput {
 }
 
 input StripeCustomerPortalFeatureSubscriptionUpdateInput {
-    default_allowed_updates: [StripeCustomerPortalSubscriptionAllowedUpdatesEnum]
+    default_allowed_updates: [StripeCustomerPortalSubscriptionAllowedUpdatesEnum]!
     enabled: Boolean!
-    products: [StripeCustomerPortalSubscriptionProductsInput]
+    products: [StripeCustomerPortalSubscriptionProductsInput]!
 }
 
 input StripeCustomerPortalSubscriptionProductsInput {
-    prices: [String]
-    product: String
+    prices: [String]!
+    product: String!
 }
 
 input StripeCustomerPortalInput {
