@@ -1,3 +1,4 @@
+import type Stripe from "stripe";
 import type {
   MutationCreateStripeCustomerArgs,
   QueryRetrieveStripeCustomerArgs,
@@ -6,12 +7,13 @@ import type {
 import { deepOmitNils } from "../../lib/deepOmitNils.js";
 import { lastStripeObject } from "../../lib/lastStripeObject.js";
 import { nonNilAssertionError } from "../../lib/nonNilAssertionError.js";
+import type { ParsedStripeResponse } from "../../lib/parseStripeResponse.js";
 import { parseStripeResponse } from "../../lib/parseStripeResponse.js";
 import { stripe } from "../../lib/stripe.js";
 
 export const stripeCustomerSearch = async ({
   query,
-}: QueryStripeCustomerSearchArgs) => {
+}: QueryStripeCustomerSearchArgs): Promise<ParsedStripeResponse<Stripe.Customer>> => {
   const customer = await stripe.customers.search({
     query: query ?? "",
   });
@@ -21,7 +23,7 @@ export const stripeCustomerSearch = async ({
 
 export const retrieveStripeCustomer = async ({
   data,
-}: QueryRetrieveStripeCustomerArgs) => {
+}: QueryRetrieveStripeCustomerArgs): Promise<ParsedStripeResponse<Stripe.Customer | Stripe.DeletedCustomer>> => {
   const { id, addProps } = data ?? {};
 
   if (id !== null) {
@@ -32,6 +34,7 @@ export const retrieveStripeCustomer = async ({
     id,
     deepOmitNils(addProps) ?? {},
   );
+
   return parseStripeResponse(customer);
 };
 

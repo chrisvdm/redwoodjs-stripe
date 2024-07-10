@@ -16,16 +16,16 @@ type StripeResponseValue =
   | StripeResponseList
   | StripeResponseObject;
 
-type NormalizedResponseValue =
+type ParsedStripeResponseValue =
   | ResponsePrimitive
-  | Array<NormalizedResponseValue>
-  | NormalizedResponseObject;
+  | Array<ParsedStripeResponseValue>
+  | ParsedStripeResponseObject;
 
-type NormalizedResponseObject = {
-  [K in keyof object]: NormalizedResponseValue;
+type ParsedStripeResponseObject = {
+  [K in keyof object]: ParsedStripeResponseValue;
 };
 
-type NormalizedResponse<Input> = Input extends null
+export type ParsedStripeResponse<Input> = Input extends null
   ? null
   : Input extends string
     ? string
@@ -34,17 +34,17 @@ type NormalizedResponse<Input> = Input extends null
       : Input extends boolean
         ? boolean
         : Input extends StripeResponseList<infer Value>
-          ? NormalizedResponse<Value>[]
+          ? ParsedStripeResponse<Value>[]
           : Input extends { [K in keyof Input]: Input[K] }
             ? {
-                [K in keyof Input]: NormalizedResponse<Input[K]>;
+                [K in keyof Input]: ParsedStripeResponse<Input[K]>;
               }
             : never;
 
 export const parseStripeResponse = <Input extends StripeResponseValue>(
   input: Input,
-): NormalizedResponse<Input> => {
-  let result: NormalizedResponseValue;
+): ParsedStripeResponse<Input> => {
+  let result: ParsedStripeResponseValue;
 
   if (input == null || typeof input !== "object") {
     result = input;
@@ -54,7 +54,7 @@ export const parseStripeResponse = <Input extends StripeResponseValue>(
     result = mapValues(input as StripeResponseObject, parseStripeResponse);
   }
 
-  return result as NormalizedResponse<Input>;
+  return result as ParsedStripeResponse<Input>;
 };
 
 export const mapValues = <K extends string | number | symbol, A, B>(
