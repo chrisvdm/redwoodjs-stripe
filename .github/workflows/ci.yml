@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v3
 
       # It doesn't have Node.js either; we have to set it up before we can do Node.js things. 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@4
         with:
           node-version: 16
           corepack: true
