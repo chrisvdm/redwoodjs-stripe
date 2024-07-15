@@ -3759,9 +3759,7 @@ __metadata:
   dependencies:
     "@apollo/client": "npm:^3.10.7"
     "@redwoodjs/web": "npm:^7.7.1"
-    "@types/browser-util-inspect": "npm:^0"
     "@types/react": "npm:^18.3.3"
-    browser-util-inspect: "npm:^0.2.0"
     graphql: "npm:^16.9.0"
     graphql-tag: "npm:^2.12.6"
     react: "npm:^18.2.0"
@@ -4257,13 +4255,6 @@ __metadata:
   dependencies:
     "@types/babel-types": "npm:*"
   checksum: 10/bbec6364b295adc747693c84b52184b38c3c2dda8b097279c5402ee35ac4454793fa5034195420fd16feddb2ef20ab46cee83e5912d87e51abe93fe28c071a59
-  languageName: node
-  linkType: hard
-
-"@types/browser-util-inspect@npm:^0":
-  version: 0.2.4
-  resolution: "@types/browser-util-inspect@npm:0.2.4"
-  checksum: 10/a701569ec0b8df4ade881c887f7f1beb986ab83fe67018362c197e741cf67901d70f3dcfe0aac295d5d19d2432898f75a4afbddde81701f226d3b06a437d629f
   languageName: node
   linkType: hard
 
@@ -5540,13 +5531,6 @@ __metadata:
   dependencies:
     fill-range: "npm:^7.1.1"
   checksum: 10/fad11a0d4697a27162840b02b1fad249c1683cbc510cd5bf1a471f2f8085c046d41094308c577a50a03a579dd99d5a6b3724c4b5e8b14df2c4443844cfcda2c6
-  languageName: node
-  linkType: hard
-
-"browser-util-inspect@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "browser-util-inspect@npm:0.2.0"
-  checksum: 10/03d6be273041ab6d13411af4a1eb8a42a6c542cd2a3ec8e877a8df8f75c5eeaadd841cbfdb3d3766f340d9af325a08bda33a7c4007f6c797aeb283fa04df0fb4
   languageName: node
   linkType: hard
 
