@@ -50,7 +50,7 @@ export const deepOmitNils = <Input>(
   }
 
   if (Array.isArray(input)) {
-    return input.map(deepOmitNils).filter(rejectNils) as DeepOmitNils<Input>;
+    return rejectNils(input.map(deepOmitNils)) as DeepOmitNils<Input>;
   }
 
   if (typeof input === "object") {
