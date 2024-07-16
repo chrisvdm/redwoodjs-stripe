@@ -10,6 +10,7 @@ import type {
 } from "../generated/graphql.js";
 import { nonNilAssertionError } from "../lib/nonNilAssertionError.js";
 import type { StripeCustomerBase } from "../types.js";
+import { isEmptyString } from "../lib/index.js"
 
 const STRIPE_CUSTOMER_SEARCH = gql`
     query stripeCustomerSearch(
@@ -116,6 +117,7 @@ export const useStripeCustomerFetch = (
   setCustomer: (customer: StripeCustomerBase) => unknown,
 ) => {
   const client = useApolloClient();
+ 
   useEffect(() => {
     const doFetch = async () => {
       const context = {
@@ -123,6 +125,7 @@ export const useStripeCustomerFetch = (
         client,
         searchString,
       };
+      
       const stripeCustomer = await fetchCustomer(context);
 
       if (stripeCustomer == null) {
@@ -135,6 +138,11 @@ export const useStripeCustomerFetch = (
       setCustomer(stripeCustomer);
     };
 
-    doFetch();
+    if(!isEmptyString(id) || !isEmptyString(searchString)) {
+      doFetch();
+    }
+
+    
   }, [searchString, id]);
 };
+
