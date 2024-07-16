@@ -17,6 +17,7 @@ import type {
   StripeCustomerPortalInput,
 } from "../generated/graphql.js";
 import { nonNilAssertionError } from "../lib/nonNilAssertionError.js";
+import { isEmptyString } from "../lib/isEmptyString.js";
 
 type RedirectToStripeCustomerPortalArgs = {
   customer: StripeCustomerBase;
@@ -26,6 +27,10 @@ type CreateStripeCustomerPortalConfigArgs = StripeCustomerPortalConfigInput;
 
 export const useStripeCustomerPortal = () => {
   const context = useContext(StripeContext);
+
+  if(isEmptyString(context.customer)) {
+    return {}
+  }
 
   // Create list Stripe Customer Portal query
   const STRIPE_DEFAULT_CUSTOMER_PORTAL = gql`
