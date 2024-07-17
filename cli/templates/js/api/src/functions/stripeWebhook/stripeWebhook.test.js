@@ -1,7 +1,5 @@
-import {
-  handleStripeWebhooks,
-  generateStripeMockEvent,
-} from "@redwoodjs-stripe/api";
+import { handleStripeWebhooks } from "@redwoodjs-stripe/api";
+import { generateStripeMockEvent } from "@redwoodjs-stripe/api/testing";
 
 describe("stripeWebhooks function", () => {
   it("Should respond with 200", async () => {

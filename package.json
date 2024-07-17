@@ -2,7 +2,12 @@
   "name": "redwoodjs-stripe",
   "private": true,
   "description": "A Redwood/Stripe integration made easy",
-  "keywords": ["stripe", "redwoodjs", "payments", "commerce"],
+  "keywords": [
+    "stripe",
+    "redwoodjs",
+    "payments",
+    "commerce"
+  ],
   "homepage": "https://github.com/chrisvdm/redwoodjs-stripe#readme",
   "bugs": {
     "url": "https://github.com/chrisvdm/redwoodjs-stripe/issues"
@@ -13,14 +18,20 @@
   },
   "license": "MIT",
   "author": "Chrisvdm",
-  "workspaces": ["api", "web", "cli"],
+  "workspaces": [
+    "api",
+    "web",
+    "cli"
+  ],
   "scripts": {
     "build": "yarn tasks --task build",
     "release": "yarn build && lerna publish ",
     "sync": "yarn tasks --task sync --target",
+    "codegen": "yarn tasks --task codegen",
     "tasks": "./scripts/tasks.js",
     "lint": "npx @biomejs/biome lint",
-    "format": "npx @biomejs/biome format --write"
+    "format": "npx @biomejs/biome format --write",
+    "typecheck": "yarn tasks --task typecheck"
   },
   "dependencies": {
     "chokidar": "^3.5.3",
@@ -32,6 +43,11 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.8.1"
-  }
+    "@biomejs/biome": "1.8.1",
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/client-preset": "^4.3.1",
+    "@npmcli/promise-spawn": "^7.0.2",
+    "typescript": "^5.5.2"
+  },
+  "packageManager": "yarn@4.3.1+sha512.af78262d7d125afbfeed740602ace8c5e4405cd7f4735c08feb327286b2fdb2390fbca01589bfd1f50b1240548b74806767f5a063c94b67e431aabd0d86f7774"
 }

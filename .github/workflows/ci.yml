@@ -17,10 +17,12 @@ jobs:
       # it literally doesn't even have the code in this repo yet.
       - uses: actions/checkout@v3
 
+      - run: corepack enable
+
       # It doesn't have Node.js either; we have to set it up before we can do Node.js things. 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 18
 
       - run: yarn install
         shell: bash

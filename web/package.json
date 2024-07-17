@@ -1,23 +1,41 @@
 {
   "name": "@redwoodjs-stripe/web",
   "version": "1.0.8",
+  "type": "module",
   "main": "./dist/cjs/index.js",
   "exports": {
     ".": {
       "redwoodjs-stripe:development": "./dist/esm/index.js",
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
       "default": "./dist/cjs/index.js"
     },
-    "./dev-vite-plugin": "./plugins/dev-vite-plugin.js"
+    "./dev-vite-plugin": "./plugins/dev-vite-plugin.cjs"
   },
-  "files": ["plugins", "dist"],
-  "keywords": ["stripe", "redwoodjs", "payments", "commerce"],
+  "files": [
+    "plugins",
+    "dist"
+  ],
+  "keywords": [
+    "stripe",
+    "redwoodjs",
+    "payments",
+    "commerce"
+  ],
   "peerDependencies": {
-    "@redwoodjs/web": ">=5.4.3",
+    "@apollo/client": ">=3.10.7",
+    "@redwoodjs/web": ">=7.7.1",
+    "graphql": ">=16.9.0",
+    "graphql-tag": ">=2.12.6",
     "react": ">=18.2.0",
     "react-dom": ">=18.2.0"
   },
   "devDependencies": {
+    "@apollo/client": "^3.10.7",
+    "@redwoodjs/web": "^7.7.1",
     "@types/react": "^18.3.3",
+    "graphql": "^16.9.0",
+    "graphql-tag": "^2.12.6",
     "react": "^18.2.0"
   },
   "gitHead": "dc236d24165114a18811fe36e62482ff4ae75d36"

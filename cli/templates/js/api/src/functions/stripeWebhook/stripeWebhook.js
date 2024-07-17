@@ -19,10 +19,10 @@ import { handleStripeWebhooks } from "@redwoodjs-stripe/api";
 export const handler = async (event, context) => {
   // The Stripe documentation recommends making any calls to the db for syncing inside webhooks.
   // It's a good practice to save Stripe webhook events to your db as Stripe only stores events for 30 days.
-  const { results } = await handleStripeWebhooks(
+  const { results } = await handleStripeWebhooks({
     event,
     context,
-    {
+    webhooks: {
       "checkout.session.completed": (e) => e.type,
       "checkout.session.async_payment_succeeded": (e) => e.type,
       "checkout.session.async_payment_failed": (e) => e.type,
@@ -34,8 +34,8 @@ export const handler = async (event, context) => {
         console.log(e);
       },
     },
-    false, // Toggles "secure" mode. When "true" handler uses STRIPE_WEBHOOK_KEY to verify event origin.
-  );
+    secure: false, // Toggles "secure" mode. When "true" handler uses STRIPE_WEBHOOK_KEY to verify event origin.
+  });
 
   return {
     statusCode: 200,
