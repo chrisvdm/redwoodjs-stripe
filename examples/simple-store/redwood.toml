@@ -12,6 +12,11 @@
   includeEnvironmentVariables = [
     # Add any ENV vars that should be available to the web side to this array
     # See https://redwoodjs.com/docs/environment-variables#web
+
+   "AUTH0_DOMAIN",
+    "AUTH0_CLIENT_ID",
+    "AUTH0_REDIRECT_URI",
+    "AUTH0_AUDIENCE"
   ]
 [api]
   port = 8911
@@ -19,3 +24,4 @@
   open = true
 [notifications]
   versionUpdates = ["latest"]
+

@@ -2,6 +2,7 @@
 import { useState } from 'react'
 
 import './styles.css'
+import { useAuth } from 'src/auth'
 
 import {
   useStripeCart,
@@ -18,16 +19,13 @@ import { Icon } from './Icon'
 
 const HomePage = () => {
   const [isCartVisible, setCartVisibilty] = useState(false)
+  const { isAuthenticated, signUp, logOut} = useAuth()
 
   // This is a stub, unrelated to plugin, just to demo
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   const onCartButtonClick = () => {
     setCartVisibilty(!isCartVisible)
-  }
-
-  const onLoggedInCheckboxChange = () => {
-    setIsLoggedIn(!isLoggedIn)
   }
 
   // Details for logged in User
@@ -55,14 +53,19 @@ const HomePage = () => {
                 <h1 className="rws-bg--pink">a Store</h1>
                 <p>a redwoodjs-stripe demo</p>
               </div>
+
+
               <div className="rws-header__actions">
-                <input
-                  checked={isLoggedIn}
-                  type="checkbox"
-                  onChange={onLoggedInCheckboxChange}
-                />
+
+              {/* Auth0 */}
+              {isAuthenticated ? (
+                <button onClick={logOut}>Log out</button>
+              ) : (
+                <button onClick={signUp}>Sign up</button>
+              )}
+
                 {/* Redirects to Stripe Customer Portal */}
-                <StripeCustomerPortalButton isLoggedIn={isLoggedIn} />
+                <StripeCustomerPortalButton isLoggedIn={isAuthenticated } />
                 {/* Toggles cart visibility */}
                 <StripeCartButton
                   isCartVisible={isCartVisible}

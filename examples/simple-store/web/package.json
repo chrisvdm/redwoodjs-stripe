@@ -11,7 +11,9 @@
     ]
   },
   "dependencies": {
+    "@auth0/auth0-spa-js": "^2",
     "@redwoodjs-stripe/web": "^1.0.8",
+    "@redwoodjs/auth-auth0-web": "7.7.3",
     "@redwoodjs/forms": "7.7.3",
     "@redwoodjs/router": "7.7.3",
     "@redwoodjs/web": "7.7.3",

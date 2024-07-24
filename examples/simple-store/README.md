@@ -3,7 +3,7 @@
 ```js
   yarn  create  redwood-app  simple-store
 ```
-2. Install plugin. Have your Stripe API keys near
+2. Install plugin. Have your Stripe API keys near. If you don't already have products linked to your Stripe account then you can have dummy products added.
 
 ```js
   npx @redwoodjs-stripe/cli@latest  setup
@@ -20,4 +20,4 @@ const  Routes  = () => {
   )
 }
 ```
-4.
+4. Set up authentication. For simplicity use Redwoodjs [self-hosted](https://docs.redwoodjs.com/docs/auth/dbauth) authentication.
