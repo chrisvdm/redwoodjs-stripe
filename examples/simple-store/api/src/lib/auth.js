@@ -1,4 +1,5 @@
 import { AuthenticationError, ForbiddenError } from '@redwoodjs/graphql-server'
+import { burp } from 'src/services'
 
 /**
  * Represents the user attributes returned by the decoding the
@@ -28,6 +29,7 @@ import { AuthenticationError, ForbiddenError } from '@redwoodjs/graphql-server'
  * @returns RedwoodUser
  */
 export const getCurrentUser = async (decoded) => {
+
   if (!decoded) {
     return null
   }
