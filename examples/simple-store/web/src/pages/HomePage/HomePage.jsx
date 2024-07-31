@@ -19,7 +19,7 @@ import { Icon } from './Icon'
 
 const HomePage = () => {
   const [isCartVisible, setCartVisibilty] = useState(false)
-  const { isAuthenticated, signUp, logOut} = useAuth()
+  const { isAuthenticated, logOut, logIn,  currentUser} = useAuth()
 
   // This is a stub, unrelated to plugin, just to demo
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -34,12 +34,15 @@ const HomePage = () => {
     name: 'John Smith',
   }
 
+  console.log(currentUser?.["http://app.com/email"])
+
+
   return (
     <>
       {/* search uses a query string to search for a customer on Stripe */}
       <StripeProvider
         customer={{
-          search: isLoggedIn ? `email: "${authUser.email}"` : '',
+          search: isAuthenticated ? `email: "${currentUser?.['http://app.com/email']}"` : '',
         }}
       >
         <MetaTags
@@ -61,11 +64,14 @@ const HomePage = () => {
               {isAuthenticated ? (
                 <button onClick={logOut}>Log out</button>
               ) : (
-                <button onClick={signUp}>Sign up</button>
+                <button onClick={logIn}>LogIn</button>
               )}
 
                 {/* Redirects to Stripe Customer Portal */}
-                <StripeCustomerPortalButton isLoggedIn={isAuthenticated } />
+                {isAuthenticated && (
+                  <StripeCustomerPortalButton />
+                )}
+
                 {/* Toggles cart visibility */}
                 <StripeCartButton
                   isCartVisible={isCartVisible}
@@ -101,7 +107,7 @@ const HomePage = () => {
 
 export default HomePage
 
-const StripeCustomerPortalButton = ({ isLoggedIn }) => {
+const StripeCustomerPortalButton = () => {
   const {
     redirectToStripeCustomerPortal,
     createStripeCustomerPortalConfig,
@@ -135,10 +141,11 @@ const StripeCustomerPortalButton = ({ isLoggedIn }) => {
           subscription_cancel: {
             enabled: true,
             mode: 'immediately',
-          },
-          subscription_pause: {
-            enabled: true,
-          },
+            cancellation_reason: {
+              enabled: true,
+              options: ['other', 'unused', 'too_expensive', ]
+            }
+          }
         },
       })
       await redirectToStripeCustomerPortal(
@@ -150,12 +157,11 @@ const StripeCustomerPortalButton = ({ isLoggedIn }) => {
       )
     }
   }
+
   return (
-    isLoggedIn && (
       <button className="rws-button" onClick={onButtonClick}>
         <Icon name="user" />
       </button>
-    )
   )
 }
 
