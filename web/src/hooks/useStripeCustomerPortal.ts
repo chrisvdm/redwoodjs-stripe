@@ -28,10 +28,6 @@ type CreateStripeCustomerPortalConfigArgs = StripeCustomerPortalConfigInput;
 export const useStripeCustomerPortal = () => {
   const context = useContext(StripeContext);
 
-  if(isEmptyString(context.customer)) {
-    return {}
-  }
-
   // Create list Stripe Customer Portal query
   const STRIPE_DEFAULT_CUSTOMER_PORTAL = gql`
   query listStripeCustomerPortalConfig(
@@ -101,7 +97,7 @@ export const useStripeCustomerPortal = () => {
     CreateStripeCustomerPortalSessionSkipAuthMutationVariables
   >(
     gql`
-    mutation createStripeCustomerPortalSessionSkipAuth($data: StripeCustomerPortalInput ) {
+    mutation createStripeCustomerPortalSessionSkipAuth($data: StripeCustomerPortalInput) {
       createStripeCustomerPortalSessionSkipAuth(data: $data) {
         id
         url
