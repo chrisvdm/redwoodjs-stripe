@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/client";
+import { useMutation } from "@redwoodjs/web";
 import { useContext } from "react";
 import { gql } from "graphql-tag";
 import { useApolloClient } from "@apollo/client";

@@ -32,11 +32,11 @@
   },
   "devDependencies": {
     "@apollo/client": "^3.10.7",
-    "@redwoodjs/web": "^7.7.1",
+    "@redwoodjs/web": "^8.4.0",
     "@types/react": "^18.3.3",
     "graphql": "^16.9.0",
     "graphql-tag": "^2.12.6",
     "react": "^18.2.0"
   },
-  "gitHead": "dc236d24165114a18811fe36e62482ff4ae75d36"
+  "gitHead": "f30f009c17691fe08b04a3fe67a00efdddea8c4b"
 }

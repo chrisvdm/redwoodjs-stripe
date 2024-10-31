@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@redwoodjs/web";
 import { gql } from "graphql-tag";
 
 import { StripeContext } from "../provider/StripeContext.js";
@@ -27,10 +27,6 @@ type CreateStripeCustomerPortalConfigArgs = StripeCustomerPortalConfigInput;
 
 export const useStripeCustomerPortal = () => {
   const context = useContext(StripeContext);
-
-  if(isEmptyString(context.customer)) {
-    return {}
-  }
 
   // Create list Stripe Customer Portal query
   const STRIPE_DEFAULT_CUSTOMER_PORTAL = gql`
@@ -101,7 +97,7 @@ export const useStripeCustomerPortal = () => {
     CreateStripeCustomerPortalSessionSkipAuthMutationVariables
   >(
     gql`
-    mutation createStripeCustomerPortalSessionSkipAuth($data: StripeCustomerPortalInput ) {
+    mutation createStripeCustomerPortalSessionSkipAuth($data: StripeCustomerPortalInput) {
       createStripeCustomerPortalSessionSkipAuth(data: $data) {
         id
         url

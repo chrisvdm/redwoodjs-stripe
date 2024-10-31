@@ -24,7 +24,7 @@ const documents = {
     "\n  query listStripeCustomerPortalConfig(\n    $params: StripeCustomerPortalConfigParamsInput\n  ) {\n    listStripeCustomerPortalConfig(params: $params) {\n      data {\n        id\n        is_default\n        active\n      }\n     \n    }\n  }\n": types.ListStripeCustomerPortalConfigDocument,
     "\n      mutation createStripeCustomerPortalConfig($data: StripeCustomerPortalConfigInput ) {\n        createStripeCustomerPortalConfig(data: $data) {\n          id\n        }\n      }\n    ": types.CreateStripeCustomerPortalConfigDocument,
     "\n    mutation createStripeCustomerPortalSession($data: StripeCustomerPortalInput ) {\n      createStripeCustomerPortalSession(data: $data) {\n        id\n        url\n      }\n    }\n  ": types.CreateStripeCustomerPortalSessionDocument,
-    "\n    mutation createStripeCustomerPortalSessionSkipAuth($data: StripeCustomerPortalInput ) {\n      createStripeCustomerPortalSessionSkipAuth(data: $data) {\n        id\n        url\n      }\n    }\n  ": types.CreateStripeCustomerPortalSessionSkipAuthDocument,
+    "\n    mutation createStripeCustomerPortalSessionSkipAuth($data: StripeCustomerPortalInput) {\n      createStripeCustomerPortalSessionSkipAuth(data: $data) {\n        id\n        url\n      }\n    }\n  ": types.CreateStripeCustomerPortalSessionSkipAuthDocument,
     "\n      fragment ListFragment on StripeSubscription {\n       id\n       customer\n       status\n      }\n    ": types.ListFragmentFragmentDoc,
     "\n    query listStripeSubscriptions(\n      $data: ListStripeSubscriptionsInput\n    ) {\n      listStripeSubscriptions(data: $data) {\n        ...ListFragment\n      }\n    }\n\n    \n  ": types.ListStripeSubscriptionsDocument,
 };
@@ -90,7 +90,7 @@ export function graphql(source: "\n    mutation createStripeCustomerPortalSessio
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    mutation createStripeCustomerPortalSessionSkipAuth($data: StripeCustomerPortalInput ) {\n      createStripeCustomerPortalSessionSkipAuth(data: $data) {\n        id\n        url\n      }\n    }\n  "): (typeof documents)["\n    mutation createStripeCustomerPortalSessionSkipAuth($data: StripeCustomerPortalInput ) {\n      createStripeCustomerPortalSessionSkipAuth(data: $data) {\n        id\n        url\n      }\n    }\n  "];
+export function graphql(source: "\n    mutation createStripeCustomerPortalSessionSkipAuth($data: StripeCustomerPortalInput) {\n      createStripeCustomerPortalSessionSkipAuth(data: $data) {\n        id\n        url\n      }\n    }\n  "): (typeof documents)["\n    mutation createStripeCustomerPortalSessionSkipAuth($data: StripeCustomerPortalInput) {\n      createStripeCustomerPortalSessionSkipAuth(data: $data) {\n        id\n        url\n      }\n    }\n  "];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

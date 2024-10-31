@@ -1,5 +1,7 @@
 import { useContext } from "react";
-import { useApolloClient, useMutation } from "@apollo/client";
+import { useMutation } from "@redwoodjs/web";
+import { useApolloClient } from "@apollo/client";
+
 import { StripeContext } from "../provider/StripeContext.js";
 import { gql } from "graphql-tag";
 import type { Cart } from "../types.js";
@@ -28,7 +30,7 @@ export const useStripeCheckout = () => {
   const context = useContext(StripeContext);
 
   // Create Session Mutation
-  const [checkout] = useMutation<CheckoutMutation, CheckoutMutationVariables>(
+  const [ checkout ] = useMutation<CheckoutMutation, CheckoutMutationVariables>(
     gql`
       mutation Checkout(
         $cart: [ProductInput!]!

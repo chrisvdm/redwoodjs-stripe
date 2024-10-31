@@ -131,10 +131,11 @@ const StripeCustomerPortalButton = ({ isLoggedIn }) => {
           subscription_cancel: {
             enabled: true,
             mode: "immediately",
-          },
-          subscription_pause: {
-            enabled: true,
-          },
+            cancellation_reason: {
+              enabled: true,
+              options: ['other', 'unused', 'too_expensive', ]
+            }
+          } 
         },
       });
       await redirectToStripeCustomerPortal(
