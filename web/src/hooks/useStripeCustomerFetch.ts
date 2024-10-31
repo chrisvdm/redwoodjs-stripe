@@ -1,5 +1,4 @@
-import type { ApolloClient } from "@apollo/client";
-import { useApolloClient } from "@apollo/client";
+import { ApolloClient, useApolloClient } from "@apollo/client";
 import { gql } from "graphql-tag";
 import { useEffect } from "react";
 import type {
@@ -66,10 +65,7 @@ const retrieveCustomer = async (context: FetchCustomerContext) => {
   const { id, client } = context;
 
   if (id == null) {
-    throw nonNilAssertionError(
-      "useStripeCustomerFetch:retrieveCustomer:id",
-      context,
-    );
+    return null
   }
 
   const result = await client.query<

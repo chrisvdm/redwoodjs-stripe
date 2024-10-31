@@ -1,3 +1,4 @@
+import '@redwoodjs/web/apollo';
 import type { DocumentNode } from "graphql";
 import type {
   StripeCustomer,

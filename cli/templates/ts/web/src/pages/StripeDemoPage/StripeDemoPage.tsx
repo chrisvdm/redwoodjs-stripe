@@ -135,7 +135,7 @@ const StripeCustomerPortalButton = ({ isLoggedIn }) => {
               enabled: true,
               options: ['other', 'unused', 'too_expensive', ]
             }
-          }
+          } 
         },
       });
       await redirectToStripeCustomerPortal(
