@@ -26,7 +26,7 @@ export const retrieveStripeCustomer = async ({
 }: QueryRetrieveStripeCustomerArgs): Promise<ParsedStripeResponse<Stripe.Customer | Stripe.DeletedCustomer>> => {
   const { id, addProps } = data ?? {};
 
-  if (id !== null) {
+  if (id == null) {
     throw nonNilAssertionError("retrieveStripeCustomer:id", data);
   }
 
