@@ -11,6 +11,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * 3. It does not support dead code elimination, so it will add unused operations.
  *
  * Therefore it is highly recommended to use the babel or swc plugin for production.
+ * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 const documents = {
     "\n      mutation Checkout(\n        $cart: [ProductInput!]!\n        $successUrl: String\n        $cancelUrl: String\n        $customer: StripeCustomerInput\n        $mode: StripeCheckoutModeEnum\n        $allowPromotionCodes: Boolean\n      ) {\n        checkout(cart: $cart, successUrl: $successUrl, cancelUrl: $cancelUrl, customer: $customer, mode: $mode, allowPromotionCodes: $allowPromotionCodes) {\n          id\n          url\n        }\n      }\n    ": types.CheckoutDocument,
